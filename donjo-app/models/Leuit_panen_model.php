@@ -235,7 +235,7 @@ class Leuit_panen_model extends MY_Model
 		if($dusun) {
 			$sql .= $this->filterDusun($dusun);
 		}
-
+		$sql .= ' GROUP BY l.id';
 		$query = $this->db->query($sql);
 		$data = $query->result_array();
 
@@ -259,7 +259,7 @@ class Leuit_panen_model extends MY_Model
 		if($dusun) {
 			$sql .= $this->filterDusun($dusun);
 		}
-
+		$sql .= ' GROUP BY l.id';
 		$query = $this->db->query($sql);
 		$data = $query->row_array();
 

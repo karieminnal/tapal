@@ -118,6 +118,7 @@ class Leuit_distribusi_model extends MY_Model
 		if($year) {
 			$sql .= $this->filterTahun($year);
 		}
+		$sql .= ' GROUP BY l.id';
 
 		$query = $this->db->query($sql);
 		$data = $query->result_array();
@@ -136,6 +137,7 @@ class Leuit_distribusi_model extends MY_Model
 		if($year) {
 			$sql .= $this->filterTahun($year);
 		}
+		$sql .= ' GROUP BY l.id';
 
 		$query = $this->db->query($sql);
 		$data = $query->row_array();
