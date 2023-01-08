@@ -1,0 +1,11 @@
+RewriteEngine on
+RewriteBase /
+RewriteCond $1 !^(index\.php|resources|robots\.txt)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php/$1 [L,QSA]
+Options All -Indexes
+php_value memory_limit 512M
+php_value max_input_vars 2000
+php_value upload_max_filesize 100M
+php_value max_execution_time 3000

@@ -1,0 +1,3 @@
+# Ignore all HTML files:
+/assets/js/vendors.js
+/assets/js/anti-csrf.js

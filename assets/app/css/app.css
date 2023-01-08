@@ -1,0 +1,296 @@
+body.from-app {
+}
+body.from-app .highcharts-exporting-group {
+	display: none;
+}
+body.from-app .site-content {
+  position: relative;
+  width: 100%;
+  margin-left: 0;
+}
+.highcharts-exporting-group,
+.highcharts-credits {
+	display: none!important;
+}
+.leaflet-control-container .leaflet-left,
+.leaflet-control-container .leaflet-right {
+  display: none;
+}
+.leaflet-control-container .leaflet-right,
+.leaflet-control-layers-expanded,
+.btn-unduh-popup {
+  display: none;
+}
+.leaflet-control-container .leaflet-left {
+  width: 100%;
+}
+.search-container {
+  /* position: absolute; */
+  padding: 10px;
+  width: 100%;
+  border-radius: 0px;
+  border: none !important;
+  color: #888;
+  margin: 0 !important;
+  transform: translate(0, -160px);
+  transition: all 0.3s ease-in-out;
+}
+.search-container .control-custom {
+  /* float: left; */
+  margin-left: 0;
+  width: 100%;
+}
+.search-container .control-custom label {
+  margin-left: 0;
+  text-align: center;
+}
+.leaflet-container .leaflet-control-search {
+  width: auto;
+  min-width: unset;
+  border: 1px solid #d2d2d2;
+  border-radius: 15px;
+  margin-bottom: 0;
+  float: none;
+}
+.leaflet-container .leaflet-control-search .search-input {
+  border: none;
+  width: 100%;
+  max-width: 100% !important;
+  font-size: 14px;
+  text-transform: capitalize;
+  float: none;
+  display: inline-block;
+  color: #888;
+}
+.leaflet-container .leaflet-control-search .search-input:focus {
+  border-color: transparent;
+  outline: none;
+}
+.leaflet-control-search .search-cancel {
+  opacity: 0.5;
+}
+
+.button-batas,
+.button-data,
+.button-data-sub {
+  display: inline-block;
+  position: absolute;
+  height: 52px;
+  width: 100%;
+  overflow-y: hidden;
+  overflow-x: auto;
+  white-space: nowrap;
+  top: 0;
+  z-index: 9;
+  padding: 10px;
+  background: #fff;
+  transform: translate(0, -80px);
+  transition: all 0.3s ease-in-out;
+}
+.button-batas.loading:after,
+.button-data.loading:after,
+.button-data-sub.loading:after {
+	position: absolute;
+	content: 'Loading';
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	color: black;
+	background-color: rgba(255,255,255,.5);
+	display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.button-batas.loading .control-custom,
+.button-data.loading .control-custom,
+.button-data-sub.loading .control-sebaran {
+	opacity: .4;
+}
+.button-data {
+}
+.button-data-sub {
+	z-index: 5;
+}
+.button-batas.show,
+.button-data.show,
+.search-container.show,
+.button-data-sub.show {
+  transform: translate(0);
+}
+.button-data .control-custom,
+.button-data-sub .control-custom {
+  width: auto;
+}
+
+.control-custom,
+.control-sebaran {
+  display: inline-block;
+  vertical-align: top;
+  text-align: left;
+  margin: 0 6px;
+  width: auto;
+  /* width: calc(100% / 3 - 15px); */
+}
+.control-custom .control,
+.control-sebaran .control {
+  display: block;
+  position: relative;
+  padding: 4px 16px;
+  cursor: pointer;
+  font-size: 14px;
+  width: 100%;
+  margin-bottom: 0;
+  text-align: center;
+}
+.control-custom .control span,
+.control-sebaran .control span {
+  position: relative;
+  z-index: 9;
+  color: #888;
+  /* font-weight: bold; */
+}
+.control-custom .control span.warna-label,
+.control-sebaran .control span.warna-label {
+  top: 1px;
+}
+.control-custom .control input:checked ~ span {
+  color: white;
+  color: rgba(174, 138, 50, 0.9);
+}
+.control-custom .control input {
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+}
+.control-custom .control__indicator,
+.control-sebaran .control__indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 30px;
+  width: 100%;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid #d2d2d2;
+  z-index: 1;
+  transition: all 0.3s ease;
+}
+.control-custom .control--radio .control__indicator {
+  background: rgba(255, 255, 255, 0.5);
+}
+.control-custom .control:hover input ~ .control__indicator,
+.control-custom .control input:focus ~ .control__indicator {
+  border-color: #d2d2d2;
+}
+.control-custom .control input:checked ~ .control__indicator {
+  background-color: rgba(174, 138, 50, 0.2);
+  border-color: #ae8a32;
+}
+.control-custom
+  .control:hover
+  input:not([disabled]):checked
+  ~ .control__indicator,
+.control-custom .control input:checked:focus ~ .control__indicator {
+  background-color: rgba(174, 138, 50, 0.2);
+}
+.control-custom .control input:disabled ~ .control__indicator {
+  background: #e6e6e6;
+  border-color: #d2d2d2;
+  opacity: 0.6;
+  pointer-events: none;
+}
+.control-custom .control__indicator:after,
+.control-sebaran .control__indicator:after {
+  content: '';
+  position: absolute;
+  display: none;
+}
+.control-custom .control input:checked ~ .control__indicator:after {
+  display: block;
+}
+.control-custom .control--checkbox input:disabled ~ .control__indicator:after {
+  border-color: #7b7b7b;
+}
+.control-custom .control--radio input:disabled ~ .control__indicator:after {
+  background: #7b7b7b;
+}
+.control-custom .select {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 15px;
+  width: 100%;
+}
+.control-custom .select select {
+  display: inline-block;
+  width: 100%;
+  cursor: pointer;
+  padding: 6px 15px;
+  outline: 0;
+  border: 1px solid #d2d2d2;
+  border-radius: 15px;
+  background: #fff;
+  color: #888;
+  font-size: 14px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+.control-custom .select select::-ms-expand {
+  display: none;
+}
+.control-custom .select select:hover,
+.control-custom .select select:focus {
+  color: #888;
+  background: #fff;
+  border-color: #ae8a32;
+  box-shadow: none;
+}
+.control-custom .select select:disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+.control-custom .select__arrow {
+  position: absolute;
+  top: 12px;
+  right: 15px;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  border-style: solid;
+  border-width: 8px 5px 0 5px;
+  border-color: #d2d2d2 transparent transparent transparent;
+}
+.control-custom .select select:hover ~ .select__arrow,
+.control-custom .select select:focus ~ .select__arrow,
+.control-custom .select select:disabled ~ .select__arrow {
+  border-top-color: #ccc;
+}
+
+.close-batas-sub {
+	border-radius: 3px;
+    background: rgba(255, 255, 255, 0.85);
+    height: auto;
+    padding: 5px 10px;
+    display: inline-flex;
+    width: auto;
+    align-items: center;
+    justify-content: center;
+}
+
+
+@media (max-width: 767px) {
+  .leaflet-control-container .leaflet-left {
+  }
+}
+
+.form-control-sm, .input-group-sm>.form-control, .input-group-sm>.input-group-append>.btn, .input-group-sm>.input-group-append>.input-group-text, .input-group-sm>.input-group-prepend>.btn, .input-group-sm>.input-group-prepend>.input-group-text {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    border-radius: 0.2rem;
+}
+table.table tr td,
+table.table tr th {
+	white-space: nowrap;
+}

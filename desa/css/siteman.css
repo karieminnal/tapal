@@ -1,0 +1,136 @@
+/*
+ * File ini berisi CSS ubahan desa untuk tampilan siteman
+ * Letakkan file ini di: desa/css/siteman.css
+*/
+
+/* Sebagai contoh:
+ * - Perubahan css di bawah memungkinkan penggunaan gambar untuk latar belakang halaman siteman.
+ *   Gambar yang digunakan harus ditempatkan di desa/css/images/img1.jpg
+ *
+*/
+body {
+  /* font-family: 'Montserrat', sans-serif; */
+  font-family: 'Nunito Sans', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+}
+/* Contoh mengubah warna latar belakang deretan tombol menu utama
+*/
+div.contentm {
+  background-color: #f4f4da; /* misalnya coba ganti menjadi #c8f1c8 */
+}
+.superscript {
+  vertical-align: super;
+  font-size: calc(100% - 5px);
+}
+table.dataTable thead > tr > th.sorting,
+table.dataTable thead > tr > th.sorting_asc,
+table.dataTable thead > tr > th.sorting_desc {
+  padding-right: 25px;
+}
+table.dataTable thead th.sorting::after,
+table.dataTable thead th.sorting_asc::after,
+table.dataTable thead th.sorting_desc::after {
+  bottom: unset;
+  top: calc(50% - 7px);
+}
+table.dataTable thead th.no-sort {
+  pointer-events: none !important;
+  cursor: default !important;
+}
+table.dataTable thead th.no-sort::after {
+  display: none !important;
+}
+.dataTables_info {
+  font-size: 11px;
+}
+.loading-data {
+  position: absolute;
+  left: 15px;
+  right: 15px;
+  height: 100%;
+  z-index: 1;
+}
+.loading-data span {
+  position: relative;
+  z-index: 5;
+}
+.loading-data:before {
+  position: absolute;
+  content: '';
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.image-square {
+  background-color: white;
+  width: 100%;
+  padding-top: 100%;
+  position: relative;
+  height: 0;
+  overflow: hidden;
+}
+.image-square img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.image-wide {
+  background-color: white;
+  width: 100%;
+  padding-top: 56.25%;
+  position: relative;
+  height: 0;
+  overflow: hidden;
+}
+.image-wide img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.thumbnail-gallery {
+  position: relative;
+  overflow: hidden;
+  padding: 0;
+}
+
+.thumbnail-gallery img {
+  height: 160px;
+  width: auto;
+  object-fit: cover;
+}
+.thumbnail-gallery .title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 0;
+}
+
+.thumbnail-gallery input[type='checkbox'] {
+  position: absolute;
+  left: 7px;
+  top: 5px;
+}
+.thumbnail-gallery .action-btn {
+  position: absolute;
+  top: -80px;
+  right: 5px;
+  transition: top 0.2s ease;
+}
+.thumbnail-gallery:hover img {
+  opacity: 0.8;
+}
+.thumbnail-gallery:hover .action-btn {
+  top: 5px;
+}
+.main-header .logo img {
+  height: 30px;
+  width: auto;
+  margin: 10px 0;
+}

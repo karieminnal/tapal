@@ -1,0 +1,110 @@
+.body-artikel {
+}
+
+.container-artikel {
+  margin-top: 60px;
+  position: relative;
+}
+
+.container-artikel img {
+  max-width: 100%;
+}
+
+.container-artikel .sampul {
+  margin-bottom: 30px;
+}
+.container-artikel p {
+  font-size: 16px;
+}
+h2.judul {
+  margin-bottom: 20px;
+}
+.sub-judul {
+  margin-bottom: 20px;
+  line-height: 24px;
+}
+.sub-judul span {
+  position: relative;
+}
+.sub-judul span .fa {
+  margin-right: 5px;
+  color: #ae8a32;
+}
+.sub-judul span + span {
+  margin-left: 5px;
+  padding-left: 10px;
+}
+.sub-judul span + span::before {
+  position: absolute;
+  content: '';
+  width: 1px;
+  height: 15px;
+  left: 0;
+  top: 1px;
+  background-color: #ccc;
+}
+.kategori-artikel .badge {
+  color: white;
+  background-color: #ae8a32;
+  text-shadow: none;
+  text-transform: uppercase;
+  padding: 2px 5px;
+  line-height: 15px;
+  font-weight: normal;
+  letter-spacing: 1px;
+}
+
+@media (max-width: 767px) {
+  body.body-artikel .site-content {
+    margin-left: 0;
+    width: 100%;
+  }
+  body.body-artikel.hide-menu .site-content {
+    margin-left: 0;
+    width: 100%;
+  }
+  body.body-artikel .toggle-menu.mobile {
+    position: fixed;
+    width: 100%;
+    background: white;
+    margin: 0;
+    z-index: 5;
+    text-align: right;
+    height: 50px;
+  }
+  body.body-artikel .toggle-menu.mobile .btn {
+    display: inline-flex;
+    position: absolute;
+    right: 0;
+    top: 3px;
+  }
+  .container-artikel {
+    margin-top: 76px;
+  }
+  .sub-judul span {
+    display: block;
+  }
+  .sub-judul span + span {
+    margin: 0;
+    padding: 0px;
+  }
+  .sub-judul span + span::before {
+    display: none;
+  }
+  .logo-desa {
+    height: 50px;
+    text-align: left;
+    padding: 10px 0;
+  }
+  .logo-desa img {
+    max-height: 100%;
+    width: auto;
+  }
+  .nama-desa {
+    display: inline-block;
+    margin-left: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    vertical-align: middle;
+  }
+}
