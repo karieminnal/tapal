@@ -39,7 +39,7 @@ function set_marker(marker, daftar_path, warna, judul, nama_wil) {
       }
       daftar[x].path[0].push(daftar[x].path[0][0]);
       marker.push(
-        turf.polygon(daftar[x].path, {
+        turf.multiPolygon([daftar[x].path], {
           content: judul + ' ' + daftar[x][nama_wil],
           style: marker_style,
         }),
@@ -590,26 +590,26 @@ function eximShp(layerpeta, page) {
             //   arr_res,
             // );
 
-            document.getElementById('path').value = JSON.stringify(coords)
-              .replace(']],[[', '],[')
-              .replace(']],[[', '],[')
-              .replace(']],[[', '],[')
-              .replace(']],[[', '],[')
-              .replace(']],[[', '],[')
-              .replace(']],[[', '],[')
-              .replace(']],[[', '],[')
-              .replace(']],[[', '],[')
-              .replace(']],[[', '],[')
-              .replace(']],[[', '],[')
-              .replace(']]],[[[', '],[')
-              .replace(']]],[[[', '],[')
-              .replace(']]],[[[', '],[')
-              .replace(']]],[[[', '],[')
-              .replace(']]],[[[', '],[')
-              .replace('[[[[', '[[[')
-              .replace(']]]]', ']]]')
-              .replace('],null]', ']');
-
+            // document.getElementById('path').value = JSON.stringify(coords)
+            //   .replace(']],[[', '],[')
+            //   .replace(']],[[', '],[')
+            //   .replace(']],[[', '],[')
+            //   .replace(']],[[', '],[')
+            //   .replace(']],[[', '],[')
+            //   .replace(']],[[', '],[')
+            //   .replace(']],[[', '],[')
+            //   .replace(']],[[', '],[')
+            //   .replace(']],[[', '],[')
+            //   .replace(']],[[', '],[')
+            //   .replace(']]],[[[', '],[')
+            //   .replace(']]],[[[', '],[')
+            //   .replace(']]],[[[', '],[')
+            //   .replace(']]],[[[', '],[')
+            //   .replace(']]],[[[', '],[')
+            //   .replace('[[[[', '[[[')
+            //   .replace(']]]]', ']]]')
+            //   .replace('],null]', ']');
+            document.getElementById('path').value = normalize_coords(coords);
             layerpeta.fitBounds(shpfile.getBounds());
           });
         }

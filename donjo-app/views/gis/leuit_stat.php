@@ -19,10 +19,7 @@
 		<div class="col-sm-12">
 			<div class="text-center">
 				<span class="btn btn-default ">
-					Total Input : 
-					<?php foreach ($total_produksi as $tp) : ?>
-						<strong><?= ton($tp['TOTAL_ALL']) ?></strong>
-					<?php endforeach; ?>
+					Total Input : <strong><?= ton($total_produksi['TOTAL_ALL']) ?></strong>
 				</span>
 			</div>
 		</div>
@@ -169,7 +166,7 @@
 						<?php
 							$arr2 = array();
 							foreach ($panen_group as $pg) {
-								$arr2[] = '["SAWAH '.$pg['pemilik'].'",'.ton2($pg['TOTAL']).']';
+								$arr2[] = '["SAWAH '.($pg['pemilik'] != null ? $pg['pemilik'] : 'Pemilik tidak diketahui').'",'.ton2($pg['TOTAL']).']';
 							}
 							$arr2data = implode(",", $arr2);
 							echo $arr2data; 
@@ -233,7 +230,7 @@
 							<?php
 								$arr2 = array();
 								foreach ($panen_group as $pg) {
-									$arr2[] = '["SAWAH '.$pg['pemilik'].'",'.ton2($pg['TOTAL']).']';
+									$arr2[] = '["SAWAH '.($pg['pemilik'] != null ? $pg['pemilik'] : 'Pemilik tidak diketahui').'",'.ton2($pg['TOTAL']).']';
 								}
 								$arr2data = implode(",", $arr2);
 								echo $arr2data; 

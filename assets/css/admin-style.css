@@ -588,3 +588,11 @@ Agar Logo Desa di menu navigasi Admin di sisi kiri tidak terlalu rapat ke kiri
 		overflow-x: auto;
 	}
 }
+
+.content #notification {
+    position: absolute;
+    z-index: 9;
+    width: calc(100% - 298px);
+    top: 53px;
+    right: 14px;
+}

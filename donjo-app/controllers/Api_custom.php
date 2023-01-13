@@ -301,8 +301,8 @@ class Api_custom extends Api_Controller
 					"sarana_aset" => $resultSarana,
 				),
 				"geometry" => array(
-					"type" => "Polygon",
-					"coordinates" => json_decode($dusun['path'])
+					"type" => "MultiPolygon",
+					"coordinates" => json_decode('['.$dusun['path'].']')
 				)
 			);
 			$result[] = $tmp;
@@ -335,14 +335,23 @@ class Api_custom extends Api_Controller
 					"warna" => $lahan['warna']
 				),
 				"geometry" => array(
-					"type" => 'Polygon',
-					"coordinates" => json_decode($lahan['path'])
+					"type" => 'MultiPolygon',
+					"coordinates" => json_decode('['.$lahan['path'].']')
 				)
 			);
 			$result[] = $tmp;
 		}
 		header('Content-Type: application/json');
 		echo json_encode($result);
+	}
+
+	public function plan_tutupan_lahan_jenis()
+	{
+		$this->log_request();
+		// $jenis = $_REQUEST['jenis'];
+		$dataArray = $this->tutupan_lahan_model->list_tutupan_lahan_api_jenis();
+		header('Content-Type: application/json');
+		echo json_encode($dataArray);
 	}
 
 	public function plan_tutupan_lahan_jenis_fe()

@@ -65,19 +65,15 @@
 													</div> -->
 												<?php } ?>
 											</div>
-											<div class="col-sm-6">
-												<div class="text-right">
-													<span class="btn btn-default ">
-														Total Input : 
-														<?php foreach ($total_produksi as $tp) : ?>
-															<strong><?= ton($tp['TOTAL_ALL']) ?></strong>
-														<?php endforeach; ?>
-													</span>
-													<!-- <span class="btn btn-info">
-														Biaya : <strong>Rp 6,750,000</strong>
-													</span> -->
+											<?php if($leuit_panen) { ?>
+												<div class="col-sm-6">
+													<div class="text-right">
+														<span class="btn btn-default ">
+															Total Input : <strong><?= ton($total_produksi['TOTAL_ALL']) ?></strong>
+														</span>
+													</div>
 												</div>
-											</div>
+											<?php } ?>
 										</div>
 									</form>
 
@@ -131,7 +127,7 @@
 																	</td>
 																	<td><?= tgl_indo_out($produksi['tanggal_produksi']) ?></td>
 																	<td><?= $produksi['dusun'] ?></td>
-																	<td><?= $produksi['pemilik'] ?></td>
+																	<td><?= ($produksi['pemilik'] != null ? $produksi['pemilik'] : 'Pemilik tidak diketahui') ?></td>
 																	<td><?= ton($produksi['jumlah_panen']) ?></td>
 																	<td><?= rupiah24($produksi['harga']) ?></td>
 																	<td>
@@ -287,7 +283,7 @@
 						<?php
 							$arr1 = array();
 							foreach ($panen_group as $pg) {
-								$arr1[] = '"Sawah '.$pg['pemilik'].'"';
+								$arr1[] = '"Sawah '.($pg['pemilik'] != null ? $pg['pemilik'] : 'Pemilik tidak diketahui').'"';
 							}
 							$arr1data = implode(",", $arr1);
 							echo $arr1data; 
@@ -370,7 +366,7 @@
 					<?php
 						$arr2 = array();
 						foreach ($panen_group as $pg) {
-							$arr2[] = '["SAWAH '.$pg['pemilik'].'",'.ton2($pg['TOTAL']).']';
+							$arr2[] = '["SAWAH '.($pg['pemilik'] != null ? $pg['pemilik'] : 'Pemilik tidak diketahui').'",'.ton2($pg['TOTAL']).']';
 						}
 						$arr2data = implode(",", $arr2);
 						echo $arr2data; 
@@ -443,7 +439,7 @@
 						<?php
 							$arr2 = array();
 							foreach ($panen_group as $pg) {
-								$arr2[] = '["SAWAH '.$pg['pemilik'].'",'.ton2($pg['TOTAL']).']';
+								$arr2[] = '["SAWAH '.($pg['pemilik'] != null ? $pg['pemilik'] : 'Pemilik tidak diketahui').'",'.ton2($pg['TOTAL']).']';
 							}
 							$arr2data = implode(",", $arr2);
 							echo $arr2data; 

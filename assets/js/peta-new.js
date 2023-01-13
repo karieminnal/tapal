@@ -1314,7 +1314,7 @@ function setPolygonContent(
 
       daftar[x].path[0].push(daftar[x].path[0][0]);
       marker.push(
-        turf.polygon(daftar[x].path, {
+        turf.multiPolygon([daftar[x].path], {
           name: judul,
           dusun: thisDusun,
           tipe: nama_wil,
@@ -1326,12 +1326,20 @@ function setPolygonContent(
             weight: 2,
             fillColor: configColor.dusun,
             fillOpacity: 0.05,
-            className: 'poly-wil desa-' + daftar[x].id_desa,
+            className:
+              'poly-wil class-dusun-' +
+              thisDusun +
+              ' desa-' +
+              daftar[x].id_desa,
           },
           color: configColor.dusun,
         }),
       );
-      //   console.log(marker);
+      //   console.log(
+      //     turf.multiPolygon(daftar[x].path, {
+      //       dusun: thisDusun + ' (' + daftar[x].id_desa + ')',
+      //     }),
+      //   );
     }
   }
 }

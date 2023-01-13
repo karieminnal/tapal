@@ -49,13 +49,15 @@
 													</div> -->
 												<?php } ?>
 											</div>
-											<div class="col-sm-6">
-												<div class="text-right">
-													<span class="btn btn-default ">
-														Total Distribusi : <strong><?= ton($total_distribusi['TOTAL_ALL']) ?></strong>
-													</span>
+											<?php if($leuit_distribusi) { ?>
+												<div class="col-sm-6">
+													<div class="text-right">
+														<span class="btn btn-default ">
+															Total Distribusi : <strong><?= ton($total_distribusi['TOTAL_ALL']) ?></strong>
+														</span>
+													</div>
 												</div>
-											</div>
+											<?php } ?>
 										</div>
 									</form>
 									
@@ -117,6 +119,8 @@
 												</div>
 											</div>
 										</div>
+									<?php } else { ?>
+										<p class="my-5 text-center">Belum ada data</p>
 									<?php } ?>
 								</div>
 							</div>

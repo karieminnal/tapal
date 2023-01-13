@@ -62,6 +62,7 @@ class Tutupan_lahan_model extends MY_Model
 			->select('j.nama AS jenis, j.warna AS warna')
 			->from('tutupan_lahan p')
 			->join('tutupan_lahan_jenis j', 'j.id = p.jenis')
+			// ->where('id_desa', ?)
 			->get()->result_array();
 		return $data;
 	}

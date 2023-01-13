@@ -972,9 +972,13 @@ function select_options_sawah(select, params) {
         var option_elem = $('<option>');
         var thisLuas = parseFloat(option.properties.luas);
         var luasDec = Number(thisLuas).toFixed(2);
-        option_elem
-          .val(option.id)
-          .text(option.properties.pemilik + ' (' + luasDec + ' Ha)');
+        var namaPemilik = option.properties.pemilik;
+        if (namaPemilik !== null) {
+          pemilik = option.properties.pemilik;
+        } else {
+          pemilik = 'Pemilik tidak diketahui';
+        }
+        option_elem.val(option.id).text(pemilik + ' (' + luasDec + ' Ha)');
         select.append(option_elem);
       });
     } else {

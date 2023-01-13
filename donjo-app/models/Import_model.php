@@ -401,6 +401,7 @@ class Import_model extends CI_Model {
 
 	private function hapus_data_penduduk()
 	{
+		$filterDesa = $_SESSION['filterDesa'];
 		$tabel_penduduk = array('tweb_wil_clusterdesa', 'tweb_keluarga', 'tweb_penduduk', 'log_bulanan', 'log_keluarga', 'log_penduduk', 'log_perubahan_penduduk', 'log_surat', 'tweb_rtm');
 		foreach ($tabel_penduduk as $tabel)
 		{

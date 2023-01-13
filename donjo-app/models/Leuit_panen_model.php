@@ -129,7 +129,7 @@ class Leuit_panen_model extends MY_Model
 			LEFT JOIN tutupan_lahan p ON l.sawah = p.id 
 			LEFT JOIN tweb_wil_clusterdesa t ON l.dusun = t.id 
 			LEFT JOIN config c ON l.id_desa = c.id 
-			WHERE l.id != 0";
+			WHERE 1";
 		
 		if($desaid) {
 			$sql .= " AND l.id_desa = '".$desaid."'";
@@ -167,7 +167,7 @@ class Leuit_panen_model extends MY_Model
 			LEFT JOIN tutupan_lahan p ON l.sawah = p.id 
 			LEFT JOIN tweb_wil_clusterdesa t ON l.dusun = t.id 
 			LEFT JOIN config c ON l.id_desa = c.id 
-			WHERE l.id != 0";
+			WHERE 1";
 		if($desaid) {
 			$sql .= " AND l.id_desa = '".$desaid."'";
 		}
@@ -222,7 +222,7 @@ class Leuit_panen_model extends MY_Model
 	{
 		$sql = "SELECT l.*, SUM(l.jumlah_panen) AS TOTAL_ALL 
 			FROM leuit_produksi l 
-			WHERE l.id != 0";
+			WHERE 1";
 		if($desaid) {
 			$sql .= " AND l.id_desa = '".$desaid."'";
 		}
@@ -246,7 +246,7 @@ class Leuit_panen_model extends MY_Model
 	{
 		$sql = "SELECT l.*, SUM(l.jumlah_panen) AS TOTAL_ALL 
 			FROM leuit_produksi l 
-			WHERE l.id != 0";
+			WHERE 1";
 		if($desaid) {
 			$sql .= " AND l.id_desa = '".$desaid."'";
 		}
@@ -282,7 +282,7 @@ class Leuit_panen_model extends MY_Model
 			LEFT JOIN tutupan_lahan p ON l.sawah = p.id 
 			LEFT JOIN tweb_wil_clusterdesa t ON l.dusun = t.id 
 			LEFT JOIN config c ON l.id_desa = c.id 
-			WHERE l.id != 0";
+			WHERE 1";
 		if($desaid) {
 			$sql .= " AND l.id_desa = '".$desaid."'";
 		}
@@ -337,42 +337,67 @@ class Leuit_panen_model extends MY_Model
 		// 	->group_by('l.sawah')
 		// 	->order_by('l.id ASC')
 		// 	->get()->result_array();
+		
+		if($tampilsawah) {
+			$thisSelect = ' l.tanggal_produksi';
+		} else {
+			if(isset($_REQUEST['sawah'],$_REQUEST['year'])) {
+				$thisSelect = ' l.id';
+			} else if(isset($_REQUEST['dusun'],$_REQUEST['year'])) {
+				$thisSelect = ' l.sawah';
+			} else {
+				if($year) {
+					$sql .= $this->filterTahun($year);
+					$thisSelect = ' l.dusun';
+				} else if($sawah) {
+					$sql .= $this->filterSawah($sawah);
+					$thisSelect = ' l.tanggal_produksi';
+				} else if($dusun) {
+					$sql .= $this->filterDusun($dusun);
+					$thisSelect = ' p.pemilik';
+				} else if($desaid) {
+					$thisSelect = ' t.dusun';
+				} else {
+					$thisSelect = ' l.id_desa';
+				}
+			}
+		}
 
-		$sql = "SELECT l.*, p.pemilik AS pemilik, p.kelas AS kelas, p.luas AS luas, SUM(l.jumlah_panen) AS TOTAL, t.dusun AS dusun, c.nama_desa AS nama_desa, c.nama_kabupaten AS nama_kabupaten
+		$sql = "SELECT $thisSelect, SUM(l.jumlah_panen) AS TOTAL, t.dusun AS dusun, p.pemilik AS pemilik
 			FROM leuit_produksi l 
 			LEFT JOIN tutupan_lahan p ON l.sawah = p.id 
 			LEFT JOIN tweb_wil_clusterdesa t ON l.dusun = t.id 
 			LEFT JOIN config c ON l.id_desa = c.id 
-			WHERE l.id != 0";
+			WHERE 1";
 		if($desaid) {
 			$sql .= " AND l.id_desa = '".$desaid."'";
 		}
 		if($tampilsawah) {
-			$sql .= ' GROUP BY EXTRACT(year FROM l.tanggal_produksi)';
+			$sql .= ' GROUP BY EXTRACT(year FROM '.$thisSelect.')';
 			// $sql .= ' ORDER BY l.tanggal_produksi ASC';
 		} else {
 			if(isset($_REQUEST['sawah'],$_REQUEST['year'])) {
 				$sql .= $this->filterTahun($year);
 				$sql .= $this->filterSawah($sawah);
-				$sql .= ' GROUP BY l.id';
+				$sql .= ' GROUP BY '.$thisSelect;
 			} else if(isset($_REQUEST['dusun'],$_REQUEST['year'])) {
 				$sql .= $this->filterTahun($year);
 				$sql .= $this->filterDusun($dusun);
-				$sql .= ' GROUP BY l.sawah';
+				$sql .= ' GROUP BY '.$thisSelect;
 			} else {
 				if($year) {
 					$sql .= $this->filterTahun($year);
-					$sql .= ' GROUP BY l.dusun';
+					$sql .= ' GROUP BY '.$thisSelect;
 				} else if($sawah) {
 					$sql .= $this->filterSawah($sawah);
-					$sql .= ' GROUP BY EXTRACT(year FROM l.tanggal_produksi)';
+					$sql .= ' GROUP BY EXTRACT(year FROM '.$thisSelect.')';
 				} else if($dusun) {
 					$sql .= $this->filterDusun($dusun);
-					$sql .= ' GROUP BY l.id';
+					$sql .= ' GROUP BY '.$thisSelect;
 				} else if($desaid) {
-					$sql .= ' GROUP BY t.dusun';
+					$sql .= ' GROUP BY '.$thisSelect;
 				} else {
-					$sql .= ' GROUP BY l.id_desa';
+					$sql .= ' GROUP BY '.$thisSelect;
 				}
 			}
 		}
@@ -395,17 +420,14 @@ class Leuit_panen_model extends MY_Model
 	public function get_panen_tahun($desaid)
 	{
 
-		$sql = "SELECT l.*, p.pemilik AS pemilik, p.kelas AS kelas, p.luas AS luas, SUM(l.jumlah_panen) AS TOTAL, t.dusun AS dusun, c.nama_desa AS nama_desa, c.nama_kabupaten AS nama_kabupaten
-			FROM leuit_produksi l 
-			LEFT JOIN tutupan_lahan p ON l.sawah = p.id 
-			LEFT JOIN tweb_wil_clusterdesa t ON l.dusun = t.id 
-			LEFT JOIN config c ON l.id_desa = c.id 
-			WHERE l.id != 0";
+		$sql = "SELECT tanggal_produksi
+			FROM leuit_produksi 
+			WHERE 1";
 		if($desaid) {
-			$sql .= " AND l.id_desa = '".$desaid."'";
+			$sql .= " AND id_desa = '".$desaid."'";
 		}
-		$sql .= ' GROUP BY EXTRACT(year FROM l.tanggal_produksi)';
-		$sql .= ' ORDER BY l.tanggal_produksi ASC';
+		$sql .= ' GROUP BY EXTRACT(year FROM tanggal_produksi)';
+		$sql .= ' ORDER BY tanggal_produksi ASC';
 		$query = $this->db->query($sql);
 		$data = $query->result_array();
 

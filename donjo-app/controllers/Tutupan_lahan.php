@@ -18,7 +18,7 @@ class Tutupan_lahan extends Admin_Controller {
 		$this->controller = 'tutupan_lahan';
 		$this->modul_ini = 7;
 		$this->sub_modul_ini = 214;
-		$this->set_page = ['20', '50', '100'];
+		$this->set_page = ['20', '50', '100', '500', '1000'];
 		$this->header = $this->header_model->get_data();
 	}
 

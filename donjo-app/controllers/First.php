@@ -228,7 +228,7 @@ class First extends Web_Controller
 		}
 		$data['leuitLokasi'] = $this->leuit_lokasi_model->list_data_desaid($desaid);
 		$data["leuit_panen"] = $this->leuit_panen_model->list_data('', '', $data['filteryear'], $data['filtersawah'], $data['filterdusun'], $desaid);
-		$data["total_produksi"] = $this->leuit_panen_model->get_total_produksi($data['filteryear'], $data['filtersawah'], $data['filterdusun'], $desaid);
+		$data["total_produksi"] = $this->leuit_panen_model->get_total_produksi_row($data['filteryear'], $data['filtersawah'], $data['filterdusun'], $desaid);
 		$data["panen_group"] = $this->leuit_panen_model->get_total_by_dusun('', '', $data['filteryear'], $data['filtersawah'], $data['filterdusun'], $data['tampilsawah'], $desaid);
 		$this->load->view('gis/leuit_stat', $data);
 	}
@@ -242,7 +242,7 @@ class First extends Web_Controller
 		}
 		$data['listdesa'] = $this->config_model->get_data_all();
 		$data["leuit_panen"] = $this->leuit_panen_model->list_data('', '', '', '', '', $desaid);
-		$data["total_produksi"] = $this->leuit_panen_model->get_total_produksi('', '', '', '', '', $desaid);
+		$data["total_produksi"] = $this->leuit_panen_model->get_total_produksi_row('', '', '', '', '', $desaid);
 		$data["panen_group"] = $this->leuit_panen_model->get_total_by_dusun('', '', '', '', '', '', $desaid);
 		$this->load->view('gis/leuit_stat_all', $data);
 	}
@@ -256,7 +256,7 @@ class First extends Web_Controller
 		}
 		$data['listdesa'] = $this->config_model->get_data_all();
 		$data["leuit_panen"] = $this->leuit_panen_model->list_data('', '', '', '', '', $desaid);
-		$data["total_produksi"] = $this->leuit_panen_model->get_total_produksi('', '', '', '', '', $desaid);
+		$data["total_produksi"] = $this->leuit_panen_model->get_total_produksi_row('', '', '', '', '', $desaid);
 		$data["panen_group"] = $this->leuit_panen_model->get_total_by_dusun('', '', '', '', '', '', $desaid);
 		$this->load->view('gis/leuit_data_stok', $data);
 	}

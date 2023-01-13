@@ -8,7 +8,7 @@ var config = (function () {
     apiPersil: window.location.origin + '/api_custom/plan_persil',
     apiLahan: window.location.origin + '/api_custom/plan_tutupan_lahan',
     apiLahanJenis:
-      window.location.origin + '/api_custom/plan_tutupan_lahan_jenis_fe',
+      window.location.origin + '/api_custom/plan_tutupan_lahan_jenis',
     apiStat: window.location.origin + '/api_custom/statistik_penduduk',
     apiStatSub: window.location.origin + '/api_custom/statistik_sub',
     pathImageLokasi: window.location.origin + '/desa/upload/gis/lokasi/',

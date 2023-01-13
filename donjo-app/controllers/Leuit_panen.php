@@ -75,7 +75,7 @@ class Leuit_panen extends Admin_Controller {
 
 		$data['paging']  = $this->leuit_panen_model->paging($page);
 		$data["leuit_panen"] = $this->leuit_panen_model->list_data($data['paging']->offset, $data['paging']->per_page, $data['filteryear'], $data['filtersawah'], $data['filterdusun'], $filterDesa);
-		$data["total_produksi"] = $this->leuit_panen_model->get_total_produksi($data['filteryear'], $data['filtersawah'], $dusun, $filterDesa);
+		$data["total_produksi"] = $this->leuit_panen_model->get_total_produksi_row($data['filteryear'], $data['filtersawah'], $dusun, $filterDesa);
 		$data["panen_group"] = $this->leuit_panen_model->get_total_by_dusun($data['paging']->offset, $data['paging']->per_page, $data['filteryear'], $data['filtersawah'], $data['filterdusun'], $data['tampilsawah'], $filterDesa);
 		$data["panen_get_tahun"] = $this->leuit_panen_model->get_panen_tahun($filterDesa);
 
