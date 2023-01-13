@@ -108,6 +108,9 @@
 		$data = $this->bersihkan_data($this->input->post());
 		$wil = array(
 			'dusun' => $data['dusun'],
+			'rw' => '-',
+			'rt' => '-',
+			'dusun' => $data['dusun'],
 			'id_desa' => $filterDesa
 		);
 		$cek_data = $this->cek_data('tweb_wil_clusterdesa', $wil);

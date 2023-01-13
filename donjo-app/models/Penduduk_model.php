@@ -1055,7 +1055,8 @@
 	// TODO: Ubah yg masih menggunakan, spy menggunakan penanganan wilayah di wilayah_model.php
 	public function list_dusun()
 	{
-		$sql = "SELECT * FROM tweb_wil_clusterdesa WHERE rt = '0' AND rw = '0' ";
+		$filterDesa = $_SESSION['filterDesa'];
+		$sql = "SELECT * FROM tweb_wil_clusterdesa WHERE rt = '0' AND rw = '0' AND id_desa= $filterDesa ";
 		$query = $this->db->query($sql);
 		$data = $query->result_array();
 		return $data;
@@ -1073,9 +1074,11 @@
 	// TODO: Ubah yg masih menggunakan, spy menggunakan penanganan wilayah di wilayah_model.php
 	public function list_rw($dusun='')
 	{
+		$filterDesa = $_SESSION['filterDesa'];
 		$data = $this->db->
 			where('rt', '0')->
 			where('dusun', $dusun)->
+			where('id_desa', $filterDesa)->
 			where("rw <> '0'")->
 			get('tweb_wil_clusterdesa')->
 			result_array();
@@ -1094,7 +1097,8 @@
 	// TODO: Ubah yg masih menggunakan, spy menggunakan penanganan wilayah di wilayah_model.php
 	public function list_rt($dusun='', $rw='')
 	{
-		$sql = "SELECT * FROM tweb_wil_clusterdesa WHERE rw = ? AND dusun = ? AND rt <> '0'";
+		$filterDesa = $_SESSION['filterDesa'];
+		$sql = "SELECT * FROM tweb_wil_clusterdesa WHERE rw = ? AND dusun = ? AND rt <> '0' AND id_desa= $filterDesa";
 		$query = $this->db->query($sql,array($rw,$dusun));
 		$data = $query->result_array();
 		return $data;

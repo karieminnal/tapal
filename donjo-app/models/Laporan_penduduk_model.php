@@ -71,11 +71,13 @@ class Laporan_penduduk_model extends MY_Model
 	// TODO: Ubah yg masih menggunakan, spy menggunakan penanganan wilayah di wilayah_model.php
 	public function list_dusun()
 	{
+		$filterDesa = $_SESSION['filterDesa'];
 		$sql = $this->db
 			->select()
 			->from('tweb_wil_clusterdesa')
 			->where('rt', '0')
 			->where('rw', '0')
+			->where('id_desa', $filterDesa)
 			->get();
 
 		return $sql->result_array();
@@ -84,12 +86,14 @@ class Laporan_penduduk_model extends MY_Model
 	// TODO: Ubah yg masih menggunakan, spy menggunakan penanganan wilayah di wilayah_model.php
 	public function list_rw($dusun = '')
 	{
+		$filterDesa = $_SESSION['filterDesa'];
 		$sql = $this->db
 			->select()
 			->from('tweb_wil_clusterdesa')
 			->where('rt', '0')
 			->where('dusun', $dusun)
 			->where('rw <>', '0')
+			->where('id_desa', $filterDesa)
 			->get();
 
 		return $sql->result_array();
@@ -98,12 +102,14 @@ class Laporan_penduduk_model extends MY_Model
 	// TODO: Ubah yg masih menggunakan, spy menggunakan penanganan wilayah di wilayah_model.php
 	public function list_rt($dusun = '', $rw = '')
 	{
+		$filterDesa = $_SESSION['filterDesa'];
 		$sql = $this->db
 			->select()
 			->from('tweb_wil_clusterdesa')
 			->where('dusun', $dusun)
 			->where('rw', $rw)
 			->where('rt <>', '0')
+			->where('id_desa', $filterDesa)
 			->get();
 
 		return $sql->result_array();
@@ -189,22 +195,22 @@ class Laporan_penduduk_model extends MY_Model
 		$statistik = [
 			"statistik/13" => "Umur (Rentang)",
 			"statistik/15" => "Umur (Kategori)",
-			"statistik/0" => "Pendidikan Dalam KK",
-			"statistik/14" => "Pendidikan Sedang Ditempuh",
+			// "statistik/0" => "Pendidikan Dalam KK",
+			// "statistik/14" => "Pendidikan Sedang Ditempuh",
 			"statistik/1" => "Pekerjaan",
 			"statistik/2" => "Status Perkawinan",
 			"statistik/3" => "Agama",
 			"statistik/4" => "Jenis Kelamin",
 			"statistik/5" => "Warga Negara",
 			"statistik/6" => "Status Penduduk",
-			"statistik/7" => "Golongan Darah",
-			"statistik/9" => "Penyandang Cacat",
-			"statistik/10" => "Penyakit Menahun",
-			"statistik/16" => "Akseptor KB",
-			"statistik/17" => "Akte Kelahiran",
-			"statistik/18" => "Kepemilikan KTP",
-			"statistik/19" => "Jenis Asuransi",
-			"statistik/covid" => "Status Covid",
+			// "statistik/7" => "Golongan Darah",
+			// "statistik/9" => "Penyandang Cacat",
+			// "statistik/10" => "Penyakit Menahun",
+			// "statistik/16" => "Akseptor KB",
+			// "statistik/17" => "Akte Kelahiran",
+			// "statistik/18" => "Kepemilikan KTP",
+			// "statistik/19" => "Jenis Asuransi",
+			// "statistik/covid" => "Status Covid",
 			"statistik/bantuan_penduduk" => "Penerima Bantuan (Penduduk)"
 		];
 

@@ -81,7 +81,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		</ul>
 	</div>
 </div>
-<div id="bantuan" class="box box-info <?= ($kategori == 'bantuan') ?: 'collapsed-box'; ?>">
+<div id="bantuan" class="box box-info <?= ($kategori == 'bantuan') ?: 'collapsed-box'; ?> hide">
 	<div class="box-header with-border">
 		<h3 class="box-title">Statistik Program Bantuan</h3>
 		<div class="box-tools">
