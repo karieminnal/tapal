@@ -242,7 +242,7 @@
 						<?php if($_SESSION['grup'] == 1) { ?>
 							<iframe src="/first/loadLeuitAllData?tab=output" class="iframe-view" frameborder="0" onload="successLoadIframe()"></iframe>
 						<?php } else { ?>
-							<iframe src="/first/loadLeuitAllData?tab=input&desa=<?php echo $_SESSION['filterDesa']?>" class="iframe-view" frameborder="0" onload="successLoadIframe()"></iframe>
+							<iframe src="/first/loadLeuitAllData?tab=output&desa=<?php echo $_SESSION['filterDesa']?>" class="iframe-view" frameborder="0" onload="successLoadIframe()"></iframe>
 						<?php } ?>
 					</div>
 				</div>
@@ -258,7 +258,7 @@
 						<?php if($_SESSION['grup'] == 1) { ?>
 							<iframe src="/first/loadLeuitAllData?tab=analisa" class="iframe-view" frameborder="0" onload="successLoadIframe()"></iframe>
 						<?php } else { ?>
-							<iframe src="/first/loadLeuitAllData?tab=input&desa=<?php echo $_SESSION['filterDesa']?>" class="iframe-view" frameborder="0" onload="successLoadIframe()"></iframe>
+							<iframe src="/first/loadLeuitAllData?tab=analisa&desa=<?php echo $_SESSION['filterDesa']?>" class="iframe-view" frameborder="0" onload="successLoadIframe()"></iframe>
 						<?php } ?>
 					</div>
 				</div>
