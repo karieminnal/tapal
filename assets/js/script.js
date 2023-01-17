@@ -278,9 +278,12 @@ $(function () {
 
   var getIframe = $('.iframe-view');
   if (getIframe.length) {
-    getIframe.iframeAutoHeight({
-      minHeight: 240, // Sets the iframe height to this value if the calculated value is less
-      heightOffset: 50, // Optionally add some buffer to the bottom
+    $(getIframe).each(function () {
+      var thisClass = $(this);
+      thisClass.iframeAutoHeight({
+        minHeight: 240, // Sets the iframe height to this value if the calculated value is less
+        heightOffset: 50, // Optionally add some buffer to the bottom
+      });
     });
   }
 });
@@ -293,7 +296,9 @@ function successLoadIframe() {
     return;
   }
   $('.loading-iframe').hide();
-  $('.iframe-view').addClass('visible');
+  $('.iframe-view').each(function () {
+    $(this).addClass('visible');
+  });
   isLoaded = true;
 }
 
@@ -302,7 +307,10 @@ setTimeout(function () {
     return;
   }
   $('.loading-iframe').hide();
-  $('.iframe-view').removeClass('visible');
+  //   $('.iframe-view').removeClass('visible');
+  $('.iframe-view').each(function () {
+    $(this).removeClass('visible');
+  });
   $('.error-iframe').addClass('visible');
   isTimeout = true;
 }, 5000);

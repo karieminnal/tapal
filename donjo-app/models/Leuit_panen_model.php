@@ -235,7 +235,7 @@ class Leuit_panen_model extends MY_Model
 		if($dusun) {
 			$sql .= $this->filterDusun($dusun);
 		}
-		$sql .= ' GROUP BY l.id';
+		// $sql .= ' GROUP BY l.id';
 		$query = $this->db->query($sql);
 		$data = $query->result_array();
 
@@ -259,7 +259,7 @@ class Leuit_panen_model extends MY_Model
 		if($dusun) {
 			$sql .= $this->filterDusun($dusun);
 		}
-		$sql .= ' GROUP BY l.id';
+		// $sql .= ' GROUP BY l.id';
 		$query = $this->db->query($sql);
 		$data = $query->row_array();
 
@@ -363,7 +363,7 @@ class Leuit_panen_model extends MY_Model
 			}
 		}
 
-		$sql = "SELECT $thisSelect, SUM(l.jumlah_panen) AS TOTAL, t.dusun AS dusun, p.pemilik AS pemilik
+		$sql = "SELECT $thisSelect, SUM(l.jumlah_panen) AS TOTAL, t.dusun AS dusun, p.pemilik AS pemilik, c.nama_desa AS nama_desa 
 			FROM leuit_produksi l 
 			LEFT JOIN tutupan_lahan p ON l.sawah = p.id 
 			LEFT JOIN tweb_wil_clusterdesa t ON l.dusun = t.id 

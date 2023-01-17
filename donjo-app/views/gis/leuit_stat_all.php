@@ -1,3 +1,4 @@
+<?php if(!isset($_REQUEST['fe'])) { ?>
 <?php $this->load->view($folder_themes . '/layouts/header_iframe.php'); ?>
 
 <body <?php if (isset($_REQUEST['app'])) { ?> class="from-app" <?php } ?>>
@@ -11,115 +12,205 @@
 		overflow-x: hidden;
 	}
 </style>
-
+<?php } ?>
 <main class="my-3 mx-3" role="main">
 	<section class="">
 	<?php if($_SESSION['grup'] == 1) { ?>
-		<div class='form-group'>
-			<select class="form-control input-sm select2" name="filterDesa" data-param="desa" id="filterDesa">
-				<option value="">Filter Desa</option>
-				<?php foreach ($listdesa as $data) : 
-					$kab = $data['nama_kabupaten'];
-					$newKab = str_replace("KABUPATEN","KAB. ",$kab);
-					?>
-					<option value="<?= $data['id'] ?>"><?= $data['nama_desa'] ?> - <?= $newKab ?></option>
-				<?php endforeach; ?>
-			</select>
-		</div>
+		<?php if(!isset($_REQUEST['fe'])) { ?>
+			<div class='form-group'>
+				<select class="form-control input-sm select2" name="filterDesa" data-param="desa" id="filterDesa">
+					<option value="">Filter Desa</option>
+					<?php foreach ($listdesa as $data) : 
+						$kab = $data['nama_kabupaten'];
+						$newKab = str_replace("KABUPATEN","KAB. ",$kab);
+						?>
+						<option value="<?= $data['id'] ?>"><?= $data['nama_desa'] ?> - <?= $newKab ?></option>
+					<?php endforeach; ?>
+				</select>
+			</div>
+		<?php } ?>
 	<?php } ?>
 
 	<?php if($leuit_panen) { ?>
+		<?php if (isset($_REQUEST['tab'])) { 
+			$tab = $_REQUEST['tab'];
+			?>
+			<?php if ($tab == 'input') { ?>
+				<h6 class="box-title text-center mt-3">
+					<b>Data Input Gabah 
+					<?php if (isset($_REQUEST['desa'])) {
+						echo 'DESA '. $leuit_panen[0]['nama_desa'] . ' ';
+					} ?>
+					</b>
+				</h6>
 
-		<div class="row">
-			<div class="col-md-12">
-				<div class="d-flex justify-content-between my-3 mx-5">
-					<div class="tabs active" id="tab01">
-						<h4 class="font-weight-bold">Input</h4>
-					</div>
-					<div class="tabs" id="tab02">
-						<h4 class="text-muted">Output</h4>
-					</div>
-					<div class="tabs" id="tab03">
-						<h4 class="text-muted">Analisa</h4>
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="text-center">
+							<span class="btn btn-default ">
+								Total Input : <strong><?= ton($total_produksi['TOTAL_ALL']) ?></strong>
+							</span>
+						</div>
 					</div>
 				</div>
-			</div>
-		</div>
 
-		<div id="tab011" class="tab-content show">
-			<h6 class="box-title text-center mt-3">
-				<b>Data Input Gabah 
-				<?php if (isset($_REQUEST['desa'])) {
-					echo 'DESA '. $leuit_panen[0]['nama_desa'] . ' ';
-				} ?>
-				</b>
-			</h6>
+				<div class="row" style="margin-top: 30px;">
+					<div class="col-md-12">
+						<div class="text-center">
+							<a class="btn btn-sm" title="Pie Data" onclick="pieTypeInput();"><i class="fa fa-pie-chart"></i> Pie Data&nbsp;&nbsp;</a>
+							<a class="btn btn-sm" title="Grafik Data" onclick="grafikTypeInput();"><i class="fa fa-bar-chart"></i> Grafik Data&nbsp;&nbsp;</a>
+						</div>
+						<div id="chartInput"> </div>
+					</div>
+				</div>
+			<?php } else if($tab == 'output') { ?>
+				<h6 class="box-title text-center mt-3">
+					<b>Data Output Gabah 
+					<?php if (isset($_REQUEST['desa'])) {
+						echo 'DESA '. $leuit_panen[0]['nama_desa'] . ' ';
+					} ?>
+					</b>
+				</h6>
 
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="text-center">
+							<span class="btn btn-default ">
+								Total Output : <strong><?= ton($total_distribusi['TOTAL_ALL']) ?></strong>
+							</span>
+						</div>
+					</div>
+				</div>
+				
+				<div class="row" style="margin-top: 30px;">
+					<div class="col-md-12">
+						<div class="text-center">
+							<a class="btn btn-sm" title="Pie Data" onclick="pieTypeOutput();"><i class="fa fa-pie-chart"></i> Pie Data&nbsp;&nbsp;</a>
+							<a class="btn btn-sm" title="Grafik Data" onclick="grafikTypeOutput();"><i class="fa fa-bar-chart"></i> Grafik Data&nbsp;&nbsp;</a>
+						</div>
+						<div id="chartOutput"> </div>
+					</div>
+				</div>
+			<?php } else { ?>
+				<h6 class="box-title text-center mt-3">
+					<b>Analisa Gabah 
+					<?php if (isset($_REQUEST['desa'])) {
+						echo 'DESA '. $leuit_panen[0]['nama_desa'] . ' ';
+					} ?>
+					</b>
+				</h6>
+
+				<div class="row" style="margin-top: 30px;">
+					<div class="col-md-12">
+						<div id="chartAnalisa"> </div>
+					</div>
+				</div>
+			<?php } ?>
+		<?php } else { ?>
 			<div class="row">
-				<div class="col-sm-12">
-					<div class="text-center">
-						<span class="btn btn-default ">
-							Total Input : <strong><?= ton($total_produksi['TOTAL_ALL']) ?></strong>
-						</span>
-					</div>
-				</div>
-			</div>
-
-			<div class="row" style="margin-top: 30px;">
 				<div class="col-md-12">
-					<div class="text-center">
-						<a class="btn btn-sm" title="Pie Data" onclick="pieTypeInput();"><i class="fa fa-pie-chart"></i> Pie Data&nbsp;&nbsp;</a>
-						<a class="btn btn-sm" title="Grafik Data" onclick="grafikTypeInput();"><i class="fa fa-bar-chart"></i> Grafik Data&nbsp;&nbsp;</a>
-					</div>
-					<div id="chartInput"> </div>
-				</div>
-			</div>
-		</div>
-
-		<div id="tab021" class="tab-content">
-			<h6 class="box-title text-center mt-3">
-				<b>Data Output Gabah 
-				<?php if (isset($_REQUEST['desa'])) {
-					echo 'DESA '. $leuit_panen[0]['nama_desa'] . ' ';
-				} ?>
-				</b>
-			</h6>
-
-			<div class="row">
-				<div class="col-sm-12">
-					<div class="text-center">
-						<span class="btn btn-default ">
-							Total Output : <strong>0.25 Ton</strong>
-						</span>
+					<div class="d-flex justify-content-between my-3 mx-5">
+						<?php if(!isset($_REQUEST['fe'])) { ?>
+							<div class="tabs active" id="tab01">
+								<h4 class="font-weight-bold">Input</h4>
+							</div>
+							<div class="tabs" id="tab02">
+								<h4 class="text-muted">Output</h4>
+							</div>
+							<div class="tabs" id="tab03">
+								<h4 class="text-muted">Analisa</h4>
+							</div>
+						<?php } else { ?>
+							<div class="tabs active" id="tab01">
+								<h6 class="font-weight-bold">Input</h6>
+							</div>
+							<div class="tabs" id="tab02">
+								<h6 class="text-muted">Output</h6>
+							</div>
+							<div class="tabs" id="tab03">
+								<h6 class="text-muted">Analisa</h6>
+							</div>
+						<?php } ?>
 					</div>
 				</div>
 			</div>
-			
-			<div class="row" style="margin-top: 30px;">
-				<div class="col-md-12">
-					<div class="text-center">
-						<a class="btn btn-sm" title="Pie Data" onclick="pieTypeOutput();"><i class="fa fa-pie-chart"></i> Pie Data&nbsp;&nbsp;</a>
-						<a class="btn btn-sm" title="Grafik Data" onclick="grafikTypeOutput();"><i class="fa fa-bar-chart"></i> Grafik Data&nbsp;&nbsp;</a>
-					</div>
-					<div id="chartOutput"> </div>
-				</div>
-			</div>
-		</div>
-		<div id="tab031" class="tab-content">
-			<h6 class="box-title text-center mt-3">
-				<b>Analisa Gabah 
-				<?php if (isset($_REQUEST['desa'])) {
-					echo 'DESA '. $leuit_panen[0]['nama_desa'] . ' ';
-				} ?>
-				</b>
-			</h6>
 
-			<div class="row" style="margin-top: 30px;">
-				<div class="col-md-12">
-					<div id="chartAnalisa"> </div>
+			<div id="tab011" class="tab-content show">
+				<h6 class="box-title text-center mt-3">
+					<b>Data Input Gabah 
+					<?php if (isset($_REQUEST['desa'])) {
+						echo 'DESA '. $leuit_panen[0]['nama_desa'] . ' ';
+					} ?>
+					</b>
+				</h6>
+
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="text-center">
+							<span class="btn btn-default ">
+								Total Input : <strong><?= ton($total_produksi['TOTAL_ALL']) ?></strong>
+							</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="row" style="margin-top: 30px;">
+					<div class="col-md-12">
+						<div class="text-center">
+							<a class="btn btn-sm" title="Pie Data" onclick="pieTypeInput();"><i class="fa fa-pie-chart"></i> Pie Data&nbsp;&nbsp;</a>
+							<a class="btn btn-sm" title="Grafik Data" onclick="grafikTypeInput();"><i class="fa fa-bar-chart"></i> Grafik Data&nbsp;&nbsp;</a>
+						</div>
+						<div id="chartInput"> </div>
+					</div>
 				</div>
 			</div>
-		</div>
+
+			<div id="tab021" class="tab-content">
+				<h6 class="box-title text-center mt-3">
+					<b>Data Output Gabah 
+					<?php if (isset($_REQUEST['desa'])) {
+						echo 'DESA '. $leuit_panen[0]['nama_desa'] . ' ';
+					} ?>
+					</b>
+				</h6>
+
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="text-center">
+							<span class="btn btn-default ">
+								Total Output : <strong><?= ton($total_distribusi['TOTAL_ALL']) ?></strong>
+							</span>
+						</div>
+					</div>
+				</div>
+				
+				<div class="row" style="margin-top: 30px;">
+					<div class="col-md-12">
+						<div class="text-center">
+							<a class="btn btn-sm" title="Pie Data" onclick="pieTypeOutput();"><i class="fa fa-pie-chart"></i> Pie Data&nbsp;&nbsp;</a>
+							<a class="btn btn-sm" title="Grafik Data" onclick="grafikTypeOutput();"><i class="fa fa-bar-chart"></i> Grafik Data&nbsp;&nbsp;</a>
+						</div>
+						<div id="chartOutput"> </div>
+					</div>
+				</div>
+			</div>
+
+			<div id="tab031" class="tab-content">
+				<h6 class="box-title text-center mt-3">
+					<b>Analisa Gabah 
+					<?php if (isset($_REQUEST['desa'])) {
+						echo 'DESA '. $leuit_panen[0]['nama_desa'] . ' ';
+					} ?>
+					</b>
+				</h6>
+
+				<div class="row" style="margin-top: 30px;">
+					<div class="col-md-12">
+						<div id="chartAnalisa"> </div>
+					</div>
+				</div>
+			</div>
+		<?php } ?>
 
 	<?php } else { ?>
 		<p class="my-5 text-center">Belum ada data</p>
@@ -127,13 +218,12 @@
 
 	</section>
 </main>
-
+<?php if(!isset($_REQUEST['fe'])) { ?>
 <?php $this->load->view($folder_themes . '/layouts/script_iframe.php'); ?>
-
+<?php } ?>
 <script>
 	$(document).ready(function () {
 		<?php if($leuit_panen) { ?>
-			pieTypeInput();
 
 			$('.tabs').click(function () {
 				$('.tabs').removeClass('active');
@@ -168,47 +258,63 @@
 			});
 
 			var chart;
-			pieTypeOutput();
-			grafikTypeAnalisa();
+			<?php if (isset($_REQUEST['tab'])) { 
+			$tab = $_REQUEST['tab'];
+			?>
+				<?php if ($tab == 'input') { ?>
+					pieTypeInput();
+				<?php } else if($tab == 'output') { ?>
+					pieTypeOutput();
+				<?php } else if($tab == 'analisa') { ?>
+					grafikTypeAnalisa();
+				<?php } ?>
+			<?php } else { ?>
+				pieTypeInput();
+				pieTypeOutput();
+				grafikTypeAnalisa();
+			<?php } ?>
 		<?php } ?>
-		var termDesa = GetURLParameter('desa');
-		if (typeof termDesa !== "undefined") {
-			$('#filterDesa').val(termDesa);
-		}
-		var $desaSelect = $(".select2").select2();
-		$desaSelect.on('change', function (e) {
-			var val = $(this).val();
-			var thisParam = $(this).attr('data-param');
-			var pag = window.location.pathname;
-			if(val == 0) {
-				window.location.href = pag;
-			} else {
-				var url = window.location.search;
-					url = url.replace("?", "").split("&");
 
-				var n = 0;
-				for (var count = 0; count < url.length; count++) {
-					if (!url[count].indexOf(thisParam)) {
-						n = count;
-						break;
-					}
-				}
-
-				if (n !=0) {
-					url.splice(n,1);
-				}
-
-				var len = url.length;
-				var newUrl = url.join("&");
-
-				if (len > 0) {
-					newUrl = pag + "?" + newUrl + "&"+thisParam+"=" + val;
-				} else {
-					newUrl = pag + newUrl + "?"+thisParam+"=" + val;
-				}
-				window.location.href = newUrl;
+		<?php if(!isset($_REQUEST['fe'])) { ?>
+			var termDesa = GetURLParameter('desa');
+			if (typeof termDesa !== "undefined") {
+				$('#filterDesa').val(termDesa);
 			}
-		});
+			var $desaSelect = $(".select2").select2();
+			$desaSelect.on('change', function (e) {
+				var val = $(this).val();
+				var thisParam = $(this).attr('data-param');
+				var pag = window.location.pathname;
+				if(val == 0) {
+					window.location.href = pag;
+				} else {
+					var url = window.location.search;
+						url = url.replace("?", "").split("&");
+
+					var n = 0;
+					for (var count = 0; count < url.length; count++) {
+						if (!url[count].indexOf(thisParam)) {
+							n = count;
+							break;
+						}
+					}
+
+					if (n !=0) {
+						url.splice(n,1);
+					}
+
+					var len = url.length;
+					var newUrl = url.join("&");
+
+					if (len > 0) {
+						newUrl = pag + "?" + newUrl + "&"+thisParam+"=" + val;
+					} else {
+						newUrl = pag + newUrl + "?"+thisParam+"=" + val;
+					}
+					window.location.href = newUrl;
+				}
+			});
+		<?php } ?>
 	});
 
 	function GetURLParameter(sParam){
@@ -235,6 +341,9 @@
 					}
 				},
 				title:0,
+				tooltip: {
+					pointFormat: '{series.name}: <b>{point.y:.2f} ton</b>'
+				},
 				plotOptions: {
 					pie: {
 						allowPointSelect: true,
@@ -242,12 +351,16 @@
 						showInLegend: true,
 						innerSize: 100,
 						depth: 45,
-						colors: ['#42b649', '#b6d434', '#fbde08', '#f15f23', '#ed1e28']
+						colors: ['#42b649', '#b6d434', '#fbde08', '#f15f23', '#ed1e28'],
+						dataLabels: {
+							enabled: true,
+							format: '<b>{point.name}</b>: {point.y:.2f} ton'
+						}
 					}
 				},
 				series: [{
 					type: 'pie',
-					name: 'Jumlah Input',
+					name: 'Jumlah',
 					shadow:1,
 					border:1,
 					data: [
@@ -359,7 +472,7 @@
 			},
 			yAxis: {
 				title: {
-					text: 'Jumlah Input (Ton)'
+					text: 'Jumlah (Ton)'
 				}
 			},
 			legend: {
@@ -368,7 +481,11 @@
 			},
 			plotOptions: {
 				series: {
-					colorByPoint: true
+					colorByPoint: true,
+					dataLabels: {
+						enabled: true,
+						format: '{point.y:.2f} ton'
+					}
 				},
 				column: {
 					pointPadding: 0,
@@ -430,6 +547,9 @@
 					plotShadow: false
 				},
 				title:0,
+				tooltip: {
+					pointFormat: '{series.name}: <b>{point.y:.2f} ton</b>'
+				},
 				plotOptions: {
 					pie: {
 						allowPointSelect: true,
@@ -437,18 +557,27 @@
 						showInLegend: true,
 						innerSize: 100,
 						depth: 45,
-						colors: ['#42b649', '#b6d434', '#fbde08', '#f15f23', '#ed1e28']
+						colors: ['#42b649', '#b6d434', '#fbde08', '#f15f23', '#ed1e28'],
+						dataLabels: {
+							enabled: true,
+							format: '<b>{point.name}</b>: {point.y:.2f} ton'
+						}
 					}
 				},
 				series: [{
 					type: 'pie',
-					name: 'Jumlah Input',
+					name: 'Jumlah Distribusi',
 					shadow:1,
 					border:1,
 					data: [
-						['Produksi',0.05],
-						['Distribusi/Logistik',0.05],
-						['Komersil',0.1],
+						<?php
+							$arr2 = array();
+							foreach ($distribusi_group as $pg) {
+								$arr2[] = '["'.$pg['jenis'].'",'.ton2($pg['TOTAL']).']';
+							}
+							$arr2data = implode(",", $arr2);
+							echo $arr2data; 
+						?>
 					]
 				}]
 			});
@@ -471,7 +600,16 @@
 					title: {
 						text: ''
 					},
-					categories: ['Produksi','Distribusi/<br>Logistik','Komersil']
+					categories: [
+							<?php
+								$arr1 = array();
+								foreach ($distribusi_group as $pg) {
+									$arr1[] = '" '.$pg['jenis'].'"';
+								}
+								$arr1data = implode(",", $arr1);
+								echo $arr1data; 
+							?>
+						]
 			},
 			yAxis: {
 				title: {
@@ -484,7 +622,11 @@
 			},
 			plotOptions: {
 				series: {
-					colorByPoint: true
+					colorByPoint: true,
+					dataLabels: {
+						enabled: true,
+						format: '{point.y:.2f} ton'
+					}
 				},
 				column: {
 					pointPadding: 0,
@@ -496,9 +638,14 @@
 				shadow:1,
 				border:1,
 				data: [
-					['Produksi',0.05],
-					['Distribusi/Logistik',0.05],
-					['Komersil',0.1],
+					<?php
+						$arr2 = array();
+						foreach ($distribusi_group as $pg) {
+							$arr2[] = '["'.$pg['jenis'].'",'.ton2($pg['TOTAL']).']';
+						}
+						$arr2data = implode(",", $arr2);
+						echo $arr2data; 
+					?>
 				]
 				}]
 			});

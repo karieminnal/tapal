@@ -52,7 +52,7 @@ class Hom_sid extends Admin_Controller {
 
 		$data["total_input"] = $this->leuit_panen_model->get_total_produksi_row('', '', '', $filterDesa);
 		$data["total_distribusi"] = $this->leuit_distribusi_model->get_total_distribusi_row('', $filterDesa);
-		$data["panen_get_tahun"] = $this->leuit_panen_model->get_panen_tahun($filterDesa);
+		$data["panen_get_tahun"] = $this->leuit_panen_model->get_panen_tahun('');
 		
 		$header = $this->header_model->get_data();
 

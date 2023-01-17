@@ -218,15 +218,47 @@
 			<div class='col-lg-6 col-md-12'>
 				<div class='box box-info'>
 					<div class="box-header with-border">
-						<h3 class="box-title">Statistik Leuit</h3>
+						<h3 class="box-title">Input Leuit</h3>
 					</div>
 					<div class='box-body text-center'>
 						<img class="loading-iframe" src="<?= base_url() ?>assets/images/loader.gif"></img>
 						<div class="error-iframe">Timeout. Coba reload kembali</div>
 						<?php if($_SESSION['grup'] == 1) { ?>
-							<iframe src="/first/loadLeuitAllData" class="iframe-view" frameborder="0" onload="successLoadIframe()"></iframe>
+							<iframe src="/first/loadLeuitAllData?tab=input" class="iframe-view" frameborder="0" onload="successLoadIframe()"></iframe>
 						<?php } else { ?>
-							<iframe src="/first/loadLeuitAllData?desa=<?php echo $_SESSION['filterDesa']?>" class="iframe-view" frameborder="0" onload="successLoadIframe()"></iframe>
+							<iframe src="/first/loadLeuitAllData?tab=input&desa=<?php echo $_SESSION['filterDesa']?>" class="iframe-view" frameborder="0" onload="successLoadIframe()"></iframe>
+						<?php } ?>
+					</div>
+				</div>
+			</div>
+			<div class='col-lg-6 col-md-12'>
+				<div class='box box-info'>
+					<div class="box-header with-border">
+						<h3 class="box-title">Distribusi Leuit</h3>
+					</div>
+					<div class='box-body text-center'>
+						<img class="loading-iframe" src="<?= base_url() ?>assets/images/loader.gif"></img>
+						<div class="error-iframe">Timeout. Coba reload kembali</div>
+						<?php if($_SESSION['grup'] == 1) { ?>
+							<iframe src="/first/loadLeuitAllData?tab=output" class="iframe-view" frameborder="0" onload="successLoadIframe()"></iframe>
+						<?php } else { ?>
+							<iframe src="/first/loadLeuitAllData?tab=input&desa=<?php echo $_SESSION['filterDesa']?>" class="iframe-view" frameborder="0" onload="successLoadIframe()"></iframe>
+						<?php } ?>
+					</div>
+				</div>
+			</div>
+			<div class='col-lg-12 col-md-12'>
+				<div class='box box-info'>
+					<div class="box-header with-border">
+						<h3 class="box-title">Analisa Leuit</h3>
+					</div>
+					<div class='box-body text-center'>
+						<img class="loading-iframe" src="<?= base_url() ?>assets/images/loader.gif"></img>
+						<div class="error-iframe">Timeout. Coba reload kembali</div>
+						<?php if($_SESSION['grup'] == 1) { ?>
+							<iframe src="/first/loadLeuitAllData?tab=analisa" class="iframe-view" frameborder="0" onload="successLoadIframe()"></iframe>
+						<?php } else { ?>
+							<iframe src="/first/loadLeuitAllData?tab=input&desa=<?php echo $_SESSION['filterDesa']?>" class="iframe-view" frameborder="0" onload="successLoadIframe()"></iframe>
 						<?php } ?>
 					</div>
 				</div>

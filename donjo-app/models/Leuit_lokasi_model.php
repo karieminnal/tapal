@@ -197,7 +197,7 @@ class Leuit_lokasi_model extends MY_Model
 		, c.rt AS rt, c.rw AS rw, c.dusun AS dusun, c.path AS path
 		FROM leuit_lokasi l
 		LEFT JOIN tweb_wil_clusterdesa c ON l.id_cluster = c.id
-		WHERE 1 AND c.id_desa = '".$desaid."'";
+		WHERE 1 AND l.id_desa = '".$desaid."'";
 
 		$query = $this->db->query($sql);
 		$data = $query->result_array();

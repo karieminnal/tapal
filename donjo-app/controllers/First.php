@@ -62,6 +62,7 @@ class First extends Web_Controller
 		$this->load->model('keuangan_grafik_manual_model');
 		$this->load->model('leuit_lokasi_model');
 		$this->load->model('leuit_panen_model');
+		$this->load->model('leuit_distribusi_model');
 		$this->load->model('tutupan_lahan_model');
 		$this->load->model('tutupan_lahan_jenis_model');
 		$this->load->model('plan_lokasi_model');
@@ -230,6 +231,9 @@ class First extends Web_Controller
 		$data["leuit_panen"] = $this->leuit_panen_model->list_data('', '', $data['filteryear'], $data['filtersawah'], $data['filterdusun'], $desaid);
 		$data["total_produksi"] = $this->leuit_panen_model->get_total_produksi_row($data['filteryear'], $data['filtersawah'], $data['filterdusun'], $desaid);
 		$data["panen_group"] = $this->leuit_panen_model->get_total_by_dusun('', '', $data['filteryear'], $data['filtersawah'], $data['filterdusun'], $data['tampilsawah'], $desaid);
+		$data["leuit_distribusi"] = $this->leuit_distribusi_model->list_data('', '', '', '', '', $desaid);
+		$data["total_distribusi"] = $this->leuit_distribusi_model->get_total_distribusi_row('', $desaid);
+		$data["distribusi_group"] = $this->leuit_distribusi_model->get_total_distribusi_byjenis('', '', $desaid); 
 		$this->load->view('gis/leuit_stat', $data);
 	}
 
@@ -242,8 +246,11 @@ class First extends Web_Controller
 		}
 		$data['listdesa'] = $this->config_model->get_data_all();
 		$data["leuit_panen"] = $this->leuit_panen_model->list_data('', '', '', '', '', $desaid);
-		$data["total_produksi"] = $this->leuit_panen_model->get_total_produksi_row('', '', '', '', '', $desaid);
-		$data["panen_group"] = $this->leuit_panen_model->get_total_by_dusun('', '', '', '', '', '', $desaid);
+		$data["total_produksi"] = $this->leuit_panen_model->get_total_produksi_row('', '', '', $desaid);
+		$data["panen_group"] = $this->leuit_panen_model->get_total_by_dusun('', '', '', '', '', '', $desaid); 
+		$data["leuit_distribusi"] = $this->leuit_distribusi_model->list_data('', '', '', '', '', $desaid);
+		$data["total_distribusi"] = $this->leuit_distribusi_model->get_total_distribusi_row('', $desaid);
+		$data["distribusi_group"] = $this->leuit_distribusi_model->get_total_distribusi_byjenis('', '', $desaid); 
 		$this->load->view('gis/leuit_stat_all', $data);
 	}
 

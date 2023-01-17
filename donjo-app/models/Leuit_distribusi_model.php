@@ -118,7 +118,7 @@ class Leuit_distribusi_model extends MY_Model
 		if($year) {
 			$sql .= $this->filterTahun($year);
 		}
-		$sql .= ' GROUP BY l.id';
+		// $sql .= ' GROUP BY l.id';
 
 		$query = $this->db->query($sql);
 		$data = $query->result_array();
@@ -130,14 +130,14 @@ class Leuit_distribusi_model extends MY_Model
 	{
 		$sql = "SELECT l.*, SUM(l.jumlah_distribusi) AS TOTAL_ALL 
 			FROM leuit_distribusi l 
-			WHERE l.id != 0";
+			WHERE 1";
 		if($desaid) {
 			$sql .= " AND l.id_desa = '".$desaid."'";
 		}
 		if($year) {
 			$sql .= $this->filterTahun($year);
 		}
-		$sql .= ' GROUP BY l.id';
+		// $sql .= ' GROUP BY l.id';
 
 		$query = $this->db->query($sql);
 		$data = $query->row_array();
