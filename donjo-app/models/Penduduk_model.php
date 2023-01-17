@@ -1056,7 +1056,10 @@
 	public function list_dusun()
 	{
 		$filterDesa = $_SESSION['filterDesa'];
-		$sql = "SELECT * FROM tweb_wil_clusterdesa WHERE rt = '0' AND rw = '0' AND id_desa= $filterDesa ";
+		$sql = "SELECT * FROM tweb_wil_clusterdesa WHERE rt = '0' AND rw = '0'";
+		if($filterDesa) {
+			$sql .= " AND id_desa= $filterDesa";
+		}
 		$query = $this->db->query($sql);
 		$data = $query->result_array();
 		return $data;

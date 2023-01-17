@@ -8,7 +8,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		<div id="isi_popup_rw_<?= $key_rw ?>" style="visibility: hidden;">
 			<div id="content">
 				<h5 id="firstHeading" class="firstHeading">
-					RW <?= set_ucwords($rw['rw']) . " " . ucwords($this->setting->sebutan_dusun) . " <span class='nama-dusun'>" . set_ucwords($rw['dusun']) . "</span>"; ?>
+					RW <?= set_ucwords($rw['rw']) . " <span class='wrap-dusun'>" . ucwords($this->setting->sebutan_dusun) . " <span class='nama-dusun'>" . set_ucwords($rw['dusun']) . "</span></span>"; ?>
 				</h5>
 				<div id="bodyContent" class="hide-on-tooltip">
 					<!-- <p>

@@ -1149,12 +1149,20 @@ function poligonWilNew(marker) {
           color: '#42b649',
           // fillOpacity: 0.6,
         });
+        layer.bindTooltip(feature.properties.content, {
+          sticky: true,
+          direction: 'center',
+          permanent: true,
+          //   className: 'not-clear',
+        });
       } else {
         if (feature.properties.name !== 'Wilayah Desa') {
           layer.bindTooltip(feature.properties.content, {
             sticky: true,
             direction: 'center',
             // permanent: true,
+            className: 'tooltip-wilayah',
+            offset: [0, 10],
           });
         } else {
           layer.bindTooltip(feature.properties.desa, {
