@@ -483,6 +483,18 @@ header.header .header-web-name h1 {
 .leaflet-tooltip.tooltip-wilayah.visible {
 	/* visibility: visible; */
 }
+.poly-wil {
+	position: relative;
+}
+.poly-wil.wil-sub-dusun {
+	z-index: 5;
+}
+.poly-wil.wil-sub-rw {
+	z-index: 3;
+}
+.poly-wil.wil-sub-rt {
+	z-index: 1;
+}
 #viewer360 {
 	width: 100%;
 	height: 100%;

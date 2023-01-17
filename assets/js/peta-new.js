@@ -1335,7 +1335,9 @@ function setPolygonContent(
             fillColor: configColor.dusun,
             fillOpacity: 0.05,
             className:
-              'poly-wil class-dusun-' +
+              'poly-wil wil-sub-' +
+              nama_wil +
+              ' class-dusun-' +
               thisDusun +
               ' desa-' +
               daftar[x].id_desa,
