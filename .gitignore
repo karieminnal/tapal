@@ -58,3 +58,4 @@ desa/upload/
 desa/logo/
 mobile/config.php
 *.sql
+.htaccess
