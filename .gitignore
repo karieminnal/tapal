@@ -59,3 +59,4 @@ desa/logo/
 mobile/config.php
 *.sql
 .htaccess
+donjo-app/cache/
