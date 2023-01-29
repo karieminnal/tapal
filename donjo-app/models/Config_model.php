@@ -75,14 +75,14 @@ class Config_model extends CI_Model
 	}
 
 	public function get_kab(){
-		$sql = 'SELECT * FROM config GROUP BY kode_kabupaten';
+		$sql = 'SELECT * FROM config GROUP BY kode_kabupaten ORDER BY nama_kabupaten ASC';
 		$query = $this->db->query($sql);
 		$data = $query->result_array();
 		return $data;
 	}
 
 	public function get_desa_by_kab($kode){
-		$sql = "SELECT * FROM config WHERE kode_kabupaten = $kode";
+		$sql = "SELECT * FROM config WHERE kode_kabupaten = $kode ORDER BY nama_desa ASC";
 		$query = $this->db->query($sql);
 		$data = $query->result_array();
 		return $data;
