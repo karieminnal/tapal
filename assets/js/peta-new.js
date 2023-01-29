@@ -975,6 +975,8 @@ function setLayerCustomLahan(paths, map, color) {
         var controlList = poligonArea(paths, thisNama);
         labelControlLahanAll[labelList] = controlList;
       }
+
+      $('.loaderAll').hide();
     },
   });
 

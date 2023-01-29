@@ -74,6 +74,20 @@ class Config_model extends CI_Model
 		return $data;
 	}
 
+	public function get_kab(){
+		$sql = 'SELECT * FROM config GROUP BY kode_kabupaten';
+		$query = $this->db->query($sql);
+		$data = $query->result_array();
+		return $data;
+	}
+
+	public function get_desa_by_kab($kode){
+		$sql = "SELECT * FROM config WHERE kode_kabupaten = $kode";
+		$query = $this->db->query($sql);
+		$data = $query->result_array();
+		return $data;
+	}
+
 	public function get_data_all_leuit($year=''){
 		if($year) {
 			$tahunProd = " AND YEAR(leuit_produksi.tanggal_produksi) = $year";

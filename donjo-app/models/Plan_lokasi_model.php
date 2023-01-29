@@ -394,18 +394,22 @@ class Plan_lokasi_model extends MY_Model
 		return $data;
 	}
 
-	public function list_lokasi_api()
+	public function list_lokasi_api($desaId)
 	{
-		$data = $this->db
-			->select('l.*, p.nama AS kategori, m.nama AS jenis, p.simbol AS simbol, p.nama AS kategori, d.dusun AS dusun')
+		$this->db
+			->select('l.*, p.nama AS kategori, m.nama AS jenis, p.simbol AS simbol, p.nama AS kategori, d.dusun AS dusun, c.nama_desa AS nama_desa')
 			->from('lokasi l')
 			->join('point p', 'l.ref_point = p.id', 'left')
 			->join('point m', 'p.parrent = m.id', 'left')
 			->join('tweb_wil_clusterdesa d', 'l.id_cluster = d.id', 'left')
+			->join('config c', 'd.id_desa = c.id', 'left')
 			->where('l.enabled = 1')
 			->where('p.enabled = 1')
-			->where('m.enabled = 1')
-			->get()->result_array();
+			->where('m.enabled = 1');
+		if($desaId) {
+			$this->db->where("d.id_desa", $desaId);
+		}
+		$data = $this->db->get()->result_array();
 		return $data;
 	}
 

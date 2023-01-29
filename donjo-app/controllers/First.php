@@ -155,6 +155,9 @@ class First extends Web_Controller
 		$data['listkota'] = $this->config_model->get_kota(32);
 		$data['desa'] = $this->config_model->get_desa($desaid);
 		$data['listdesa'] = $this->config_model->get_data_all();
+
+		$data['listkab'] = $this->config_model->get_kab();
+
 		$data['filterDesa'] = $desaid;
 
 		$data['headline'] = $this->first_artikel_m->get_headline();
@@ -182,8 +185,10 @@ class First extends Web_Controller
 		}
 
 		$this->_get_common_data($data, $desaid);
+		$this->filterIdDesa();
 		$this->track_model->track_desa('first');
 		$this->load->view($this->template, $data);
+		$this->output->cache(30);
 	}
 
 	function loadModalProfil($desaid) {

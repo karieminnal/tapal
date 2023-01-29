@@ -2,6 +2,7 @@
 <?php $this->load->view($folder_themes . '/layouts/header.php'); ?>
 <div id="map">
 </div>
+
 <!-- content popup -->
 <?php foreach ($desaall as $listdesa) { ?>
 <div id="isi_popup_<?php echo $listdesa['id'] ?>" style="visibility: hidden;" class="isi-popup">
@@ -245,8 +246,9 @@
 		var thisFilter = $(this).attr('data-filter');
 		var thisType = $(this).attr('filter-kategori');
 		var idJenis = $(this).attr('id-jenis');
+		var desaId = $(this).attr('data-desaid');
 
-		$.getJSON(config.apiLokasi, function(data) {
+		$.getJSON(config.apiLokasi+'/'+desaId, function(data) {
 			var featureLok = setLayerCustomSaranaAll(data, '<?= base_url() . LOKASI_SIMBOL_LOKASI ?>', idJenis, thisFilter, thisType, map);
 			var lokCheck = L.control.groupedLayers(baseLayers, featureLok, {
 				position: 'topleft',
@@ -257,16 +259,6 @@
 			map.removeControl(loadingAset);
 			triggerMenu(map);
 		});
-
-		// <?php if (!empty($data_config['path'])) : ?>
-		// 	map.flyTo([<?= $data_prov['lat'] . "," . $data_prov['lng'] ?>], 9, {
-		// 		animate: true,
-		// 		duration: 1.5
-		// 	});
-		// <?php else : ?>
-		// 	$('#pilihDesa').val('0');
-		// 	$('#pilihDesa').trigger('change');
-		// <?php endif; ?>
 		return markerSarana;
 	});
 
@@ -392,7 +384,25 @@
 	$('[data-trigger="showTutupanLahan"]').click(function(e) {
 		clearControl();
 		menuActive(e.currentTarget);
-
+		lahanControl.addTo(map);
+		map.removeControl(loadingAset);
+		triggerMenu(map);
+		var lahanControlAdd = lahanControl.getContainer();
+		lahanControlAdd.setAttribute("id", "lahan-check-container");
+		var lahanControlUkuranLayer = L.control({
+			position: 'topleft',
+		});
+		lahanControlUkuranLayer.onAdd = function(map) {
+			let checkboxDiv = L.DomUtil.create("div");
+			checkboxDiv.setAttribute("class", "leaflet-control-layers leaflet-control-layers-expanded leaflet-control lahan-check-container");
+			checkboxDiv.innerHTML = '<label><input type="checkbox" value="1" checked="checked" onclick="checkUkuran()"><span>Tampilkan ukuran</span></label>';
+			$(checkboxDiv).appendTo(lahanControlAdd);
+			L.DomEvent.disableClickPropagation(checkboxDiv);
+			return checkboxDiv;
+		};
+	});
+	loadDataTutupanLahan();
+	function loadDataTutupanLahan() {
 		$.getJSON(config.apiLahan, function(data) {
 			var featureLayer = setLayerCustomLahan(data, map);
 			var lahanCheck = L.control.groupedLayers(baseLayers, featureLayer, {
@@ -400,49 +410,12 @@
 				collapsed: false,
 				// groupCheckboxes: true
 			});
-
-			lahanControl = lahanCheck.addTo(map);
-			map.removeControl(loadingAset);
-
-			// <?php if (!empty($data_config['path'])) : ?>
-			// 	map.flyTo([<?= $data_prov['lat'] . "," . $data_prov['lng'] ?>], 9, {
-			// 		animate: true,
-			// 		duration: 1.5
-			// 	});
-			// <?php else : ?>
-			// 	$('#pilihDesa').val('0');
-			// 	$('#pilihDesa').trigger('change');
-			// <?php endif; ?>
-			triggerMenu(map);
-
-			var lahanControlAdd = lahanCheck.getContainer();
-			lahanControlAdd.setAttribute("id", "lahan-check-container");
-			var lahanControlUkuranLayer = L.control({
-				position: 'topleft',
-			});
-			lahanControlUkuranLayer.onAdd = function(map) {
-				let checkboxDiv = L.DomUtil.create("div");
-				checkboxDiv.setAttribute("class", "leaflet-control-layers leaflet-control-layers-expanded leaflet-control lahan-check-container");
-				checkboxDiv.innerHTML = '<label><input type="checkbox" value="1" checked="checked" onclick="checkUkuran()"><span>Tampilkan ukuran</span></label>';
-				$(checkboxDiv).appendTo(lahanControlAdd);
-				L.DomEvent.disableClickPropagation(checkboxDiv);
-				return checkboxDiv;
-			};
-			// lahanControlUkuran = lahanControlUkuranLayer.addTo(map);
+			
+			lahanControl = lahanCheck;
+			return lahanControl, lahanControlUkuran;
 		});
-
-		// <?php if (!empty($data_config['path'])) : ?>
-		// 	map.flyTo([<?= $data_prov['lat'] . "," . $data_prov['lng'] ?>], 9, {
-		// 		animate: true,
-		// 		duration: 1.5
-		// 	});
-		// <?php else : ?>
-		// 	$('#pilihDesa').val('0');
-		// 	$('#pilihDesa').trigger('change');
-		// <?php endif; ?>
-		return lahanControl, lahanControlUkuran;
-	});
-
+	}
+	
 	$('[data-trigger="showKependudukan"]').click(function(e) {
 		clearControl();
 		menuActive(e.currentTarget);
@@ -468,18 +441,11 @@
 				triggerMenu(map);
 			},
 		});
-
-		// <?php if (!empty($data_config['path'])) : ?>
-		// 	map.flyTo([<?= $data_prov['lat'] . "," . $data_prov['lng'] ?>], 9, {
-		// 		animate: true,
-		// 		duration: 1.5
-		// 	});
-		// <?php else : ?>
-		// 	$('#pilihDesa').val('0');
-		// 	$('#pilihDesa').trigger('change');
-		// <?php endif; ?>
 		return sebaranControl;
 	});
+
+	function loadDataSebaranPenduduk(idJenis,desaId) {
+	}
 
 	function leuitLokasi(lat, lng, nama, volume, kekeringan, alamat, foto) {
 		clearControl();
@@ -720,11 +686,11 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<script type="text/javascript">
+			<!-- <script type="text/javascript">
 				var csrfParam = '<?= $this->security->get_csrf_token_name() ?>';
 				var getCsrfToken = () => document.cookie.match(new RegExp(csrfParam + '=(\\w+)'))[1]
 			</script>
-			<script defer src="<?= base_url() ?>assets/js/anti-csrf.js"></script>
+			<script defer src="<?= base_url() ?>assets/js/anti-csrf.js"></script> -->
 			<form class="login-form" action="<?= site_url('siteman/auth') ?><?php if (isset($_REQUEST['app'])) { ?>?app=1<?php } ?>" method="post">
 				<div class="modal-body">
 					<div class="form-group">

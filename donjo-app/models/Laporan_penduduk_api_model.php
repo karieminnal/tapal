@@ -792,7 +792,7 @@ class Laporan_penduduk_api_model extends MY_Model
 		return $data;
 	}
 
-	public function list_data_api($lap = 0, $o = 0, $id_wil)
+	public function list_data_api($lap = 0, $o = 0, $id_wil, $desaId)
 	{
 		$this->lap = $lap;
 		if ($lap > 50) {
@@ -801,9 +801,9 @@ class Laporan_penduduk_api_model extends MY_Model
 
 		$this->load->model('statistik_penduduk_api_model');
 		$this->db->where("p.id_cluster", $id_wil);
-		// if($desaid) {
-		// 	$this->db->where("a.id_desa", $desaid);
-		// }
+		if($desaId) {
+			$this->db->where("a.id_desa", $desaId);
+		}
 		if ($statistik = $this->statistik_penduduk_api_model->statistik($lap)) {
 			// Statistik yg sudah di-refactor
 			$namespace = $statistik;

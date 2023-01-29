@@ -19,13 +19,19 @@ body, h1, h2, h3, h4, h5,
 .main-nav li a[id-jenis="47"] {
 	display: none;
 }
-.leaflet-control-layers-toggle {
+.leaflet-control-layers-toggle,
+.leaflet-retina .leaflet-control-layers-toggle {
 	background-image: url('../images/layer.png');
 }
-.trigger-clear {
+.trigger-clear,
+.leaflet-retina .trigger-clear {
 	background-image: url('../images/erase.png');
 }
-.leaflet-control-measure .leaflet-control-measure-toggle, .leaflet-control-measure .leaflet-control-measure-toggle:hover {
+.leaflet-control-measure .leaflet-control-measure-toggle, 
+.leaflet-control-measure .leaflet-control-measure-toggle:hover,
+.leaflet-retina .leaflet-control-measure .leaflet-control-measure-toggle,
+.leaflet-retina .leaflet-control-measure .leaflet-control-measure-toggle:hover
+ {
 	background-image: url('../images/ruler.png');
 }
 .left-content {
@@ -534,6 +540,23 @@ header.header .header-web-name h1 {
 	color: white;
     text-shadow: 0 1px 0 #000;
     opacity: 1;
+}
+.loaderAll {
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	top: 0;
+	background-color: rgba(0,0,0,.5);
+	text-align: center;
+	z-index: 999;
+}
+.loaderAll .loader-content {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: white;
+	height: 100%;
 }
 @media (min-width: 992px) {
 	#modalLeuit .modal-dialog {

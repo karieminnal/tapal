@@ -30,7 +30,43 @@ class Api_custom extends Api_Controller
 	{
 		$json_send = $this->config_model->get_data();
 		header('Content-Type: application/json');
-		echo json_encode($json_send);
+		$this->output->set_output(json_encode($json_send));
+	}
+
+	public function desa_group()
+	{
+		$json_send = [];
+		$kabArray = $this->config_model->get_kab();
+		// $json_send[] = $desa;
+		foreach ($kabArray as $kab) {
+			$desaList = [];
+			$desaArray = $this->config_model->get_desa_by_kab($kab['kode_kabupaten']);
+			foreach ($desaArray as $desa) {
+				if($desa['path'] != NULL) {
+					$path = 1;
+				} else {
+					$path = 0;
+				}
+				$desaTemp = array(
+					"id" => $desa['id'],
+					"text" => $desa['nama_desa'],
+					"lat" => $desa['lat'],
+					"lng" => $desa['lng'],
+					"path" => $path
+				);
+				$desaList[] = $desaTemp;
+			}
+			$kabname = $kab['nama_kabupaten'];
+			$newKab = str_replace("KABUPATEN","KAB. ",$kabname);
+			$temp = array(
+				"id" => $newKab,
+				"text" => $newKab,
+				"children" => $desaList
+			);
+			$json_send[] = $temp;
+		}
+		header('Content-Type: application/json');
+		$this->output->set_output(json_encode($json_send));
 	}
 
 	private function group_by($key, $data, $count = true)
@@ -67,7 +103,7 @@ class Api_custom extends Api_Controller
 			"data" => $this->penduduk_model->list_data()
 		);
 		header('Content-Type: application/json');
-		echo json_encode($json_send);
+		$this->output->set_output(json_encode($json_send));
 	}
 
 	public function pamong($jabatan = false)
@@ -88,7 +124,7 @@ class Api_custom extends Api_Controller
 			"data" => $data
 		);
 		header('Content-Type: application/json');
-		echo json_encode($json_send);
+		$this->output->set_output(json_encode($json_send));
 	}
 
 	public function data_persil()
@@ -99,7 +135,7 @@ class Api_custom extends Api_Controller
 			"data" => $this->data_persil_model->list_data()
 		);
 		header('Content-Type: application/json');
-		echo json_encode($json_send);
+		$this->output->set_output(json_encode($json_send));
 	}
 
 	public function plan()
@@ -112,7 +148,7 @@ class Api_custom extends Api_Controller
 		}
 		header('Content-Type: application/json');
 		header('Access-Control-Allow-Origin: http://man.info');
-		echo json_encode($json_send);
+		$this->output->set_output(json_encode($json_send));
 	}
 
 	public function plan_all()
@@ -128,7 +164,7 @@ class Api_custom extends Api_Controller
 		// 	"data" => $this->plan_lokasi_model->list_dusun()
 		// );
 		header('Content-Type: application/json');
-		echo json_encode($lokasi);
+		$this->output->set_output(json_encode($lokasi));
 	}
 
 	public function plan_area()
@@ -137,7 +173,7 @@ class Api_custom extends Api_Controller
 		$json_send = [];
 		$lokasi = $this->plan_lokasi_model->list_area();
 		header('Content-Type: application/json');
-		echo json_encode($lokasi);
+		$this->output->set_output(json_encode($lokasi));
 	}
 
 	public function plan_garis()
@@ -146,20 +182,20 @@ class Api_custom extends Api_Controller
 		$json_send = [];
 		$lokasi = $this->plan_lokasi_model->list_garis();
 		header('Content-Type: application/json');
-		echo json_encode($lokasi);
+		$this->output->set_output(json_encode($lokasi));
 	}
 
-	public function plan_lokasi()
+	public function plan_lokasi($desaId)
 	{
 		// $this->log_request();
 		// $json_send = [];
 		// $lokasi = $this->plan_lokasi_model->list_lokasi();
 		// header('Content-Type: application/json');
-		// echo json_encode($lokasi);
+		// $this->output->set_output(json_encode($lokasi));
 
 		$this->log_request();
 		$result = [];
-		$lokasiArray = $this->plan_lokasi_model->list_lokasi_api();
+		$lokasiArray = $this->plan_lokasi_model->list_lokasi_api($desaId);
 		foreach ($lokasiArray as $lokasi) {
 			$tmp = array(
 				"type" => "Feature",
@@ -173,6 +209,7 @@ class Api_custom extends Api_Controller
 					"kategori" => $lokasi['kategori'],
 					"simbol" => $lokasi['simbol'],
 					"dusun" => $lokasi['dusun'],
+					"desa" => $lokasi['nama_desa'],
 					"nama_jalan" => $lokasi['nama_jalan'],
 					"desk" => $lokasi['desk'],
 					"foto" => $lokasi['foto'],
@@ -185,7 +222,7 @@ class Api_custom extends Api_Controller
 			$result[] = $tmp;
 		}
 		header('Content-Type: application/json');
-		echo json_encode($result);
+		$this->output->set_output(json_encode($result));
 	}
 
 	public function plan_lokasi_kategori()
@@ -194,7 +231,7 @@ class Api_custom extends Api_Controller
 		// $jenis = $_REQUEST['jenis'];
 		$dataArray = $this->plan_point_model->get_lokasi_kategori();
 		header('Content-Type: application/json');
-		echo json_encode($dataArray);
+		$this->output->set_output(json_encode($dataArray));
 	}
 
 	public function plan_lokasi_jenis()
@@ -219,7 +256,7 @@ class Api_custom extends Api_Controller
 			$result[] = $tmp;
 		}
 		header('Content-Type: application/json');
-		echo json_encode($result);
+		$this->output->set_output(json_encode($result));
 	}
 
 	public function plan_persil()
@@ -268,7 +305,7 @@ class Api_custom extends Api_Controller
 		// 	"data" => $persilArray
 		// );
 		header('Content-Type: application/json');
-		echo json_encode($result);
+		$this->output->set_output(json_encode($result));
 	}
 
 	public function dusun()
@@ -308,11 +345,12 @@ class Api_custom extends Api_Controller
 			$result[] = $tmp;
 		}
 		header('Content-Type: application/json');
-		echo json_encode($result);
+		$this->output->set_output(json_encode($result));
 	}
 
 	public function plan_tutupan_lahan()
 	{
+		// $this->output->cache(30);
 		$this->log_request();
 		$result = [];
 		$dataArray = $this->tutupan_lahan_model->list_tutupan_lahan_api();
@@ -342,7 +380,7 @@ class Api_custom extends Api_Controller
 			$result[] = $tmp;
 		}
 		header('Content-Type: application/json');
-		echo json_encode($result);
+		$this->output->set_output(json_encode($result));
 	}
 
 	public function plan_tutupan_lahan_jenis()
@@ -351,7 +389,7 @@ class Api_custom extends Api_Controller
 		// $jenis = $_REQUEST['jenis'];
 		$dataArray = $this->tutupan_lahan_model->list_tutupan_lahan_api_jenis();
 		header('Content-Type: application/json');
-		echo json_encode($dataArray);
+		$this->output->set_output(json_encode($dataArray));
 	}
 
 	public function plan_tutupan_lahan_jenis_fe()
@@ -372,7 +410,7 @@ class Api_custom extends Api_Controller
 		}
 
 		header('Content-Type: application/json');
-		echo json_encode($result);
+		$this->output->set_output(json_encode($result));
 	}
 
 	public function statistik_penduduk($kat, $desaId)
@@ -388,7 +426,7 @@ class Api_custom extends Api_Controller
 		$dataArray = $this->wilayah_model->list_rt_gis_api('','',$desaId);
 		// $dataArray = $this->wilayah_model->list_rt_gis_api_2();
 		foreach ($dataArray as $rt) {
-			$lapKats = $this->laporan_penduduk_api_model->list_data_api($kat, 0, $rt['id']);
+			$lapKats = $this->laporan_penduduk_api_model->list_data_api($kat, 0, $rt['id'],$desaId);
 			$arrmer = [];
 			foreach ($lapKats as $k => $v) {
 
@@ -424,7 +462,7 @@ class Api_custom extends Api_Controller
 			$result[] = $tmp;
 		}
 		header('Content-Type: application/json');
-		echo json_encode($result);
+		$this->output->set_output(json_encode($result));
 	}
 
 	public function statistik_sub($kat)
@@ -442,7 +480,7 @@ class Api_custom extends Api_Controller
 			$arrmer[$v['nama']] = $v['jumlah'];
 		}
 		header('Content-Type: application/json');
-		echo json_encode($arrmer);
+		$this->output->set_output(json_encode($arrmer));
 	}
 
 	public function analisa_leuit()
@@ -495,6 +533,6 @@ class Api_custom extends Api_Controller
 		}
 		$hasil = array("data" => $result);
 		header('Content-Type: application/json');
-		echo json_encode($hasil);
+		$this->output->set_output(json_encode($hasil));
 	}
 }

@@ -17,3 +17,10 @@ $hook['pre_system']  = array(
    'filename'  => 'router.php',
    'filepath'  => 'hooks'
 );
+// compress output
+$hook['display_override'][] = array(
+	'class' => '',
+	'function' => 'compress',
+	'filename' => 'compress.php',
+	'filepath' => 'hooks'
+	);

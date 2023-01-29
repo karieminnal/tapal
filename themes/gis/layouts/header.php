@@ -49,9 +49,22 @@
 	<script type="text/javascript">
 		var BASE_URL = "<?= base_url() ?>";
 	</script>
+	
+	<?php if ($this->config->config['csrf_protection']) : ?>
+	<script type="text/javascript">
+		var csrfParam = '<?= $this->security->get_csrf_token_name() ?>';
+		var getCsrfToken = () => document.cookie.match(new RegExp(csrfParam + '=(\\w+)'))[1]
+	</script>
+	<script defer src="<?= base_url() ?>assets/js/anti-csrf.js"></script>
+<?php endif ?>
 </head>
 
 <body <?php if (isset($_REQUEST['app'])) { ?> class="from-app" <?php } ?>>
+	<div class="loaderAll">
+		<div class="loader-content">
+			<p>Loading Tutupan Lahan, mohon tunggu!</p>
+		</div>
+	</div>
 	<div class="toggle-menu mobile">
 		<a href="javascript:;" class="btn btn-sm">
 			<i class="fa fa-bars"></i>
@@ -92,17 +105,23 @@
 				<div class="col-sm-12">          
 					<select class="form-control" name="kota" id="pilihDesa">
 						<option value="0">Default (Provinsi)</option>
-						<?php foreach ($listdesa as $desa) { 
-							$dataPath = $desa['path'];
-							$kab = $desa['nama_kabupaten'];
-							$newKab = str_replace("KABUPATEN","KAB. ",$kab);
-							if($dataPath != NULL) {
-								$getPath = 1;
-							} else {
-								$getPath = 0;
-							}
-							?>
-							<option value="<?php echo $desa['id'] ?>" <?php echo ($getPath ? '' : 'disabled'); ?> data-path="<?php echo $getPath ?>" data-lat="<?php echo $desa['lat'] ?>" data-lng="<?php echo $desa['lng'] ?>"><?php echo sentence_case($desa['nama_desa']) ?> - <?php echo sentence_case($newKab) ?></option>
+						<?php foreach ($listkab as $kablist) { ?>
+							<optgroup label="<?php echo $kablist['nama_kabupaten'] ?>">
+								<?php
+									$desaArray = $this->config_model->get_desa_by_kab($kablist['kode_kabupaten']);
+									foreach ($desaArray as $desa) { 
+									$dataPath = $desa['path'];
+									$kab = $desa['nama_kabupaten'];
+									$newKab = str_replace("KABUPATEN","KAB. ",$kab);
+									if($dataPath != NULL) {
+										$getPath = 1;
+									} else {
+										$getPath = 0;
+									}
+									?>
+									<option value="<?php echo $desa['id'] ?>" <?php echo ($getPath ? '' : 'disabled'); ?> data-path="<?php echo $getPath ?>" data-lat="<?php echo $desa['lat'] ?>" data-lng="<?php echo $desa['lng'] ?>">&#x2192; <?php echo $desa['nama_desa'] ?></option>
+								<?php } ?>
+							</optgroup>
 						<?php } ?>
 					</select>
 					<img src="<?= base_url() ?>assets/images/loader.gif" id="load2" style="display:none;" />
