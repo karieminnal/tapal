@@ -93,7 +93,7 @@
 		<?php } ?>
 	<?php } ?>
 	<?php if (!empty($desa['path'])) : ?>
-		/* setPolygonDesa(marker_desa, <?= json_encode($desa) ?>, "<?= ucwords($this->setting->sebutan_desa) . ' ' . $desa['nama_desa'] ?>", "<?= favico_desa() ?>", '#isi_popup'); */
+		
 	<?php endif; ?>
 	<?php if (!empty($dusun_gis)) : ?>
 		setPolygonContent(marker_dusun, '<?= addslashes(json_encode($dusun_gis)) ?>', '', '<?= ucwords($this->setting->sebutan_dusun) ?>', 'dusun', '#isi_popup_dusun_', '<?= $dusun_gis['id_desa'] ?>');
@@ -134,8 +134,7 @@
 	loadingControl(loadingAset, map);
 
 	<?php if (isset($userdata['nama'])) : ?>
-		/*toggleExport(map);*/
-		/*var printExport = L.easyPrint().addTo(map);*/
+		
 	<?php endif; ?>
 
 	toggleClear(map);
@@ -192,10 +191,6 @@
 			new L.LatLng(latDesa, lngDesa),
 			new L.LatLng(latDesa, lngDesa));
 			if(pathDesa != '') {
-				/* var poligonDesa = L.polygon(pathDesa)
-				 	map.fitBounds(toDesa);
-					map.fitBounds(poligonDesa.getBounds());
-					map.setZoom(13); */
 				map.flyTo([latDesa, lngDesa], 14, {
 					animate: true,
 					duration: 3
@@ -203,8 +198,6 @@
 			}
 			clearExlude(getId);
 		} else {
-			/*map.fitBounds(bounds);*/
-			/*map.setZoom(9);*/
 			$('.leaflet-interactive.poly-desa, .leaflet-interactive.poly-wil').removeClass('fade-poly');
 			map.flyTo([<?= $data_prov['lat'] . "," . $data_prov['lng'] ?>], 9, {
 				animate: true,

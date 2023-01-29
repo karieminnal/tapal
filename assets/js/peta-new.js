@@ -136,7 +136,6 @@ $(window).on('load', function () {});
 
 function resetModalAkun() {
   $('.modal-body .erm').html('');
-  // $('.modal-body #namaLengkap').val('<?= $userdata['nama'] ?>');
   $('input[type="password"]').val('');
   $('.form-group').removeClass('has-error');
   $('label.error').remove();
@@ -258,7 +257,6 @@ function resizeWindow(map) {
     $('#map').removeAttr('style');
     $('body').removeClass('hide-menu');
     map.invalidateSize();
-    // map.setZoom(9);
     triggerMenu(map);
   });
 }
@@ -270,7 +268,6 @@ function triggerMenu(map) {
     if (!bodyClass) {
       $('.toggle-menu.mobile a').trigger('click');
     }
-    // map.setZoom(15);
   }
 }
 
@@ -288,12 +285,10 @@ function toggleMenu(map) {
     if (bodyClass) {
       $('#map').width(winWid);
       map.invalidateSize();
-      //   map.setZoom(15);
     } else {
       $('#map').removeAttr('style');
       setTimeout(function () {
         map.invalidateSize();
-        // map.setZoom(15);
       }, 500);
     }
   });
@@ -340,10 +335,8 @@ function checkUkuran() {
   var thiCheck = $('.lahan-check-container input[type="checkbox"]');
 
   if (thiCheck.is(':checked')) {
-    // $('.leaflet-measure-path-measurement').show();
     $('.tooltip-lahan').show();
   } else {
-    // $('.leaflet-measure-path-measurement').hide();
     $('.tooltip-lahan').hide();
   }
 }
@@ -363,7 +356,6 @@ function petaProv(map) {
       style: styleProv,
       onEachFeature: function (feature, layer) {
         layer.layerID = 'layerProv';
-        // layer.options.zIndex = -1;
       },
     });
     layerProv.addTo(map);
@@ -404,18 +396,6 @@ function setLayerSebaran(paths, idJenis, namaJenis, map) {
 }
 
 function poligonAreaSebaran(paths, thisNama, idJenis, namaJenis, totalSebaran) {
-  //   var arrCoord = [];
-  //   $.getJSON(config.apiStat + '/' + idJenis, function (data) {
-  //     $.each(data, function (index, value) {
-  //       arrCoordGeo = this.geometry.coordinates;
-  //       arrCoord.push(arrCoordGeo);
-  //     });
-  //   });
-  //   console.log(arrCoord);
-
-  //   if (arrCoord.length) {
-  //   }
-
   var style_polygon = {
     weight: 1,
     color: '#555555',
@@ -512,7 +492,6 @@ function poligonAreaSebaran(paths, thisNama, idJenis, namaJenis, totalSebaran) {
         '<span class="jml-orang"><b>' +
         getJml +
         '</b></span> orang' +
-        // getFile +
         '</p>' +
         '</div>';
       layer.bindPopup(content_pop);
@@ -527,18 +506,6 @@ function poligonAreaSebaran(paths, thisNama, idJenis, namaJenis, totalSebaran) {
   legend.onAdd = function (map) {
     var totalPenduduk = getTotalPendudukPlus(elemTotal);
     var div = L.DomUtil.create('div', 'info-sebaran legend'),
-      //   grades = [
-      //     1,
-      //     Math.floor(totalPenduduk / 9),
-      //     Math.floor(totalPenduduk / 8),
-      //     Math.floor(totalPenduduk / 7),
-      //     Math.floor(totalPenduduk / 6),
-      //     Math.floor(totalPenduduk / 5),
-      //     Math.floor(totalPenduduk / 4),
-      //     Math.floor(totalPenduduk / 3),
-      //     Math.floor(totalPenduduk / 2),
-      //     Math.floor(totalPenduduk / 1),
-      //   ],
       grades = [0, 10, 20, 50, 100, 200, 500, 1000],
       labels = [],
       from,
@@ -562,7 +529,6 @@ function poligonAreaSebaran(paths, thisNama, idJenis, namaJenis, totalSebaran) {
   };
 
   legend.addTo(map);
-  //   map.fitBounds(layerLahan.getBounds());
   return layerLahan;
 }
 
@@ -695,7 +661,6 @@ function setLayerCustomSarana(marker, pathSimbol, jenis, kategori, map) {
 
   var layerLokasi = {
     'Tampilkan Pin': layer_lokasi,
-    // 'Tampilkan Jumlah': layer_lokasi,
   };
   var saranaLayer = L.geoJSON(marker, {
     coordsToLatLng: function (coords) {
@@ -720,7 +685,7 @@ function setLayerCustomSarana(marker, pathSimbol, jenis, kategori, map) {
         return feature.properties.jenis === jenis;
       }
     },
-    // onEachFeature: onEachFeature
+
     onEachFeature: function (feature, layer) {
       var content_lokasi =
         '<div id="content">' +
@@ -728,7 +693,6 @@ function setLayerCustomSarana(marker, pathSimbol, jenis, kategori, map) {
         feature.properties.nama +
         '</h4>' +
         '<div id="bodyContent">' +
-        // feature.properties.foto +
         '<p>' +
         feature.properties.nama_jalan +
         '</p>' +
@@ -744,7 +708,6 @@ function setLayerCustomSarana(marker, pathSimbol, jenis, kategori, map) {
 
   markersList.push(saranaLayer);
   markers.addLayer(saranaLayer);
-  //   map.fitBounds(saranaLayer.getBounds());
 
   map.on('layeradd layerremove', function () {
     var bounds = new L.LatLngBounds();
@@ -792,7 +755,6 @@ function setLayerCustomPersil(marker, map, color) {
         feature.properties.deskripsi === '' ||
         feature.properties.deskripsi === null
       ) {
-        // layer.bindTooltip('Data belum tersedia');
       } else {
         var perNamaPemilik =
             feature.properties.Nama_Pemil !== ''
@@ -882,7 +844,7 @@ function setLayerCustomPersil(marker, map, color) {
               : '';
         var mergeAlamat =
           '<tr><td>Alamat</td><td>: <ul>' +
-          perAlamat + //perNamaJalan +
+          perAlamat +
           '<li>' +
           perBlok +
           perRT +
@@ -950,8 +912,6 @@ function overlayWilPersil(wilayah, deskripsi, map) {
 
     poligonPersil.on('click', onPolyClick);
   }
-  //   poligonPersil.fitBounds();
-  //   poligonPersil.addTo(map);
 
   return poligonPersil;
 }
@@ -992,7 +952,6 @@ function poligonArea(paths, jenis) {
     fillOpacity: 0.85,
   };
   var layerLahan = L.geoJSON(paths, {
-    // showMeasurements: true,
     coordsToLatLng: function (coords) {
       return new L.LatLng(coords[0], coords[1]);
     },
@@ -1015,15 +974,12 @@ function poligonArea(paths, jenis) {
           weight: 0.5,
           color: lightenColor(feature.properties.warna, 15),
         });
-        // layer.showMeasurements({ imperial: true, showSegmentLength: false });
       }
       layer.on('load', function () {
-        // $('.show-ukuran-lahan').show();
         this.setStyle({
           fillColor: feature.properties.warna,
         });
         checkUkuran();
-        // console.log(checkUkuran());
       });
       layer.on('mouseover', function () {
         this.setStyle({
@@ -1067,32 +1023,21 @@ function poligonArea(paths, jenis) {
           perNamaPemilik +
           perLuas +
           perKelasTanah +
-          //   perAlamatTanah +
           '</table>';
         var contentSawah = mergeDataSawah;
         layer.bindPopup(contentSawah);
       } else {
-        // layer.bindTooltip(feature.properties.luas, {
-        //   sticky: true,
-        //   direction: 'center',
-        //   permanent: true,
-        //   className: 'tooltip-lahan',
-        // });
         layer.bindPopup('Luas : ' + luasDec + ' Ha');
       }
       if (
         feature.properties.deskripsi === '' ||
         feature.properties.deskripsi === null
       ) {
-        // layer.bindTooltip('Data belum tersedia');
       } else {
-        // layer.bindPopup(feature.properties.deskripsi);
-        // layer.bindTooltip('Lihat detil');
       }
     },
   });
 
-  //   map.fitBounds(layerLahan.getBounds());
   return layerLahan;
 }
 
@@ -1119,14 +1064,10 @@ function getJenisLahan(jenis) {
 }
 
 function poligonWilNew(marker) {
-  //   console.log(marker);
   var poligonWil = L.geoJSON(turf.featureCollection(marker), {
     pmIgnore: true,
-    // showMeasurements: true,
-    // measurementOptions: { showOnHover: true },
     onEachFeature: function (feature, layer) {
       if (feature.properties.name == 'kantor_desa') {
-        // Beri classname berbeda, supaya bisa gunakan css berbeda
         layer.bindPopup(feature.properties.content, {
           className: 'kantor_desa',
         });
@@ -1149,20 +1090,17 @@ function poligonWilNew(marker) {
       } else if (feature.properties.tipe == 'dusun') {
         layer.setStyle({
           color: '#42b649',
-          // fillOpacity: 0.6,
         });
         layer.bindTooltip(feature.properties.content, {
           sticky: true,
           direction: 'center',
           permanent: true,
-          //   className: 'not-clear',
         });
       } else {
         if (feature.properties.name !== 'Wilayah Desa') {
           layer.bindTooltip(feature.properties.content, {
             sticky: true,
             direction: 'center',
-            // permanent: true,
             className: 'tooltip-wilayah',
             offset: [0, 10],
           });
@@ -1180,13 +1118,11 @@ function poligonWilNew(marker) {
         if (feature.properties.name == 'RT') {
           layer.setStyle({
             color: '#999999',
-            // fillOpacity: 0.6,
           });
         }
         if (feature.properties.name == 'RW') {
           layer.setStyle({
             color: '#0E86D4',
-            // fillOpacity: 0.6,
           });
         }
 
@@ -1229,7 +1165,6 @@ function overlayWilNew(marker_desa, marker_dusun, marker_rw, marker_rt) {
 
   var overlayLayers = {
     '<b style="text-transform:uppercase;">Batas Wilayah</b>': {
-      //   ' Desa': poligon_wil_desa,
       ' Dusun': poligon_wil_dusun,
       ' RW': poligon_wil_rw,
       ' RT': poligon_wil_rt,
@@ -1260,18 +1195,6 @@ function setPolygonDesa(
 
   content = $(contents).html();
   thisDesa = $(content).find('.firstHeading').html();
-
-  //   var point_style = stylePointLogo(favico_desa);
-  //   marker_desa.push(
-  //     turf.point([desa['lng'], desa['lat']], {
-  //       name: 'kantor_desa',
-  //       //   content: 'Kantor ' + judul,
-  //       content: content,
-  //       judulkantor: judul,
-  //       style: L.icon(point_style),
-  //       color: configColor.desa,
-  //     }),
-  //   );
   marker_desa.push(
     turf.polygon(daerah_desa, {
       name: 'Wilayah Desa',
@@ -1304,7 +1227,6 @@ function setPolygonContent(
     color: '#f8db21',
     opacity: 1,
     weight: 1,
-    // fillColor: warna,
     fillOpacity: 0.5,
   };
   var daftar = JSON.parse(daftar_path);
@@ -1347,11 +1269,6 @@ function setPolygonContent(
           color: configColor.dusun,
         }),
       );
-      //   console.log(
-      //     turf.multiPolygon(daftar[x].path, {
-      //       dusun: thisDusun + ' (' + daftar[x].id_desa + ')',
-      //     }),
-      //   );
     }
   }
 }
@@ -1366,7 +1283,6 @@ function setPointLeuit(map, nama, lat, lng, contents, id) {
     clickable: true,
     icon: customIcon,
   };
-  //   contentUrl = $('/first/loadModalLeuit360/' + id).html();
   var marker = L.marker([lat, lng], markerOptions);
   var popupLeuit =
     '<div id="content">' +
@@ -1375,16 +1291,12 @@ function setPointLeuit(map, nama, lat, lng, contents, id) {
     '</h4>' +
     '<div id="bodyContent">' +
     '<p>' +
-    // feature.properties.nama_jalan +
     '</p>' +
     '</div>' +
     '</div>';
   marker.bindPopup(content);
   marker.addTo(map);
   var getLink = $('#isi_popup_leuit_' + id).find('a');
-  //   marker.addTo(map).on('click', function (e) {
-  //     $(getLink).trigger('click');
-  //   });
 }
 
 function stylePointLeuit(url) {

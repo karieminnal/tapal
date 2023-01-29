@@ -55,31 +55,6 @@ function randomColor() {
   return '#' + randomColor;
 }
 
-// function getColor(d) {
-//   var penduduk = getTotalPendudukPlus(elemTotal);
-//   var hasil =
-//     d > Math.floor(penduduk / 1)
-//       ? '#5B0000'
-//       : d > Math.floor(penduduk / 2)
-//       ? '#800026'
-//       : d > Math.floor(penduduk / 3)
-//       ? '#BD0026'
-//       : d > Math.floor(penduduk / 4)
-//       ? '#E31A1C'
-//       : d > Math.floor(penduduk / 5)
-//       ? '#FC4E2A'
-//       : d > Math.floor(penduduk / 6)
-//       ? '#FD8D3C'
-//       : d > Math.floor(penduduk / 7)
-//       ? '#FEB24C'
-//       : d > Math.floor(penduduk / 8)
-//       ? '#FED976'
-//       : d > 0
-//       ? '#FFEDA0'
-//       : '#FFFFFF';
-//   return hasil;
-// }
-
 function getColor(d) {
   return d > 1000
     ? '#ed1e28'
@@ -113,7 +88,6 @@ function isGanjil(num) {
 function getTotalPendudukPlus(elemTotal) {
   var jml = $(elemTotal).attr('value');
   var cekGanjil = isGanjil(jml);
-  //   console.log(cekGanjil / 2);
   if (cekGanjil < 200) {
     return 200 / 2;
   } else {
