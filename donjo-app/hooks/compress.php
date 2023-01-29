@@ -7,15 +7,15 @@ function compress()
  
    $search = array(
     '/\n/',            // replace end of line by a space
-    //'/\>[^\S ]+/s',        // strip whitespaces after tags, except space
-    //'/[^\S ]+\</s',        // strip whitespaces before tags, except space
+    '/\>[^\S ]+/s',        // strip whitespaces after tags, except space
+    '/[^\S ]+\</s',        // strip whitespaces before tags, except space
     //    '/(\s)+/s'        // shorten multiple whitespace sequences
     );
  
    $replace = array(
     ' ',
-    // '>',
-    //    '<',
+    '>',
+       '<',
     //    '\\1'
     );
  

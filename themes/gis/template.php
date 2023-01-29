@@ -93,7 +93,7 @@
 		<?php } ?>
 	<?php } ?>
 	<?php if (!empty($desa['path'])) : ?>
-		//setPolygonDesa(marker_desa, <?= json_encode($desa) ?>, "<?= ucwords($this->setting->sebutan_desa) . ' ' . $desa['nama_desa'] ?>", "<?= favico_desa() ?>", '#isi_popup');
+		/* setPolygonDesa(marker_desa, <?= json_encode($desa) ?>, "<?= ucwords($this->setting->sebutan_desa) . ' ' . $desa['nama_desa'] ?>", "<?= favico_desa() ?>", '#isi_popup'); */
 	<?php endif; ?>
 	<?php if (!empty($dusun_gis)) : ?>
 		setPolygonContent(marker_dusun, '<?= addslashes(json_encode($dusun_gis)) ?>', '', '<?= ucwords($this->setting->sebutan_dusun) ?>', 'dusun', '#isi_popup_dusun_', '<?= $dusun_gis['id_desa'] ?>');
@@ -134,8 +134,8 @@
 	loadingControl(loadingAset, map);
 
 	<?php if (isset($userdata['nama'])) : ?>
-		//toggleExport(map);
-		//var printExport = L.easyPrint().addTo(map);
+		/*toggleExport(map);*/
+		/*var printExport = L.easyPrint().addTo(map);*/
 	<?php endif; ?>
 
 	toggleClear(map);
@@ -192,10 +192,10 @@
 			new L.LatLng(latDesa, lngDesa),
 			new L.LatLng(latDesa, lngDesa));
 			if(pathDesa != '') {
-				// var poligonDesa = L.polygon(pathDesa)
-				// map.fitBounds(toDesa);
-				// map.fitBounds(poligonDesa.getBounds());
-				// map.setZoom(13);
+				/* var poligonDesa = L.polygon(pathDesa)
+				 	map.fitBounds(toDesa);
+					map.fitBounds(poligonDesa.getBounds());
+					map.setZoom(13); */
 				map.flyTo([latDesa, lngDesa], 14, {
 					animate: true,
 					duration: 3
@@ -203,8 +203,8 @@
 			}
 			clearExlude(getId);
 		} else {
-			// map.fitBounds(bounds);
-			// map.setZoom(9);
+			/*map.fitBounds(bounds);*/
+			/*map.setZoom(9);*/
 			$('.leaflet-interactive.poly-desa, .leaflet-interactive.poly-wil').removeClass('fade-poly');
 			map.flyTo([<?= $data_prov['lat'] . "," . $data_prov['lng'] ?>], 9, {
 				animate: true,
@@ -224,7 +224,6 @@
 			},
 		});
 		changeSesi(getId);
-		// console.log(getId);
 	});
 
 	function changeSesi(val) {
@@ -269,7 +268,6 @@
 			var featureLayer = setLayerCustomPersil(data, map, '#FC4E2A').addTo(persilGroup);
 
 			var searchControlAdd = mainlayer.getContainer();
-			// searchControlAdd.setAttribute("id", "search-check-container");
 			var searchContainerLayer = L.control({
 				position: 'topleft',
 			});
@@ -279,7 +277,6 @@
 				$(searchDiv).attr("id", "search-check-container");
 				var selectForm = '<select id="selectSearchType" class="form-control form-control-sm" onchange="selectSearch()"><option value="1">Nomor SPPT</option><option value="2">Nama Pemilik</option><option value="3">NIB</option></select>';
 				$(searchDiv).html('<div class="form-group"><label for="selectSearchType">Cari berdasarkan :</label>' + selectForm + '</div>');
-				// searchDiv.innerHTML = '<label></label>';
 				$(searchDiv).appendTo(searchControlAdd);
 				L.DomEvent.disableClickPropagation(searchDiv);
 				return searchDiv;
@@ -296,7 +293,6 @@
 				textPlaceholder: 'ketik...',
 				textErr: 'Data tidak ditemukan',
 				moveToLocation: function(latlng, title, map) {
-					// var zoom = map.getBoundsZoom(latlng.layer.getBounds());
 					map.setView(latlng, 18);
 				}
 			});
@@ -324,7 +320,6 @@
 				textPlaceholder: 'ketik...',
 				textErr: 'Data tidak ditemukan',
 				moveToLocation: function(latlng, title, map) {
-					// var zoom = map.getBoundsZoom(latlng.layer.getBounds());
 					map.setView(latlng, 18);
 				}
 			});
@@ -352,7 +347,6 @@
 				textPlaceholder: 'ketik...',
 				textErr: 'Data tidak ditemukan',
 				moveToLocation: function(latlng, title, map) {
-					// var zoom = map.getBoundsZoom(latlng.layer.getBounds());
 					map.setView(latlng, 18);
 				}
 			});
@@ -408,7 +402,6 @@
 			var lahanCheck = L.control.groupedLayers(baseLayers, featureLayer, {
 				position: 'topleft',
 				collapsed: false,
-				// groupCheckboxes: true
 			});
 			
 			lahanControl = lahanCheck;
@@ -424,7 +417,6 @@
 		var desaId = $(this).attr('data-desaid');
 
 		$.ajax({
-			// async: false,
 			url: config.apiStat + '/' + idJenis+'/'+desaId,
 			dataType: 'json',
 			success: function(data) {
@@ -527,17 +519,12 @@
 		map.removeLayer(persilGroup);
 		map.closePopup();
 		$('.list_kategori').find('li').removeClass('current-menu');
-		<?php if (!empty($data_config['path'])) : ?>
-			// var overlayDesa = overlayWilDesa(marker_desa);
-			// overlayDesa.addTo(map);
-		<?php endif; ?>
 	}
 
 	function clearExlude(id) {
 		$('.leaflet-interactive:not(.not-clear):not(.poly-desa), .leaflet-tooltip:not(.not-clear)').remove();
 		$('.leaflet-interactive.poly-desa, .leaflet-interactive.poly-wil').removeClass('fade-poly');
 		$('.leaflet-interactive.poly-desa:not(.desa-'+id+')').addClass('fade-poly');
-		// $('.leaflet-interactive.poly-desa.desa-'+id).fadeIn('fast');
 	}
 
 	function menuActive(el) {
