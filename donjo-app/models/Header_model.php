@@ -147,6 +147,7 @@ class Header_model extends CI_Model {
 		$outp['desa'] = $this->config_model->get_desa($_SESSION['filterDesa']);
 
 		$outp['listdesa'] = $this->config_model->get_data_all();
+		$outp['listkab'] = $this->config_model->get_kab();
 		$outp['sebutandesa'] = ucwords($this->setting->sebutan_desa);
 		$outp['kecamatan'] = ucwords($this->setting->sebutan_kecamatan);
 		$outp['kabupaten'] = ucwords($this->setting->sebutan_kabupaten);

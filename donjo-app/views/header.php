@@ -144,11 +144,16 @@
 							<?php if($_SESSION['grup'] == 1) { ?>
 								<li>
 									<select name="filterDesa" class="pilihDesaHeader" onchange="formAction('formFilterDesa', '<?= site_url('/hom_sid/filterDesa') ?>')">
-										<?php foreach ($listdesa as $desa) { 
-											$kab = $desa['nama_kabupaten'];
-											$newKab = str_replace("KABUPATEN","KAB. ",$kab);
-											?>
-											<option value="<?php echo $desa['id'] ?>" <?php if ($_SESSION['filterDesa'] == $desa['id']) : ?>selected<?php endif ?>><?php echo sentence_case($desa['nama_desa']) ?> - <?php echo sentence_case($newKab) ?></option>
+										<?php foreach ($listkab as $kablist) { ?>
+											<optgroup label="<?php echo $kablist['nama_kabupaten'] ?>">
+											<?php 
+												$desaArray = $this->config_model->get_desa_by_kab($kablist['kode_kabupaten']);
+												foreach ($desaArray as $desa) { 
+													$kab = $desa['nama_kabupaten'];
+													$newKab = str_replace("KABUPATEN","KAB. ",$kab);
+												?>
+												<option value="<?php echo $desa['id'] ?>" <?php if ($_SESSION['filterDesa'] == $desa['id']) : ?>selected<?php endif ?>>&#x2192; <?php echo $desa['nama_desa'] ?></option>
+											<?php } ?>
 										<?php } ?>
 									</select>
 								</li>
