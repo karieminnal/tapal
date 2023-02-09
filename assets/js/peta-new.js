@@ -134,6 +134,119 @@ $(document).ready(function () {
 
 $(window).on('load', function () {});
 
+function changeSesi(val) {
+  $('input#sesiDesa').val(val);
+  $('.main-nav ul li a:not(.has-child)').attr('data-desaid', val);
+}
+
+function triggerPilihDesa(map, lat, lng) {
+  $('#pilihDesa').select2({
+    placeholder: 'Pilih Desa',
+    language: 'id',
+    width: '100%',
+  });
+  $('#pilihDesa').change(function () {
+    var id = $(this).val();
+    var getId = $(this).select2('val');
+    if (getId != 0) {
+      var latDesa = $(this).find(':selected').data('lat');
+      var lngDesa = $(this).find(':selected').data('lng');
+      var pathDesa = $(this).find(':selected').data('path');
+      var toDesa = new L.LatLngBounds(
+        new L.LatLng(latDesa, lngDesa),
+        new L.LatLng(latDesa, lngDesa),
+      );
+      if (pathDesa != '') {
+        map.flyTo([latDesa, lngDesa], 14, {
+          animate: true,
+          duration: 3,
+        });
+      }
+      clearExlude(getId);
+    } else {
+      $(
+        '.leaflet-interactive.poly-desa, .leaflet-interactive.poly-wil',
+      ).removeClass('fade-poly');
+      map.flyTo([lat, lng], 9, {
+        animate: true,
+        duration: 1.5,
+      });
+    }
+    $.ajax({
+      type: 'POST',
+      dataType: 'html',
+      url: '/first/filterIdDesa?',
+      data: 'filterIdDesa=' + getId,
+      success: function (msg) {
+        bersihkan(map);
+        if ((getId = 0)) {
+          $(
+            '.leaflet-interactive.poly-desa, .leaflet-interactive.poly-wil',
+          ).removeClass('fade-poly');
+        }
+      },
+    });
+    changeSesi(getId);
+  });
+}
+
+function clearControl(map) {
+  bersihkan(map);
+  loadingAset.addTo(map);
+}
+
+function bersihkan(map) {
+  $(
+    '.leaflet-interactive:not(.not-clear):not(.poly-desa), .leaflet-tooltip:not(.not-clear)',
+  ).remove();
+  markerGroup.clearLayers();
+
+  var thisCheck = $(
+    '.leaflet-top.leaflet-left .leaflet-control-layers:not(.lahan-check-container) input[type="checkbox"]',
+  );
+  $(thisCheck).each(function (index, value) {
+    if ($(this).is(':checked')) {
+      $(this).trigger('click');
+      $(this).removeAttr('checked');
+    }
+  });
+
+  $('.info-sebaran').remove();
+
+  map.removeControl(lahanControl);
+  map.removeControl(lahanControlUkuran);
+  map.removeControl(sebaranControl);
+  map.removeControl(markerSarana);
+  map.closePopup();
+  $('.list_kategori').find('li').removeClass('current-menu');
+}
+
+function clearExlude(id) {
+  $(
+    '.leaflet-interactive:not(.not-clear):not(.poly-desa), .leaflet-tooltip:not(.not-clear)',
+  ).remove();
+  $(
+    '.leaflet-interactive.poly-desa, .leaflet-interactive.poly-wil',
+  ).removeClass('fade-poly');
+  $('.leaflet-interactive.poly-desa:not(.desa-' + id + ')').addClass(
+    'fade-poly',
+  );
+}
+
+function menuActive(el) {
+  $('.list_kategori').find('li').removeClass('current-menu');
+  $(el).parent('li').addClass('current-menu');
+}
+
+function filterFormDesa(idForm, action, target = '') {
+  csrf_semua_form();
+  if (target != '') {
+    $('#' + idForm).attr('target', target);
+  }
+  $('#' + idForm).attr('action', action);
+  $('#' + idForm).submit();
+}
+
 function resetModalAkun() {
   $('.modal-body .erm').html('');
   $('input[type="password"]').val('');
@@ -298,6 +411,7 @@ function loadingControl(loadingAset, map) {
   loadingAset.onAdd = function (map) {
     this._div = L.DomUtil.create('div', 'leaflet-bar');
     this._div.innerHTML = '<a class="leaflet-control-loading"></a>';
+    $('.main-nav').addClass('loading-active');
     return this._div;
   };
 
@@ -323,7 +437,7 @@ function toggleClear(map) {
   toggleClear.onAdd = function (map) {
     this._div = L.DomUtil.create('div');
     this._div.classList.add('leaflet-bar', 'leaflet-control');
-    this._div.setAttribute('onclick', 'bersihkan()');
+    this._div.setAttribute('onclick', 'bersihkan(map)');
     this._div.innerHTML =
       '<a class="trigger-clear" title="Bersihkan Peta"></a>';
     return this._div;

@@ -380,6 +380,11 @@ header.header .header-web-name h1 {
 .main-nav ul li .total-penduduk span {
     color: #009B4D;
 }
+.main-nav.loading-active ul li a {
+	cursor: auto;
+    pointer-events: none;
+    opacity: 0.5;
+}
 .form-control {
 	padding: .75rem;
 	border-radius: .25rem;

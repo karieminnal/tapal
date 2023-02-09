@@ -37,9 +37,9 @@
 
 	}
 
-	loadJS('<?= base_url() ?>assets/js/config.js', scriptOnLoad, document.body);
-	loadJS('<?= base_url() ?>assets/js/peta.js', scriptOnLoad, document.body);
-	loadJS('<?= base_url() ?>assets/js/peta-new.js', scriptOnLoad, document.body);
+	loadJS('<?= base_url() ?>assets/js/config-min.js', scriptOnLoad, document.body);
+	loadJS('<?= base_url() ?>assets/js/peta-min.js', scriptOnLoad, document.body);
+	loadJS('<?= base_url() ?>assets/js/peta-new-min.js', scriptOnLoad, document.body);
 
 	<?php if (isset($userdata['nama'])) : ?>
 		loadJS('<?= base_url() ?>assets/front/js/main.id.min.js', scriptOnLoad, document.body);
@@ -131,19 +131,14 @@
 	var loadingAset = L.control({
 		position: 'topleft',
 	});
+
 	loadingControl(loadingAset, map);
-
-	<?php if (isset($userdata['nama'])) : ?>
-		
-	<?php endif; ?>
-
 	toggleClear(map);
-
 	var info = L.control({
-		position: 'topright'
+		position: 'topright',
 	});
 	var legend = L.control({
-		position: 'bottomright'
+		position: 'bottomright',
 	});
 	var lahanControl = L.control.groupedLayers();
 	var lahanControlUkuran = L.control({
@@ -153,20 +148,6 @@
 	var persilGroup = L.layerGroup().addTo(map);
 	var markerGroup = L.layerGroup().addTo(map);
 
-	var searchContainer = L.control({
-		position: 'topleft',
-		collapsed: true,
-	});
-	var searchControlGroup = L.control({
-		position: 'topleft'
-	});
-	var searchControlGroup2 = L.control({
-		position: 'topleft'
-	});
-	var searchControlGroup3 = L.control({
-		position: 'topleft'
-	});
-
 	var sebaranControl = L.control.layers();
 	var markerSarana = L.control.groupedLayers();
 
@@ -174,205 +155,48 @@
 	$('#isi_popup_dusun').remove();
 	$('#isi_popup_rw').remove();
 	$('#isi_popup_rt').remove();
-
-	$('#pilihDesa').select2({
-		placeholder: 'Pilih Desa',
-		language: 'id',
-		width: '100%',
-	});
-	$('#pilihDesa').change(function () {
-		var id = $(this).val();
-		var getId = $(this).select2("val");
-		if(getId !=0) {
-			var latDesa = $(this).find(":selected").data("lat");
-			var lngDesa = $(this).find(":selected").data("lng");
-			var pathDesa = $(this).find(":selected").data("path");
-			var toDesa = new L.LatLngBounds(
-			new L.LatLng(latDesa, lngDesa),
-			new L.LatLng(latDesa, lngDesa));
-			if(pathDesa != '') {
-				map.flyTo([latDesa, lngDesa], 14, {
-					animate: true,
-					duration: 3
-				});
-			}
-			clearExlude(getId);
-		} else {
-			$('.leaflet-interactive.poly-desa, .leaflet-interactive.poly-wil').removeClass('fade-poly');
-			map.flyTo([<?= $data_prov['lat'] . "," . $data_prov['lng'] ?>], 9, {
-				animate: true,
-				duration: 1.5
-			});
-		}
-		$.ajax({
-			type: 'POST',
-			dataType: 'html',
-			url: '/first/filterIdDesa?',
-			data: 'filterIdDesa=' + getId,
-			success: function (msg) {
-				bersihkan();
-				if(getId=0) {
-					$('.leaflet-interactive.poly-desa, .leaflet-interactive.poly-wil').removeClass('fade-poly');
-				}
-			},
-		});
-		changeSesi(getId);
-	});
-
-	function changeSesi(val) {
-		$('input#sesiDesa').val(val);
-		$('.main-nav ul li a:not(.has-child)').attr('data-desaid', val);
-	}
+	triggerPilihDesa(map, <?= $data_prov['lat'] ?>, <?= $data_prov['lng'] ?>);
 	
 	$('[data-trigger="showWilayahAdministrasi"]').click(function(e) {
-		clearControl();
+		clearControl(map);
 		menuActive(e.currentTarget);
 		triggerMenu(map);
 		mainlayer.addTo(map);
 	});
 
 	$('[data-trigger="showMarkerAllSub"]').click(function(e) {
-		clearControl();
-		menuActive(e.currentTarget);
-
 		var thisFilter = $(this).attr('data-filter');
 		var thisType = $(this).attr('filter-kategori');
 		var idJenis = $(this).attr('id-jenis');
 		var desaId = $(this).attr('data-desaid');
 
-		$.getJSON(config.apiLokasi+'/'+desaId, function(data) {
-			var featureLok = setLayerCustomSaranaAll(data, '<?= base_url() . LOKASI_SIMBOL_LOKASI ?>', idJenis, thisFilter, thisType, map);
-			var lokCheck = L.control.groupedLayers(baseLayers, featureLok, {
-				position: 'topleft',
-				collapsed: false,
-				groupCheckboxes: true
-			});
-			markerSarana = lokCheck.addTo(map);
-			map.removeControl(loadingAset);
-			triggerMenu(map);
-		});
-		return markerSarana;
-	});
-
-	$('[data-trigger="showPersil"]').click(function(e) {
-		clearControl();
-		menuActive(e.currentTarget);
-		$.getJSON(config.apiPersil, function(data) {
-			var featureLayer = setLayerCustomPersil(data, map, '#FC4E2A').addTo(persilGroup);
-
-			var searchControlAdd = mainlayer.getContainer();
-			var searchContainerLayer = L.control({
-				position: 'topleft',
-			});
-			searchContainerLayer.onAdd = function(map) {
-				let searchDiv = L.DomUtil.create("div");
-				$(searchDiv).addClass("leaflet-control-layers leaflet-control search-container");
-				$(searchDiv).attr("id", "search-check-container");
-				var selectForm = '<select id="selectSearchType" class="form-control form-control-sm" onchange="selectSearch()"><option value="1">Nomor SPPT</option><option value="2">Nama Pemilik</option><option value="3">NIB</option></select>';
-				$(searchDiv).html('<div class="form-group"><label for="selectSearchType">Cari berdasarkan :</label>' + selectForm + '</div>');
-				$(searchDiv).appendTo(searchControlAdd);
-				L.DomEvent.disableClickPropagation(searchDiv);
-				return searchDiv;
-			};
-			searchContainer = searchContainerLayer.addTo(map);
-
-			var searchControl = new L.Control.Search({
-				layer: featureLayer,
-				propertyName: 'Nomor_SPPT',
-				marker: false,
-				zoom: 18,
-				idUnique: 'searchSppt',
-				container: 'search-check-container',
-				textPlaceholder: 'ketik...',
-				textErr: 'Data tidak ditemukan',
-				moveToLocation: function(latlng, title, map) {
-					map.setView(latlng, 18);
-				}
-			});
-
-			searchControl.on('search:locationfound', function(e) {
-				e.layer.setStyle({
-					fillColor: configColor.hightlight,
+		if(desaId != 0) {
+			clearControl(map);
+			menuActive(e.currentTarget);
+			$.getJSON(config.apiLokasi+'/'+desaId, function(data) {
+				var featureLok = setLayerCustomSaranaAll(data, '<?= base_url() . LOKASI_SIMBOL_LOKASI ?>', idJenis, thisFilter, thisType, map);
+				var lokCheck = L.control.groupedLayers(baseLayers, featureLok, {
+					position: 'topleft',
+					collapsed: false,
+					groupCheckboxes: true
 				});
-				if (e.layer._popup) {
-					e.layer.openPopup();
-				}
-			}).on('search:collapsed', function(e) {
-				featureLayer.eachLayer(function(layer) {
-					featureLayer.resetStyle(layer);
-				});
+				markerSarana = lokCheck.addTo(map);
+				map.removeControl(loadingAset);
+				$('.main-nav').removeClass('loading-active');
+				triggerMenu(map);
 			});
-
-			var searchControl2 = new L.Control.Search({
-				layer: featureLayer,
-				propertyName: 'Nama_Pemil',
-				marker: false,
-				zoom: 18,
-				idUnique: 'searchNama',
-				container: 'search-check-container',
-				textPlaceholder: 'ketik...',
-				textErr: 'Data tidak ditemukan',
-				moveToLocation: function(latlng, title, map) {
-					map.setView(latlng, 18);
-				}
-			});
-
-			searchControl2.on('search:locationfound', function(e) {
-				e.layer.setStyle({
-					fillColor: configColor.hightlight,
-				});
-				if (e.layer._popup) {
-					e.layer.openPopup();
-				}
-			}).on('search:collapsed', function(e) {
-				featureLayer.eachLayer(function(layer) {
-					featureLayer.resetStyle(layer);
-				});
-			});
-
-			var searchControl3 = new L.Control.Search({
-				layer: featureLayer,
-				propertyName: 'NIB',
-				marker: false,
-				zoom: 18,
-				idUnique: 'searchNib',
-				container: 'search-check-container',
-				textPlaceholder: 'ketik...',
-				textErr: 'Data tidak ditemukan',
-				moveToLocation: function(latlng, title, map) {
-					map.setView(latlng, 18);
-				}
-			});
-
-			searchControl3.on('search:locationfound', function(e) {
-				e.layer.setStyle({
-					fillColor: configColor.hightlight,
-				});
-				if (e.layer._popup) {
-					e.layer.openPopup();
-				}
-			}).on('search:collapsed', function(e) {
-				featureLayer.eachLayer(function(layer) {
-					featureLayer.resetStyle(layer);
-				});
-			});
-
-			searchControlGroup = searchControl.addTo(map);
-			searchControlGroup2 = searchControl2.addTo(map);
-			searchControlGroup3 = searchControl3.addTo(map);
-
-			map.removeControl(loadingAset);
-			triggerMenu(map);
-		});
-		persilGroup.addTo(map);
-		return searchContainer, searchControlGroup, searchControlGroup2, searchControlGroup3;
+			return markerSarana;
+		} else {
+			alert('Silakan pilih desa terlebih dahulu');
+		}
 	});
 
 	$('[data-trigger="showTutupanLahan"]').click(function(e) {
-		clearControl();
+		clearControl(map);
 		menuActive(e.currentTarget);
 		lahanControl.addTo(map);
 		map.removeControl(loadingAset);
+		$('.main-nav').removeClass('loading-active');
 		triggerMenu(map);
 		var lahanControlAdd = lahanControl.getContainer();
 		lahanControlAdd.setAttribute("id", "lahan-check-container");
@@ -398,42 +222,47 @@
 			});
 			
 			lahanControl = lahanCheck;
-			return lahanControl, lahanControlUkuran;
+			return lahanControl;
 		});
 	}
 	
 	$('[data-trigger="showKependudukan"]').click(function(e) {
-		clearControl();
-		menuActive(e.currentTarget);
 		var thisFilter = $(this).attr('data-filter');
 		var idJenis = $(this).attr('data-key');
 		var desaId = $(this).attr('data-desaid');
 
-		$.ajax({
-			url: config.apiStat + '/' + idJenis+'/'+desaId,
-			dataType: 'json',
-			success: function(data) {
-				var featureLayer = setLayerSebaran(data, idJenis, thisFilter, map);
-				var sebaranCheck = L.control.groupedLayers(baseLayers, featureLayer, {
-					position: 'topleft',
-					collapsed: false,
-					exclusiveGroups: ['<b style="text-transform:uppercase;">' + thisFilter + '</b>'],
-					groupCheckboxes: true
-				});
+		if(desaId != 0) {
+			clearControl(map);
+			menuActive(e.currentTarget);
+			$.ajax({
+				url: config.apiStat + '/' + idJenis+'/'+desaId,
+				dataType: 'json',
+				success: function(data) {
+					var featureLayer = setLayerSebaran(data, idJenis, thisFilter, map);
+					var sebaranCheck = L.control.groupedLayers(baseLayers, featureLayer, {
+						position: 'topleft',
+						collapsed: false,
+						exclusiveGroups: ['<b style="text-transform:uppercase;">' + thisFilter + '</b>'],
+						groupCheckboxes: true
+					});
 
-				sebaranControl = sebaranCheck.addTo(map);
-				map.removeControl(loadingAset);
-				triggerMenu(map);
-			},
-		});
-		return sebaranControl;
+					sebaranControl = sebaranCheck.addTo(map);
+					map.removeControl(loadingAset);
+					$('.main-nav').removeClass('loading-active');
+					triggerMenu(map);
+				},
+			});
+			return sebaranControl;
+		} else {
+			alert('Silakan pilih desa terlebih dahulu');
+		}
 	});
 
 	function loadDataSebaranPenduduk(idJenis,desaId) {
 	}
 
 	function leuitLokasi(lat, lng, nama, volume, kekeringan, alamat, foto) {
-		clearControl();
+		clearControl(map);
 		$('.list_kategori').find('li').removeClass('current-menu');
 		$('#modalStruktur').modal('hide');
 		map.panTo(new L.LatLng(lat, lng));
@@ -463,81 +292,10 @@
 	toggleMenu(map);
 	resizeWindow(map);
 
-	function selectSearch() {
-		$('.leaflet-control-search').hide();
-		var thisVal = $('#selectSearchType').val();
-		if (thisVal == 1) {
-			$('.leaflet-control-search').hide();
-			$('#searchSppt').show();
-		} else if (thisVal == 2) {
-			$('.leaflet-control-search').hide();
-			$('#searchNama').show();
-		} else if (thisVal == 3) {
-			$('.leaflet-control-search').hide();
-			$('#searchNib').show();
-		} else {
-			$('.leaflet-control-search').hide();
-			map.invalidateSize();
-			map.setZoom(16);
-		}
-	}
-
-	function clearControl() {
-		bersihkan();
-		loadingAset.addTo(map);
-	}
-
-	function bersihkan() {
-		$('.leaflet-interactive:not(.not-clear):not(.poly-desa), .leaflet-tooltip:not(.not-clear)').remove();
-		markerGroup.clearLayers();
-
-		var thisCheck = $('.leaflet-top.leaflet-left .leaflet-control-layers:not(.lahan-check-container) input[type="checkbox"]');
-		$(thisCheck).each(function(index, value) {
-			if ($(this).is(':checked')) {
-				$(this).trigger('click');
-				$(this).removeAttr('checked');
-			}
-		});
-
-		$('.info-sebaran').remove();
-
-		map.removeControl(lahanControl);
-		map.removeControl(lahanControlUkuran);
-		map.removeControl(sebaranControl);
-		map.removeControl(markerSarana);
-		map.removeControl(searchContainer);
-		map.removeControl(searchControlGroup);
-		map.removeControl(searchControlGroup2);
-		map.removeControl(searchControlGroup3);
-		map.removeLayer(persilGroup);
-		map.closePopup();
-		$('.list_kategori').find('li').removeClass('current-menu');
-	}
-
-	function clearExlude(id) {
-		$('.leaflet-interactive:not(.not-clear):not(.poly-desa), .leaflet-tooltip:not(.not-clear)').remove();
-		$('.leaflet-interactive.poly-desa, .leaflet-interactive.poly-wil').removeClass('fade-poly');
-		$('.leaflet-interactive.poly-desa:not(.desa-'+id+')').addClass('fade-poly');
-	}
-
-	function menuActive(el) {
-		$('.list_kategori').find('li').removeClass('current-menu');
-		$(el).parent('li').addClass('current-menu');
-	}
-
 	$('document').ready(function() {
 		checkSandi('<?= $_SESSION['user'] ?>');
 		submitSetting('<?= $_SESSION['user'] ?>');
 	});
-	
-	function filterFormDesa(idForm, action, target = '') {
-		csrf_semua_form();
-		if (target != '') {
-			$('#' + idForm).attr('target', target);
-		}
-		$('#' + idForm).attr('action', action);
-		$('#' + idForm).submit();
-	}
 </script>
 
 

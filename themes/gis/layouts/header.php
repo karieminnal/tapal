@@ -104,7 +104,7 @@
 				<!-- <label class="control-label col-sm-12" >Zoom Wilayah</label> -->
 				<div class="col-sm-12">          
 					<select class="form-control" name="kota" id="pilihDesa">
-						<option value="0">Default (Provinsi)</option>
+						<option value="0">Pilih Desa</option>
 						<?php foreach ($listkab as $kablist) { ?>
 							<optgroup label="<?php echo $kablist['nama_kabupaten'] ?>">
 								<?php
