@@ -238,7 +238,7 @@
 				url: config.apiStat + '/' + idJenis+'/'+desaId,
 				dataType: 'json',
 				success: function(data) {
-					var featureLayer = setLayerSebaran(data, idJenis, thisFilter, map);
+					var featureLayer = setLayerSebaran(data, idJenis, thisFilter, map, desaId);
 					var sebaranCheck = L.control.groupedLayers(baseLayers, featureLayer, {
 						position: 'topleft',
 						collapsed: false,

@@ -819,7 +819,7 @@ class Laporan_penduduk_api_model extends MY_Model
 		return $data;
 	}
 
-	public function list_data_api_kat($lap = 0, $o = 0)
+	public function list_data_api_kat($lap = 0, $o = 0, $desaId)
 	{
 		$this->lap = $lap;
 		if ($lap > 50) {
@@ -827,6 +827,9 @@ class Laporan_penduduk_api_model extends MY_Model
 		}
 
 		$this->load->model('statistik_penduduk_api_model');
+		if($desaId) {
+			$this->db->where("a.id_desa", $desaId);
+		}
 		if ($statistik = $this->statistik_penduduk_api_model->statistik($lap)) {
 			// Statistik yg sudah di-refactor
 			$namespace = $statistik;

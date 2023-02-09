@@ -465,7 +465,7 @@ class Api_custom extends Api_Controller
 		$this->output->set_output(json_encode($result));
 	}
 
-	public function statistik_sub($kat)
+	public function statistik_sub($kat, $desaId)
 	{
 		if(isset($_REQUEST['logApp']) && $_REQUEST['logApp'] == 'true') {
 
@@ -474,7 +474,7 @@ class Api_custom extends Api_Controller
 			// 	redirect("");
 		}
 		$this->log_request();
-		$lapKats = $this->laporan_penduduk_api_model->list_data_api_kat($kat);
+		$lapKats = $this->laporan_penduduk_api_model->list_data_api_kat($kat,0,$desaId);
 		$arrmer = [];
 		foreach ($lapKats as $k => $v) {
 			$arrmer[$v['nama']] = $v['jumlah'];

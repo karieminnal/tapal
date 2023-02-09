@@ -476,13 +476,13 @@ function petaProv(map) {
   });
 }
 
-function setLayerSebaran(paths, idJenis, namaJenis, map) {
+function setLayerSebaran(paths, idJenis, namaJenis, map, desaId) {
   var thisJenis = namaJenis;
 
   var labelControlStat = {};
   $.ajax({
     async: false,
-    url: config.apiStatSub + '/' + idJenis,
+    url: config.apiStatSub + '/' + idJenis+ '/' + desaId,
     dataType: 'json',
     success: function (data) {
       for (var key in data) {
