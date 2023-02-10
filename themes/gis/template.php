@@ -174,7 +174,7 @@
 			clearControl(map);
 			menuActive(e.currentTarget);
 			$.getJSON(config.apiLokasi+'/'+desaId, function(data) {
-				var featureLok = setLayerCustomSaranaAll(data, '<?= base_url() . LOKASI_SIMBOL_LOKASI ?>', idJenis, thisFilter, thisType, map);
+				var featureLok = setLayerCustomSaranaAll(data, '<?= base_url() . LOKASI_SIMBOL_LOKASI ?>', idJenis, thisFilter, thisType, map, desaId);
 				var lokCheck = L.control.groupedLayers(baseLayers, featureLok, {
 					position: 'topleft',
 					collapsed: false,

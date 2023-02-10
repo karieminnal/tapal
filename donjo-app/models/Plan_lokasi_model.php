@@ -413,6 +413,26 @@ class Plan_lokasi_model extends MY_Model
 		return $data;
 	}
 
+	public function jumlah_by_kat($ref_point, $desaId)
+	{
+		$this->db
+			->select('COUNT(l.id) AS jumlah')
+			->from('lokasi l')
+			->join('point p', 'l.ref_point = p.id', 'left')
+			->join('point m', 'p.parrent = m.id', 'left')
+			->join('tweb_wil_clusterdesa d', 'l.id_cluster = d.id', 'left')
+			->join('config c', 'd.id_desa = c.id', 'left')
+			->where('l.enabled = 1')
+			->where('l.ref_point', $ref_point)
+			->where('p.enabled = 1')
+			->where('m.enabled = 1');
+		if($desaId) {
+			$this->db->where("d.id_desa", $desaId);
+		}
+		$data = $this->db->get()->result_array();
+		return $data;
+	}
+
 	public function list_lokasi_kat($kategori)
 	{
 		$data = $this->db

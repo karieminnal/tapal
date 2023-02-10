@@ -482,14 +482,18 @@ function setLayerSebaran(paths, idJenis, namaJenis, map, desaId) {
   var labelControlStat = {};
   $.ajax({
     async: false,
-    url: config.apiStatSub + '/' + idJenis+ '/' + desaId,
+    url: config.apiStatSub + '/' + idJenis + '/' + desaId,
     dataType: 'json',
     success: function (data) {
       for (var key in data) {
         var thisNama = key;
         var totalSebaran = data[key];
         var thisNamaStyle =
-          '<span class="toggle-sebaran-penduduk">' + key + '</span>';
+          '<span class="toggle-sebaran-penduduk">' +
+          key +
+          ' (' +
+          convertRibuan(totalSebaran) +
+          ' Jiwa)</span>';
         labelControlStat[thisNamaStyle] = poligonAreaSebaran(
           paths,
           thisNama,
@@ -537,8 +541,8 @@ function poligonAreaSebaran(paths, thisNama, idJenis, namaJenis, totalSebaran) {
           '<br>Dusun ' +
           props.dusun +
           '<br>Jumlah : <b>' +
-          getJml +
-          ' orang</b>'
+          convertRibuan(getJml) +
+          ' Jiwa</b>'
         : '');
   };
 
@@ -605,7 +609,7 @@ function poligonAreaSebaran(paths, thisNama, idJenis, namaJenis, totalSebaran) {
         '<br> Jumlah : ' +
         '<span class="jml-orang"><b>' +
         getJml +
-        '</b></span> orang' +
+        '</b></span> Jiwa' +
         '</p>' +
         '</div>';
       layer.bindPopup(content_pop);
@@ -653,6 +657,7 @@ function setLayerCustomSaranaAll(
   jenis,
   kategori,
   map,
+  desaId,
 ) {
   var thisSimbol = pathSimbol;
   var thisJenis = idJenis;
@@ -662,7 +667,7 @@ function setLayerCustomSaranaAll(
   var labelControlMarkerAll = {};
   $.ajax({
     async: false,
-    url: config.apiLokasiKategori,
+    url: config.apiLokasiKategori + '/' + desaId,
     dataType: 'json',
     success: function (data) {
       var filterJenis = data.filter(function (v) {
@@ -670,7 +675,14 @@ function setLayerCustomSaranaAll(
       });
       var jml = filterJenis.length;
       for (var x = 0; x < jml; x++) {
-        var thisNama = filterJenis[x].nama;
+        var getJml;
+        var thisJumlah = filterJenis[x].jumlah;
+        if (thisJumlah != 0) {
+          getJml = ' (<b>' + thisJumlah + '</b>)';
+        } else {
+          getJml = ' (' + thisJumlah + ')';
+        }
+        var thisNama = filterJenis[x].nama + getJml;
         var thisLabel = thisNama + '-' + filterJenis[x].id;
         var thisKategori = filterJenis[x].id;
         labelControlMarkerAll[thisNama] = saranaLayer(

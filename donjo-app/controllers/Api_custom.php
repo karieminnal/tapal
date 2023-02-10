@@ -225,13 +225,32 @@ class Api_custom extends Api_Controller
 		$this->output->set_output(json_encode($result));
 	}
 
-	public function plan_lokasi_kategori()
+	public function plan_lokasi_kategori($desaId)
 	{
 		$this->log_request();
+		$result = [];
 		// $jenis = $_REQUEST['jenis'];
 		$dataArray = $this->plan_point_model->get_lokasi_kategori();
+		foreach ($dataArray as $kat) {
+			$jmlArray = $this->plan_lokasi_model->jumlah_by_kat($kat['id'], $desaId);
+			$getjml = '';
+			foreach ($jmlArray as $jml) {
+				$getjml = $jml['jumlah'];
+			}
+			$tmp = array(
+				"id" => $kat['id'],
+				"nama" => $kat['nama'],
+				"simbol" => $kat['simbol'],
+				"tipe" => $kat['tipe'],
+				"parrent" => $kat['parrent'],
+				"enabled" => $kat['enabled'],
+				"urutan" => $kat['urutan'],
+				"jumlah" => $getjml,
+			);
+			$result[] = $tmp;
+		}
 		header('Content-Type: application/json');
-		$this->output->set_output(json_encode($dataArray));
+		$this->output->set_output(json_encode($result));
 	}
 
 	public function plan_lokasi_jenis()
