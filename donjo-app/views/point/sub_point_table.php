@@ -41,6 +41,7 @@
 																	<th><input type="checkbox" id="checkall" /></th>
 																	<th>No</th>
 																	<th>Aksi</th>
+																	<th>ID Jenis</th>
 																	<th>Nama</th>
 																	<th>Aktif</th>
 																	<th>Urutan</th>
@@ -61,6 +62,7 @@
 																			<?php endif; ?>
 																			<a href="#" data-href="<?= site_url("point/delete_sub_point/$point[id]/$data[id]") ?>" class="btn bg-maroon btn-flat btn-sm" title="Hapus" data-toggle="modal" data-target="#confirm-delete"><i class="fa fa-trash-o"></i></a>
 																		</td>
+																		<td width="10%"><?= $data['id'] ?></td>
 																		<td width="70%"><?= $data['nama'] ?></td>
 																		<td><?= $data['aktif'] ?></td>
 																		<td><?= $data['urutan'] ?></td>

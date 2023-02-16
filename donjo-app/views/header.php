@@ -152,7 +152,9 @@
 													$kab = $desa['nama_kabupaten'];
 													$newKab = str_replace("KABUPATEN","KAB. ",$kab);
 												?>
-												<option value="<?php echo $desa['id'] ?>" <?php if ($_SESSION['filterDesa'] == $desa['id']) : ?>selected<?php endif ?>>&#x2192; <?php echo $desa['nama_desa'] ?></option>
+												<option value="<?php echo $desa['id'] ?>" <?php if ($_SESSION['filterDesa'] == $desa['id']) : ?>selected<?php endif ?>
+													>&#x2192; <?php echo $desa['nama_desa'] ?>
+												</option>
 											<?php } ?>
 										<?php } ?>
 									</select>

@@ -14,7 +14,7 @@ class Setting_provinsi extends Admin_Controller {
 		$this->load->model('header_model');
 		$this->load->model('config_model');
 		$this->load->model('wilayah_model');
-		$this->modul_ini = 11;
+		$this->modul_ini = 227;
 		$this->sub_modul_ini = 226;
 		$this->header = $this->header_model->get_data();
 	}

@@ -66,13 +66,9 @@
 						<div class="box-body">
 							<div class="clone-input">
 								<input id="nama_propinsi" name="nama_propinsi" class="form-control input-sm required" type="hidden" placeholder="Nama Provinsi" value="<?= $main["nama_propinsi"]; ?>" />
-								<input id="kode_propinsi" name="kode_propinsi" class="form-control input-sm bilangan required" type="hidden" placeholder="Kode Provinsi" value="<?= $main["kode_propinsi"]; ?>" />
 								<input id="nama_kabupaten" name="nama_kabupaten" class="form-control input-sm nama_terbatas required" type="hidden" placeholder="Nama <?= $kabupaten; ?>" value="<?= $main["nama_kabupaten"]; ?>" />
-								<input id="kode_kabupaten" name="kode_kabupaten" class="form-control input-sm bilangan required" type="hidden" placeholder="Kode <?= $kabupaten; ?>" value="<?= $main["kode_kabupaten"]; ?>" />
 								<input id="nama_kecamatan" name="nama_kecamatan" class="form-control input-sm nama_terbatas required" type="hidden" placeholder="Nama <?= $kecamatan; ?>" value="<?= $main["nama_kecamatan"]; ?>" />
-								<input id="kode_kecamatan" name="kode_kecamatan" class="form-control input-sm bilangan required" type="hidden" placeholder="Kode <?= $kecamatan; ?>" value="<?= $main['kode_kecamatan']; ?>" />
 								<input id="nama_desa" name="nama_desa" class="form-control input-sm nama_terbatas required" type="hidden" placeholder="Nama <?= $desa; ?>" value="<?= $main["nama_desa"]; ?>" />
-								<input id="kode_desa" name="kode_desa" class="form-control input-sm bilangan required" type="hidden" placeholder="Kode <?= $desa; ?>" value="<?= $main["kode_desa"]; ?>" />
 							</div>
 							<input id="nip_kepala_desa" name="nip_kepala_desa" class="form-control input-sm nomor_sk" maxlength="50" type="hidden" placeholder="NIP Kepala <?= $desa; ?>" value="<?= $main["nip_kepala_desa"]; ?>" />
 							<input id="nip_kepala_camat" name="nip_kepala_camat" class="form-control input-sm nomor_sk" maxlength="50" type="hidden" placeholder="NIP <?= ucwords($this->setting->sebutan_camat) ?>" value="<?= $main["nip_kepala_camat"]; ?>" />
@@ -86,6 +82,11 @@
 										<?php } ?>
 									</select>
 									<img src="<?= base_url() ?>assets/images/loader.gif" id="load2" style="display:none;" />
+									<div class="row clone-input">
+										<div class="col-md-8">
+											<input id="kode_propinsi" name="kode_propinsi" class="form-control input-sm bilangan required" type="text" placeholder="Kode Provinsi" value="<?= $main["kode_propinsi"]; ?>" disabled/>
+										</div>
+									</div>
 								</div>
 							</div>
 							<div class="form-group row row-kota">
@@ -100,6 +101,11 @@
 										<?php } ?>
 									</select>
 									<img src="<?= base_url() ?>assets/images/loader.gif" id="load2" style="display:none;" />
+									<div class="row clone-input">
+										<div class="col-md-8">
+											<input id="kode_kabupaten" name="kode_kabupaten" class="form-control input-sm bilangan required" type="text" placeholder="Kode Kota/Kabupaten" value="<?= $main["kode_kabupaten"]; ?>" disabled/>
+										</div>
+									</div>
 								</div>
 							</div>
 							<div class="form-group row row-kecamatan">
@@ -115,6 +121,11 @@
 									</select>
 									<div class="text-center"></div>
 									<img src="<?= base_url() ?>assets/images/loader.gif" id="load3" style="display:none;" />
+									<div class="row clone-input">
+										<div class="col-md-8">
+											<input id="kode_kecamatan" name="kode_kecamatan" class="form-control input-sm bilangan required" type="text" placeholder="Kode Kecamatan" value="<?= $main["kode_kecamatan"]; ?>" disabled/>
+										</div>
+									</div>
 								</div>
 							</div>
 							<div class="form-group row row-desa">
@@ -128,6 +139,11 @@
 											<?php } ?>
 										<?php } ?>
 									</select>
+									<div class="row clone-input">
+										<div class="col-md-8">
+											<input id="kode_desa" name="kode_desa" class="form-control input-sm bilangan required" type="text" placeholder="Kode Desa" value="<?= $main["kode_desa"]; ?>" disabled/>
+										</div>
+									</div>
 								</div>
 							</div>
 							<div class="form-group">

@@ -596,3 +596,16 @@ Agar Logo Desa di menu navigasi Admin di sisi kiri tidak terlalu rapat ke kiri
     top: 53px;
     right: 14px;
 }
+
+tr.group,
+tr.group:hover {
+    background-color: #eee !important;
+}
+tr.group td {
+	font-weight: bold;
+	padding: 8px!important;
+}
+
+.nowrap {
+	white-space: nowrap!important;
+}

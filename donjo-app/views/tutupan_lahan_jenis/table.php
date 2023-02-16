@@ -36,6 +36,7 @@
 																	<th width="1%"><input type="checkbox" id="checkall" /></th>
 																	<th width="1%">No</th>
 																	<th width="1%">Aksi</th>
+																	<th width="5%">ID Jenis</th>
 																	<?php if ($o == 2) : ?>
 																		<th><a href="<?= site_url("tutupan_lahan_jenis/index/$p/1") ?>">Jenis <i class='fa fa-sort-asc fa-sm'></i></a></th>
 																	<?php elseif ($o == 1) : ?>
@@ -44,7 +45,6 @@
 																		<th><a href="<?= site_url("tutupan_lahan_jenis/index/$p/1") ?>">Jenis <i class='fa fa-sort fa-sm'></i></a></th>
 																	<?php endif; ?>
 																	<th width="10%">Warna</th>
-																	<th width="20%"></th>
 																</tr>
 															</thead>
 															<tbody>
@@ -56,6 +56,7 @@
 																			<a href="<?= site_url("tutupan_lahan_jenis/form/$p/$o/$data[id]") ?>" class="btn btn-warning btn-flat btn-sm" title="Ubah"><i class="fa fa-edit"></i></a>
 																			<a href="#" data-href="<?= site_url("tutupan_lahan_jenis/delete/$p/$o/$data[id]") ?>" class="btn bg-maroon btn-flat btn-sm" title="Hapus" data-toggle="modal" data-target="#confirm-delete"><i class="fa fa-trash-o"></i></a>
 																		</td>
+																		<td><?= $data['id'] ?></td>
 																		<td width="40%"><?= $data['nama'] ?></td>
 																		<td >
 																			<div style="background-color:<?= $data['warna'] ?>">&nbsp;<div>

@@ -13,7 +13,7 @@ class Database extends Admin_Controller
 		$this->load->dbforge();
 		$this->load->model(['header_model', 'import_model', 'export_model', 'database_model']);
 		$this->_header = $this->header_model->get_data();
-		$this->modul_ini = 11;
+		$this->modul_ini = 227;
 		$this->sub_modul_ini = 45;
 	}
 
