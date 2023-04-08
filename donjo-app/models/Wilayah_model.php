@@ -107,7 +107,6 @@
 		$filterDesa = $_SESSION['filterDesa'];
 		$data = $this->bersihkan_data($this->input->post());
 		$wil = array(
-			'dusun' => $data['dusun'],
 			'rw' => '-',
 			'rt' => '-',
 			'dusun' => $data['dusun'],
@@ -378,6 +377,15 @@
 		return $data;
 	}
 
+	public function cluster_by_desa($desaid = 0)
+	{
+		$data = $this->db->where('id_desa', $desaid)
+			->order_by('dusun ASC, rw ASC, rt ASC')
+			->get('tweb_wil_clusterdesa')
+			->result_array();
+		return $data;
+	}
+
 	public function list_dusun()
 	{
 		$filterDesa = $_SESSION['filterDesa'];
@@ -471,7 +479,6 @@
 		return $data;
 	}
 
-
 	public function list_rt($dusun = '', $rw = '')
 	{
 		$filterDesa = $_SESSION['filterDesa'];
@@ -486,6 +493,7 @@
 
 		return $data;
 	}
+
 	public function list_rt_bydesa($dusun = '', $rw = '')
 	{
 		$filterDesa = $_SESSION['filterDesa'];
