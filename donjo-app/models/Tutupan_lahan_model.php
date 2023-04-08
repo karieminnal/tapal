@@ -163,10 +163,10 @@ class Tutupan_lahan_model extends MY_Model
 		foreach ($data as &$k) {
 			$k['jenis'] = $_POST['jenis'];
 			$k['id_desa'] = $filterDesa;
-			$k['luas'] = $k['props']['Luas'];
-			$k['pemilik'] = $k['props']['Pemilik'];
-			$k['kelas'] = $k['props']['Kelas'];
-			$k['alamat'] = $k['props']['Alamat'];
+			$k['luas'] = $k['props']['luas'];
+			$k['pemilik'] = $k['props']['pemilik'];
+			// $k['kelas'] = $k['props']['Kelas'];
+			$k['alamat'] = 'DUSUN '.$k['props']['dusun'].' RW '.$k['props']['rw'].' RT '.$k['props']['rt'];
 			$k['deskripsi'] = $k['props']['more_info'];
 			unset($k['props']);
 		}
@@ -181,7 +181,7 @@ class Tutupan_lahan_model extends MY_Model
 		$this->db->set('jenis', $_POST['jenis']);
 		$this->db->set('luas', $_POST['luas']);
 		$this->db->set('pemilik', $_POST['pemilik']);
-		$this->db->set('kelas', $_POST['kelas']);
+		// $this->db->set('kelas', $_POST['kelas']);
 		$this->db->where('id', $_POST['id']);
 		$outp = $this->db->update('tutupan_lahan');
 		status_sukses($outp);

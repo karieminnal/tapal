@@ -8,10 +8,10 @@
 	</section>
 	<section class="content" id="maincontent">
 		<div class="row">
-			<div class="col-md-4 col-lg-3">
-				<?php $this->load->view('data_persil/menu_kiri.php') ?>
-			</div>
-			<div class="col-md-8 col-lg-9">
+			<!-- <div class="col-md-4 col-lg-3">
+				<?php /* $this->load->view('data_persil/menu_kiri.php') */ ?>
+			</div> -->
+			<div class="col-md-12">
 				<div class="box box-info">
 					<div class="box-header">
 						<h4 class="text-center"><strong>DAFTAR TUTUPAN LAHAN</strong></h4>
@@ -47,6 +47,7 @@
 															<th>Jenis</th>
 															<th>Luas (Ha)</th>
 															<th>Pemilik</th>
+															<th>Alamat</th>
 															<th>Ditambahkan</th>
 															<th>Diedit</th>
 														</tr>
@@ -59,6 +60,7 @@
 																<td><?= $item['jenis_nama'] ?></td>
 																<td><?= $item['luas'] ?></td>
 																<td><?= $item['pemilik'] ?></td>
+																<td><?= $item['alamat'] ?></td>
 																<td><?= date("d/m/Y H:i", strtotime($item['tgl_diimport'])) ?></td>
 																<td><?= date("d/m/Y H:i", strtotime($item['tgl_diupdate'])) ?></td>
 															</tr>

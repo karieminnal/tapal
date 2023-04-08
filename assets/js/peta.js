@@ -709,7 +709,7 @@ function eximShpPersil(layerpeta, page) {
             switch (page) {
               case 'tutupan_lahan':
                 document.getElementById('jenis').value =
-                  geojson.features[0].properties.Land_Use_I;
+                  geojson.features[0].properties.id_jenis;
                 document.getElementById('pemilik').value =
                   JSON.stringify(arr_res);
                 document.getElementById('alamat').value =
@@ -718,7 +718,7 @@ function eximShpPersil(layerpeta, page) {
                 break;
               case 'leuit_sawah':
                 document.getElementById('jenis').value =
-                  geojson.features[0].properties.Land_Use_I;
+                  geojson.features[0].properties.id_jenis;
                 document.getElementById('pemilik').value =
                   JSON.stringify(arr_res);
                 document.getElementById('kelas').value =

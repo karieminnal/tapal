@@ -1,8 +1,13 @@
-<div class="image-modal-top mb-5" style="height: 300px;overflow: hidden;display: flex;">
-	<img src="<?= gambar_desa($desa['kantor_desa'], TRUE) ?>" alt="" style="width: 100%; object-fit: cover;">
-</div>
+<?php if($desa['kantor_desa'] != NULL) { ?>
+	<div class="image-modal-top mb-5" style="height: 300px;overflow: hidden;display: flex;">
+		<img src="<?= gambar_desa($desa['kantor_desa'], TRUE) ?>" alt="" style="width: 100%; object-fit: cover;">
+	</div>
+<?php } ?>
 <div class="media mb-5">
-	<img class="align-self-start mr-3" src="<?= gambar_desa($desa['logo']); ?>" alt="<?= $data['nama_desa']; ?>">
+	<?php if($desa['logo'] != NULL) { ?>
+		<img class="align-self-start mr-3" src="<?= gambar_desa($desa['logo']); ?>" alt="<?= $data['nama_desa']; ?>">
+	<?php } ?>
+	
 	<div class="media-body">
 		<!-- <h5 class="mt-0">Top-aligned media</h5> -->
 		<table class="ml-3">

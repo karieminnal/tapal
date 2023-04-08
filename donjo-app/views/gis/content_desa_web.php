@@ -21,7 +21,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			</div>
 			<p>
 				<a href="<?= site_url("first/loadModalProfil/$desa[id]"); ?>" class="btn btn-sm btn-outline-primary btn-block" 
-					data-title="Profil <?= ucwords($this->setting->sebutan_desa) ?> <?= set_ucwords($wilayah) ?>" 
+					data-title="Profil <?= set_ucwords($wilayah) ?>" 
 					data-remote="false" 
 					data-toggle="modal" 
 					data-target="#modalBesar">

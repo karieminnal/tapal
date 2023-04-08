@@ -105,21 +105,29 @@
 				<div class="col-sm-12">          
 					<select class="form-control" name="kota" id="pilihDesa">
 						<option value="0">Pilih Desa</option>
-						<?php foreach ($listkab as $kablist) { ?>
-							<optgroup label="<?php echo $kablist['nama_kabupaten'] ?>">
-								<?php
-									$desaArray = $this->config_model->get_desa_by_kab($kablist['kode_kabupaten']);
-									foreach ($desaArray as $desa) { 
-									$dataPath = $desa['path'];
-									$kab = $desa['nama_kabupaten'];
-									$newKab = str_replace("KABUPATEN","KAB. ",$kab);
-									if($dataPath != NULL) {
-										$getPath = 1;
-									} else {
-										$getPath = 0;
-									}
-									?>
-									<option value="<?php echo $desa['id'] ?>" <?php echo ($getPath ? '' : 'disabled'); ?> data-path="<?php echo $getPath ?>" data-lat="<?php echo $desa['lat'] ?>" data-lng="<?php echo $desa['lng'] ?>">&#x2192; <?php echo $desa['nama_desa'] ?></option>
+						<?php foreach ($listkab as $kablist) { 
+							$kab = $kablist['nama_kabupaten'];
+							$newKab = str_replace("KABUPATEN","KAB. ",$kab);
+							?>
+							<optgroup label="<?php echo $newKab ?>">
+								<?php $kecArray = $this->config_model->get_kab_kec($kablist['kode_kabupaten']);
+									foreach ($kecArray as $kec) { ?>
+										<optgroup label="&nbsp;&nbsp;&nbsp;&#8640; KEC. <?php echo $kec['nama_kecamatan'] ?>">
+										<?php
+											$desaArray = $this->config_model->get_desa_by_kec($kec['kode_kecamatan']);
+											foreach ($desaArray as $desa) { 
+												$dataPath = $desa['path'];
+												if($dataPath != NULL) {
+													$getPath = 1;
+												} else {
+													$getPath = 0;
+												}
+												?>
+												<option value="<?php echo $desa['id'] ?>" <?php echo ($getPath ? '' : 'disabled'); ?> data-path="<?php echo $getPath ?>" data-lat="<?php echo $desa['lat'] ?>" data-lng="<?php echo $desa['lng'] ?>">
+													&#8627; <?php echo $desa['nama_desa'] ?>
+												</option>
+										<?php } ?>
+										</optgroup>
 								<?php } ?>
 							</optgroup>
 						<?php } ?>

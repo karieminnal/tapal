@@ -81,8 +81,22 @@ class Config_model extends CI_Model
 		return $data;
 	}
 
+	public function get_kab_kec($kode) {
+		$sql = "SELECT * FROM config WHERE kode_kabupaten = $kode GROUP BY kode_kecamatan ORDER BY nama_kecamatan ASC";
+		$query = $this->db->query($sql);
+		$data = $query->result_array();
+		return $data;
+	}
+
 	public function get_desa_by_kab($kode){
 		$sql = "SELECT * FROM config WHERE kode_kabupaten = $kode ORDER BY nama_desa ASC";
+		$query = $this->db->query($sql);
+		$data = $query->result_array();
+		return $data;
+	}
+
+	public function get_desa_by_kec($kode){
+		$sql = "SELECT * FROM config WHERE kode_kecamatan = $kode ORDER BY nama_desa ASC";
 		$query = $this->db->query($sql);
 		$data = $query->result_array();
 		return $data;
