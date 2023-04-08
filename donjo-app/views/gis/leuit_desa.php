@@ -21,10 +21,10 @@
 			<div class="col-md-8">
 				<?php foreach ($leuitLokasi as $leuit) : ?>
 					<table class="">
-						<tr>
+						<!-- <tr>
 							<td>Lokasi</td>
 							<td><?= $alamat; ?></td>
-						</tr>
+						</tr> -->
 						<tr>
 							<td>Volume</td>
 							<td><?= convertmass($leuit['volume']); ?></td>

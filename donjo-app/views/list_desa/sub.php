@@ -23,6 +23,7 @@
 															<th class="nowrap">Nama Dusun</th>
 															<th class="nowrap">Nama RW</th>
 															<th class="nowrap">Nama RT</th>
+															<th class="nowrap">ID Cluster</th>
 														</tr>
 													</thead>
 													<tbody>
@@ -31,6 +32,7 @@
 																<td class="nowrap"><?= $data['dusun'] ?></td>
 																<td class="nowrap"><?= $data['rw'] ?></td>
 																<td class="nowrap"><?= $data['rt'] ?></td>
+																<td class="nowrap"><?= $data['id'] ?></td>
 															</tr>
 														<?php } ?>
 													</tbody>

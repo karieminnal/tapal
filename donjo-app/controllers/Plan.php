@@ -141,6 +141,37 @@ class Plan extends Admin_Controller
 		redirect("plan/index/$p/$o");
 	}
 
+	public function import()
+	{
+		$this->sub_modul_ini = 229;
+		$filterDesa = $_SESSION['filterDesa'];
+		$header = $this->header_model->get_data();
+		$header['minsidebar'] = 1;
+		$sebutan_desa = ucwords($this->setting->sebutan_desa);
+		$data["desa"] = $this->config_model->get_desa($filterDesa);
+
+		$data['wil_atas'] = $this->config_model->get_desa($filterDesa);
+		$data['dusun_gis'] = $this->wilayah_model->list_dusun();
+		$data['rw_gis'] = $this->wilayah_model->list_rw_gis_desaid();
+		$data['rt_gis'] = $this->wilayah_model->list_rt_gis_desaid();
+		$data['breadcrumb'] = array(
+			array('link' => site_url('plan'), 'judul' => "Lokasi"),
+		);
+		$data['form_action'] = site_url("plan/import_shp");
+		$namadesa =  $data['wil_atas']['nama_desa'];
+		
+		$this->load->view('header', $header);
+		$this->load->view('nav');
+		$this->load->view("lokasi/maps_lokasi", $data);
+		$this->load->view('footer');
+	}
+
+	public function import_shp()
+	{
+		$this->plan_lokasi_model->import();
+		redirect("plan");
+	}
+
 	public function search()
 	{
 		$cari = $this->input->post('cari');

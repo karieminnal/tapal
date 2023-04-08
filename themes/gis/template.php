@@ -11,7 +11,7 @@
 <?php } ?>
 <?php foreach ($getLeuitLokasi as $leuit) { ?>
 <div id="isi_popup_leuit_<?php echo $leuit['id'] ?>" style="visibility: hidden;" class="isi-popup">
-	<?php $this->load->view("gis/content_leuit_web.php", array('leuit' => $leuit, 'wilayah' => ucwords($leuit['nama']), 'desa' => ucwords($leuit['id_desa']))) ?>
+	<?php $this->load->view("gis/content_leuit_web.php", array('leuit' => $leuit, 'panorama' => $leuit['panorama'], 'wilayah' => ucwords($leuit['nama']), 'desa' => ucwords($leuit['id_desa']))) ?>
 </div>
 <?php } ?>
 <?php $this->load->view("gis/content_dusun_web.php", array('dusun_gis' => $dusun_gis, 'list_lap_front' => $list_lap_front, 'wilayah' => ucwords($this->setting->sebutan_dusun . ' '))) ?>

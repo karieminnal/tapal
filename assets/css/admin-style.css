@@ -609,3 +609,26 @@ tr.group td {
 .nowrap {
 	white-space: nowrap!important;
 }
+#tableListDesa.table>thead>tr>th {
+    text-transform: uppercase;
+    vertical-align: middle;
+    border-bottom-width: 1px;
+}
+#tableListDesa tr.odd td:first-child,
+#tableListDesa tr.even td:first-child {
+    padding-left: 50px;
+}
+
+#tableListDesa tr.dtrg-level-0 th,
+#tableListDesa tr.dtrg-level-1 th {
+    padding-top: 5px;
+    padding-bottom: 5px;
+	cursor: pointer;
+}
+#tableListDesa tr.dtrg-level-0 th {
+    background: #e6e6e6;
+}
+#tableListDesa tr.dtrg-level-1 th {
+	padding-left: 30px;
+	background: #f4f4f4;
+}

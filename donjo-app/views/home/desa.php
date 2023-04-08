@@ -156,7 +156,8 @@
 												<tr>
 													<th class="no-sort" width="20">No</th>
 													<th>Desa</th>
-													<th>Kab.</th>
+													<th>Kecamatan</th>
+													<th>Kabupaten</th>
 													<th width="90">Input (ton)</th>
 													<th width="90">Output (ton)</th>
 													<th width="90">Stok (ton)</th>
@@ -171,7 +172,7 @@
 				</div>
 			</div>
 		</div>
-		<div class='row'>
+		<!-- <div class='row'>
 			<div class='col-md-12'>
 				<div class='box box-info'>
 					<div class="box-header with-border">
@@ -212,9 +213,9 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</div> -->
 		<?php } ?>
-		<div class='row'>
+		<!-- <div class='row'>
 			<div class='col-lg-6 col-md-12'>
 				<div class='box box-info'>
 					<div class="box-header with-border">
@@ -263,7 +264,7 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</div> -->
 	</section>
 </div>
 <script>
@@ -276,6 +277,7 @@
 				columns: [
 					{ data: 'no'},
 					{ data: 'nama_desa' },
+					{ data: 'nama_kecamatan' },
 					{ data: 'nama_kabupaten' },
 					{ data: 'leuit_input' },
 					{ data: 'leuit_output' },
@@ -283,27 +285,27 @@
 				],
 			});
 
-			var tableDistribusiList = $('#tableAnalisaDistribusi').DataTable({
-				iDisplayLength: 20,
-				processing: true,
-				ajax: '/api_custom/analisa_leuit',
-				columns: [
-					{ data: 'no'},
-					{ data: 'nama_desa' },
-					{ data: 'nama_kabupaten' },
-					{ data: 'leuit_output_komersil' },
-					{ data: 'leuit_output_produksi' },
-					{ data: 'leuit_output_logistik' },
-				],
-			});
+			// var tableDistribusiList = $('#tableAnalisaDistribusi').DataTable({
+			// 	iDisplayLength: 20,
+			// 	processing: true,
+			// 	ajax: '/api_custom/analisa_leuit',
+			// 	columns: [
+			// 		{ data: 'no'},
+			// 		{ data: 'nama_desa' },
+			// 		{ data: 'nama_kabupaten' },
+			// 		{ data: 'leuit_output_komersil' },
+			// 		{ data: 'leuit_output_produksi' },
+			// 		{ data: 'leuit_output_logistik' },
+			// 	],
+			// });
 
 			$("#filterYearAnalisa").on("change", function(){
 				tableAnalisaList.ajax.url("/api_custom/analisa_leuit?year="+$(this).val()).load();
 			});
 
-			$("#filterYearDistribusi").on("change", function(){
-				tableDistribusiList.ajax.url("/api_custom/analisa_leuit?year="+$(this).val()).load();
-			});
+			// $("#filterYearDistribusi").on("change", function(){
+			// 	tableDistribusiList.ajax.url("/api_custom/analisa_leuit?year="+$(this).val()).load();
+			// });
 		<?php } ?>
 	});
 

@@ -19,15 +19,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
 					Data <?= set_ucwords($wilayah) ?>
 				</a>
 			</p>
-			<p>
-				<a href="<?= site_url("first/loadModalLeuit360/$desa"); ?>" class="btn btn-sm btn-outline-primary btn-block" 
-					data-title="Panorama <?= set_ucwords($wilayah) ?>" 
-					data-remote="false" 
-					data-toggle="modal" 
-					data-target="#modalLeuit360">
-					<i class="fa fa-image"></i>
-					View Panorama
-				</a>
-			</p>
+			<?php if($panorama != NULL) { ?>
+				<p>
+					<a href="<?= site_url("first/loadModalLeuit360/$desa"); ?>" class="btn btn-sm btn-outline-primary btn-block" 
+						data-title="Panorama <?= set_ucwords($wilayah) ?>" 
+						data-remote="false" 
+						data-toggle="modal" 
+						data-target="#modalLeuit360">
+						<i class="fa fa-image"></i>
+						View Panorama
+					</a>
+				</p>
+			<?php } ?>
 		</div>
 	</div>

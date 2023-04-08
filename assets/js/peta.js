@@ -759,6 +759,121 @@ function eximShpPersil(layerpeta, page) {
   return eximShpPersil;
 }
 
+function eximShpLokasi(layerpeta) {
+  L.Control.Shapefile = L.Control.extend({
+    onAdd: function (map) {
+      var thisControl = this;
+
+      var controlDiv = L.DomUtil.create('div', 'leaflet-control-command');
+
+      // Create the leaflet control.
+      var controlUI = L.DomUtil.create(
+        'div',
+        'leaflet-control-command-interior',
+        controlDiv,
+      );
+
+      // Create the form inside of the leaflet control.
+      var form = L.DomUtil.create(
+        'form',
+        'leaflet-control-command-form',
+        controlUI,
+      );
+      form.action = '';
+      form.method = 'post';
+      form.enctype = 'multipart/form-data';
+
+      // Create the input file element.
+      var input = L.DomUtil.create(
+        'input',
+        'leaflet-control-command-form-input',
+        form,
+      );
+      input.id = 'file';
+      input.type = 'file';
+      input.name = 'uploadFile';
+      input.style.display = 'none';
+
+      L.DomEvent.addListener(form, 'click', function () {
+        document.getElementById('file').click();
+      }).addListener(input, 'change', function () {
+        var input = document.getElementById('file');
+        if (!input.files[0]) {
+          alert('Pilih file shapefile dalam format .zip');
+        } else {
+          file = input.files[0];
+
+          fr = new FileReader();
+          fr.onload = receiveBinary;
+          fr.readAsArrayBuffer(file);
+        }
+
+        function receiveBinary() {
+          geojson = fr.result;
+          var shpfile = new L.Shapefile(geojson).addTo(map);
+
+          shpfile.once('data:loaded', function (e) {
+            var type = e.layerType;
+            var layer = e.layer;
+            var coords = [];
+            var arr_res = [];
+            var luas = [];
+            var geojson = turf.flip(shpfile.toGeoJSON());
+            var shape_for_db = JSON.stringify(geojson);
+
+            var polygon = L.geoJson(JSON.parse(shape_for_db), {
+              pointToLayer: function (feature, latlng) {
+                return L.circleMarker(latlng, { style: style });
+              },
+              onEachFeature: function (feature, layer) {
+                var popupContent =
+                  '<p> <b>' +
+                  feature.properties.nama_lokas +
+                  '</b></br>' +
+                  feature.properties.keterangan +
+                  '</p>';
+
+                layer.bindPopup(popupContent);
+
+                var gen = {
+                  //   path: feature.geometry.coordinates,
+                  props: feature.properties,
+                };
+                arr_res.push(gen);
+              },
+              pointToLayer: function (feature, latlng) {
+                return L.circleMarker(latlng, {
+                  radius: 6,
+                  opacity: 0.5,
+                  color: '#000',
+                  fillColor: 'red',
+                  fillOpacity: 0.8,
+                });
+              },
+            });
+            document.getElementById('extract_data').value =
+              JSON.stringify(arr_res);
+
+            // document.getElementById('path').value = normalize_coords(coords);
+            layerpeta.fitBounds(shpfile.getBounds());
+          });
+        }
+      });
+
+      controlUI.title = 'Impor Shapefile (.Zip)';
+      return controlDiv;
+    },
+  });
+
+  L.control.shapefile = function (opts) {
+    return new L.Control.Shapefile(opts);
+  };
+
+  L.control.shapefile({ position: 'topleft' }).addTo(layerpeta);
+
+  return eximShpPersil;
+}
+
 function shpProv(layerpeta) {
   L.Control.Shapefile = L.Control.extend({
     onAdd: function (map) {

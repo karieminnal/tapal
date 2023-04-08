@@ -276,47 +276,92 @@ $(function () {
       .draw();
   }
 
-  var groupColumn = 3;
+  var collapsedGroups = {};
+  var top = '';
+  var parent = '';
+  var groupColumn = 0;
   var table = $('#tableListDesa').DataTable({
-      columnDefs: [{ 
-        visible: false, 
-        targets: groupColumn 
+    displayLength: 50,
+    order: [
+      [0, 'asc'],
+      [1, 'asc'],
+    ],
+    rowGroup: {
+      dataSrc: [0, 1],
+      startRender: function (rows, group, level) {
+        var all;
+
+        if (level === 0) {
+          top = group;
+          all = group;
+        } else {
+          // if parent collapsed, nothing to do
+          if (!!collapsedGroups[top]) {
+            return;
+          }
+          all = top + group;
+        }
+
+        var collapsed = !!collapsedGroups[all];
+
+        rows.nodes().each(function (r) {
+          r.style.display = collapsed ? 'none' : '';
+        });
+
+        // Add category name to the <tr>. NOTE: Hardcoded colspan
+        return $('<tr/>')
+          .append('<th colspan="7">' + group + ' (' + rows.count() + ')</th>')
+          .attr('data-name', all)
+          .toggleClass('collapsed', collapsed);
+      },
+    },
+    columnDefs: [
+      {
+        visible: false,
+        targets: [0, 1],
       },
       {
         targets: 'no-sort',
         orderable: false,
-      }],
-      order: [[groupColumn, 'asc']],
-      displayLength: 25,
-      drawCallback: function (settings) {
-          var api = this.api();
-          var rows = api.rows({ page: 'current' }).nodes();
-          var last = null;
-
-          api
-              .column(groupColumn, { page: 'current' })
-              .data()
-              .each(function (group, i) {
-                  if (last !== group) {
-                      $(rows)
-                          .eq(i)
-                          .before('<tr class="group"><td colspan="10">' + group + '</td></tr>');
-
-                      last = group;
-                  }
-              });
       },
-  });
+    ],
+    // order: [[groupColumn, 'asc']],
+    // displayLength: 25,
+    // drawCallback: function (settings) {
+    //   var api = this.api();
+    //   var rows = api.rows({ page: 'current' }).nodes();
+    //   var last = null;
 
-  // Order by the grouping
-  $('#tableListDesa tbody').on('click', 'tr.group', function () {
-      var currentOrder = table.order()[0];
-      if (currentOrder[0] === groupColumn && currentOrder[1] === 'asc') {
-          table.order([groupColumn, 'desc']).draw();
-      } else {
-          table.order([groupColumn, 'asc']).draw();
-      }
+    //   api
+    //     .column(groupColumn, { page: 'current' })
+    //     .data()
+    //     .each(function (group, i) {
+    //       if (last !== group) {
+    //         $(rows)
+    //           .eq(i)
+    //           .before(
+    //             '<tr class="group"><td colspan="10">' + group + '</td></tr>',
+    //           );
+
+    //         last = group;
+    //       }
+    //     });
+    // },
   });
+  $('#tableListDesa tbody').on('click', 'tr.dtrg-start', function () {
+    var name = $(this).data('name');
+    collapsedGroups[name] = !collapsedGroups[name];
+    table.draw(false);
+  });
+  // Order by the grouping
+  //   $('#tableListDesa tbody').on('click', 'tr.group', function () {
+  //     var currentOrder = table.order()[0];
+  //     if (currentOrder[0] === groupColumn && currentOrder[1] === 'asc') {
+  //       table.order([groupColumn, 'desc']).draw();
+  //     } else {
+  //       table.order([groupColumn, 'asc']).draw();
+  //     }
+  //   });
 
   var getIframe = $('.iframe-view');
   if (getIframe.length) {

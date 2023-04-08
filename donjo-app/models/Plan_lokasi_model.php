@@ -265,6 +265,24 @@ class Plan_lokasi_model extends MY_Model
 		}
 	}
 
+	public function import()
+	{
+		$filterDesa = $_SESSION['filterDesa'];
+		$data = json_decode($_POST['extract_data'], true);
+		foreach ($data as &$k) {
+			$k['nama'] = $k['props']['nama_lokas'];
+			$k['ref_point'] = $k['props']['id_jenis'];
+			$k['id_cluster'] = $k['props']['id_cluster'];
+			$k['id_desa'] = $filterDesa;
+			$k['lat'] = $k['props']['lat'];
+			$k['lng'] = $k['props']['lng'];
+			unset($k['props']);
+		}
+		$outp = $this->db->insert_batch('lokasi', $data);
+
+		status_sukses($outp); //Tampilkan Pesan
+	}
+
 	public function list_point()
 	{
 		$filterDesa = $_SESSION['filterDesa'];
