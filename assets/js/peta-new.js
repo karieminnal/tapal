@@ -712,9 +712,9 @@ function saranaLayer(marker, thisSimbol, thisNamaJenis, thisKategori) {
     pointToLayer: function (feature, latlng) {
       var iconLokasi = L.icon({
         iconUrl: thisSimbol + feature.properties.simbol,
-        iconSize: [32, 37],
-        iconAnchor: [16, 37],
-        popupAnchor: [0, -28],
+        iconSize: [20, 25],
+        iconAnchor: [16, 25],
+        popupAnchor: [-5, -26],
       });
       return L.marker(latlng, {
         icon: iconLokasi,
@@ -767,9 +767,9 @@ function saranaLayer(marker, thisSimbol, thisNamaJenis, thisKategori) {
         '</div>';
       layer.bindPopup(content_lokasi);
       layer.bindTooltip(feature.properties.nama, {
-        sticky: true,
+        // sticky: true,
         direction: 'bottom',
-        permanent: true,
+        // permanent: true,
       });
     },
   });
@@ -1195,7 +1195,7 @@ function poligonWilNew(marker) {
     onEachFeature: function (feature, layer) {
       if (feature.properties.name == 'kantor_desa') {
         layer.bindPopup(feature.properties.content, {
-          className: 'kantor_desa',
+          className: 'kantor_desa not-clear',
         });
         layer.bindTooltip(feature.properties.judulkantor, {
           sticky: true,
@@ -1337,6 +1337,16 @@ function setPolygonDesa(
       color: configColor.desa,
     }),
   );
+
+  var point_style = stylePointLogo(favico_desa);
+  marker_desa.push(
+    turf.point([desa['lng'], desa['lat']], {
+      name: 'kantor_desa',
+      content: 'Kantor ' + judul,
+      style: L.icon(point_style),
+      color: configColor.desa,
+    }),
+  );
 }
 
 function setPolygonContent(
@@ -1427,9 +1437,9 @@ function setPointLeuit(map, nama, lat, lng, contents, id) {
 
 function stylePointLeuit(url) {
   var style = {
-    iconSize: [28, 28],
-    iconAnchor: [16, 28],
-    popupAnchor: [0, -16],
+    iconSize: [20, 20],
+    iconAnchor: [8, 20],
+    popupAnchor: [2, -16],
     iconUrl: url,
     className: 'not-clear',
   };

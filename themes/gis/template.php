@@ -114,7 +114,7 @@
 	
 	<?php foreach ($desaall as $listdesa) { ?>
 		<?php if (!empty($listdesa['path'])) { ?>
-			setPolygonDesa(marker_desa, <?= json_encode($listdesa) ?>, "<?= ucwords($this->setting->sebutan_desa) . ' ' . $listdesa['nama_desa'] ?>", "<?= gambar_desa($listdesa['logo']); ?>", "#isi_popup_<?= $listdesa['id'] ?>", "<?= $listdesa['id'] ?>");
+			setPolygonDesa(marker_desa, <?= json_encode($listdesa) ?>, "<?= ucwords($this->setting->sebutan_desa) . ' ' . $listdesa['nama_desa'] ?>", "<?= favico_desa_2($listdesa['logo']); ?>", "#isi_popup_<?= $listdesa['id'] ?>", "<?= $listdesa['id'] ?>");
 		<?php } ?>
 	<?php } ?>
 	<?php if (!empty($desa['path'])) : ?>
@@ -137,6 +137,7 @@
 		function() {
 			var overlayDesa = overlayWilDesa(marker_desa);
 			overlayDesa.addTo(map);
+	
 			<?php foreach ($getLeuitLokasi as $leuitLokasi) : ?>
 				setPointLeuit(map, "<?= $leuitLokasi['nama'] ?>", "<?= $leuitLokasi['lat_lokasi'] ?>", "<?= $leuitLokasi['lng_lokasi'] ?>", "#isi_popup_leuit_<?= $leuitLokasi['id'] ?>", "<?= $leuitLokasi['id'] ?>");
 			<?php endforeach; ?>

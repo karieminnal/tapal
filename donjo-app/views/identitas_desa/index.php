@@ -16,14 +16,15 @@
 
 	.box-profile {
 		width: 100%;
-		height: 300px;
-		background: url('<?=gambar_desa($main['kantor_desa'], TRUE)?>');
+		/* height: 200px; */
+		background-color: #41577c;
+		/* background: url('<?=gambar_desa($main['kantor_desa'], TRUE)?>'); */
 		background-repeat: no-repeat;
 		background-position: center center;
 	}
 
 	.profile-user-img {
-		padding-top: 60px;
+		/* padding-top: 60px; */
 		border: 0px;
 	}
 
@@ -33,7 +34,7 @@
 </style>
 <div class="content-wrapper">
 	<section class="content-header">
-		<h1>Identitas <?= $desa; ?></h1>
+		<h1 class="uppercase"><?= $desa; ?> <?= $main["nama_desa"]; ?> <?= $main["nama_kecamatan"]; ?></h1>
 		<ol class="breadcrumb">
 			<li><a href="<?= site_url('hom_sid'); ?>"><i class="fa fa-home"></i> Home</a></li>
 			<li class="active">Identitas <?= $desa; ?> <?= $main["nama_desa"]; ?> <?= $main["nama_kecamatan"]; ?></li>
@@ -54,8 +55,13 @@
 								<div class="col-md-12">
 									<div class="box-body box-profile">
 										<img class="profile-user-img img-responsive" src="<?= gambar_desa($main['logo']); ?>" alt="logo">
-										<h3 class="profile-username text-center detail"><?= $desa; ?> <?= $main['nama_desa']; ?></h3>
-										<p class="text-center detail"><b><?= $kecamatan; ?> <?= $main['nama_kecamatan']; ?>, <?= $kabupaten; ?> <?= $main['nama_kabupaten']; ?>, Provinsi <?= $main['nama_propinsi']; ?></b></p>
+										<h3 class="profile-username text-center detail uppercase"><?= $desa; ?> <?= $main['nama_desa']; ?></h3>
+										<p class="text-center detail uppercase">
+											<b>
+												KECAMATAN <?= $main['nama_kecamatan']; ?><br> 
+												<?= $main['nama_kabupaten']; ?>, <?= $main['nama_propinsi']; ?>
+											</b>
+										</p>
 									</div>
 								</div>
 							</div>
@@ -84,10 +90,10 @@
 													<td>Kepala <?= $desa; ?></td><td>:</td>
 													<td><?= $main['nama_kepala_desa']; ?></td>
 												</tr>
-												<tr>
+												<!-- <tr>
 													<td>NIP Kepala <?= $desa; ?></td><td>:</td>
 													<td><?= $main['nip_kepala_desa']; ?></td>
-												</tr>
+												</tr> -->
 												<tr>
 													<td>Alamat Kantor <?= $desa; ?></td><td>:</td>
 													<td><?= $main['alamat_kantor']; ?></td>
@@ -119,10 +125,10 @@
 													<td>Nama <?= ucwords($this->setting->sebutan_camat); ?></td><td>:</td>
 													<td><?= $main['nama_kepala_camat']; ?></td>
 												</tr>
-												<tr>
+												<!-- <tr>
 													<td>NIP <?= ucwords($this->setting->sebutan_camat); ?></td><td>:</td>
 													<td><?= $main['nip_kepala_camat']; ?></td>
-												</tr>
+												</tr> -->
 												<tr>
 													<th colspan="3" class="subtitle_head"><strong><?= strtoupper($kabupaten); ?></strong></th>
 												</tr>

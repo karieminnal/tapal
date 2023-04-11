@@ -84,7 +84,7 @@
 									<img src="<?= base_url() ?>assets/images/loader.gif" id="load2" style="display:none;" />
 									<div class="row clone-input">
 										<div class="col-md-8">
-											<input id="kode_propinsi" name="kode_propinsi" class="form-control input-sm bilangan required" type="text" placeholder="Kode Provinsi" value="<?= $main["kode_propinsi"]; ?>" disabled/>
+											<input id="kode_propinsi" name="kode_propinsi" class="form-control input-sm bilangan required" type="hidden" placeholder="Kode Provinsi" value="<?= $main["kode_propinsi"]; ?>"/>
 										</div>
 									</div>
 								</div>
@@ -103,7 +103,7 @@
 									<img src="<?= base_url() ?>assets/images/loader.gif" id="load2" style="display:none;" />
 									<div class="row clone-input">
 										<div class="col-md-8">
-											<input id="kode_kabupaten" name="kode_kabupaten" class="form-control input-sm bilangan required" type="text" placeholder="Kode Kota/Kabupaten" value="<?= $main["kode_kabupaten"]; ?>" disabled/>
+											<input id="kode_kabupaten" name="kode_kabupaten" class="form-control input-sm bilangan required" type="hidden" placeholder="Kode Kota/Kabupaten" value="<?= $main["kode_kabupaten"]; ?>"/>
 										</div>
 									</div>
 								</div>
@@ -123,7 +123,7 @@
 									<img src="<?= base_url() ?>assets/images/loader.gif" id="load3" style="display:none;" />
 									<div class="row clone-input">
 										<div class="col-md-8">
-											<input id="kode_kecamatan" name="kode_kecamatan" class="form-control input-sm bilangan required" type="text" placeholder="Kode Kecamatan" value="<?= $main["kode_kecamatan"]; ?>" disabled/>
+											<input id="kode_kecamatan" name="kode_kecamatan" class="form-control input-sm bilangan required" type="hidden" placeholder="Kode Kecamatan" value="<?= $main["kode_kecamatan"]; ?>"/>
 										</div>
 									</div>
 								</div>
@@ -141,7 +141,7 @@
 									</select>
 									<div class="row clone-input">
 										<div class="col-md-8">
-											<input id="kode_desa" name="kode_desa" class="form-control input-sm bilangan required" type="text" placeholder="Kode Desa" value="<?= $main["kode_desa"]; ?>" disabled/>
+											<input id="kode_desa" name="kode_desa" class="form-control input-sm bilangan required" type="hidden" placeholder="Kode Desa" value="<?= $main["kode_desa"]; ?>"/>
 										</div>
 									</div>
 								</div>

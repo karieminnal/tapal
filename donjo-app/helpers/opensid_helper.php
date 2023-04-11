@@ -380,6 +380,15 @@ function favico_desa()
 	return $favico_desa;
 }
 
+function favico_desa_2($nama_file)
+{
+	$favico = $nama_file;
+	$favico_desa = (is_file(APPPATH . '../' . LOKASI_LOGO_DESA . $favico)) ?
+		base_url() . LOKASI_LOGO_DESA . $favico :
+		base_url() . 'assets/images/logo-jabar.png';
+	return $favico_desa;
+}
+
 /**
  * gambar_desa / KantorDesa
  *

@@ -363,7 +363,7 @@ function stylePointLogo(url) {
   var style = {
     iconSize: [16, 16],
     iconAnchor: [8, 16],
-    popupAnchor: [0, -28],
+    popupAnchor: [0, -16],
     iconUrl: url,
     className: 'not-clear',
   };
